@@ -98,6 +98,42 @@ export interface ITraktApiOptions {
   client_id: string;
   client_secret: string;
   api_url?: string;
+  storage?: IStorage;
+}
+
+export interface IStorage {
+  getValue(name: string): Promise<string>;
+  setValue(name: string, value: string): Promise<void>;
+}
+
+export class LocalStorageAdapter implements IStorage {
+  getValue(name: string): Promise<string> {
+    return Promise.resolve(window.localStorage.getItem(name));
+  }
+  
+  setValue(name: string, value: string): Promise<void> {
+    if (!value) {
+      window.localStorage.removeItem(name);
+    } else {
+      window.localStorage.setItem(name, value);
+    }
+    return Promise.resolve();
+  }
+}
+
+export class GreaseMonkeyStorageAdapter implements IStorage {
+  getValue(name: string): Promise<string> {
+    return Promise.resolve(GM_getValue(name));
+  }
+  
+  setValue(name: string, value: string): Promise<void> {
+    if (!value) {
+      GM_deleteValue(name);
+    } else {
+      GM_setValue(name, value);
+    }
+    return Promise.resolve();
+  }
 }
 
 export default class TraktApi {
@@ -110,11 +146,14 @@ export default class TraktApi {
   private _redirect_uri: string;
   private _endpoint: string;
 
+  private _storage: IStorage;
+
   constructor(options: ITraktApiOptions) {
     this._client_id = options.client_id;
     this._client_secret = options.client_secret;
     this._redirect_uri = 'https://www.crunchyroll.com';
     this._endpoint = options.api_url || 'https://api.trakt.tv';
+    this._storage = options.storage || new LocalStorageAdapter();
   }
 
   static isError(obj: any, code?: number): obj is ITraktError {
@@ -126,7 +165,7 @@ export default class TraktApi {
   // ------ Authentication ------
 
   public async loadTokens(): Promise<void> {
-    const data = window.localStorage.getItem(TraktTokensKey);
+    const data = await this._storage.getValue(TraktTokensKey);
     if (data) {
       this._tokens = JSON.parse(data);
     } else {
@@ -135,7 +174,7 @@ export default class TraktApi {
 
     if (this._tokens.expires && this._tokens.expires < Date.now()) {
       this._tokens = await this._refresh_token();
-      window.localStorage.setItem(TraktTokensKey, JSON.stringify(this._tokens));
+      await this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens));
     }
 
     this.onAuthenticationChanged.dispatch(this.isAuthenticated());
@@ -151,7 +190,7 @@ export default class TraktApi {
 
     // Save authentication state data
     this._tokens.authentication_state = state;
-    window.localStorage.setItem(TraktTokensKey, JSON.stringify(this._tokens));
+    await this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens));
 
     window.location.href = url;
   }
@@ -169,7 +208,7 @@ export default class TraktApi {
 
     console.log('Trakt authentication successful!');
 
-    window.localStorage.setItem(TraktTokensKey, JSON.stringify(this._tokens));
+    await this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens));
 
     window.history.replaceState(null, undefined, window.location.pathname);
 
@@ -177,7 +216,7 @@ export default class TraktApi {
   }
 
   disconnect(): void {
-    window.localStorage.removeItem(TraktTokensKey);
+    this._storage.setValue(TraktTokensKey, null);
     this.onAuthenticationChanged.dispatch(false);
     this._revoke_token();
   }

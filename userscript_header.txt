@@ -1,9 +1,13 @@
 // ==UserScript==
 // @name          TraktRoller
 // @description   trakt.tv scrobbler for Crunchyroll
-// @namespace     http://github.com/sttz/traktroller
+// @namespace     http://github.com/sttz/TraktRoller
 // @version       0.0.1
+// @homepageURL   http://github.com/sttz/TraktRoller
+// @author        Adrian Stutz <adrian@sttz.ch>
 // @include       https://www.crunchyroll.com/*
 // @run-at        document_start
 // @connect       api.trakt.tv
+// @grant         GM_setValue
+// @grant         GM_getValue
 // ==/UserScript==
