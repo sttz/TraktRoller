@@ -4,30 +4,6 @@
   background-origin: content-box;
 }
 
-.trakt-status-button {
-  width: 38px;
-  height: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.trakt-status-button .trakt-icon {
-  height: 100%;
-}
-
-.trakt-status-button.state-lookup, .trakt-status-button.state-found {
-  filter: opacity(0.5);
-}
-
-.trakt-status-button.state-scrobbled {
-  filter: hue-rotate(150deg) brightness(1.3);
-}
-
-.trakt-status-button.state-error, .trakt-status-button.state-notfound {
-  filter: grayscale(1) brightness(2);
-}
-
 .trakt-connect-button {
   background-color: black;
   border: 1px solid #222;
@@ -41,13 +17,86 @@
   align-items: center;
   cursor: pointer;
 }
-
 .trakt-connect-button:hover {
   background-color: #444;
 }
-
 .trakt-connect-button .trakt-icon {
   height: 14px;
   width: 14px;
   margin-right: 5px;
+}
+
+.trakt-status {
+  position: relative;
+}
+
+.trakt-status-button {
+  width: 38px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.trakt-status-button .trakt-icon {
+  height: 100%;
+}
+.trakt-status-button.state-lookup, .trakt-status-button.state-found {
+  filter: opacity(0.5);
+}
+.trakt-status-button.state-scrobbled {
+  filter: hue-rotate(150deg) brightness(1.3);
+}
+.trakt-status-button.state-error, .trakt-status-button.state-notfound {
+  filter: grayscale(1) brightness(2);
+}
+
+.trakt-info-box {
+  background: #000000;
+  border: 1px solid #fff;
+  position: absolute;
+  width: 400px;
+  height: 300px;
+  z-index: 100;
+  left: -185px;
+  border-radius: 10px;
+  transition: all 0.2s ease-in;
+  transition-delay: 0.2s;
+  visibility: hidden;
+  opacity: 0;
+  bottom: 55px;
+}
+.trakt-info-box:after, .trakt-info-box:before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.trakt-info-box:after {
+  border-color: rgba(0, 0, 0, 0);
+  border-top-color: #000000;
+  border-width: 30px;
+  margin-left: -30px;
+}
+.trakt-info-box:before {
+  border-color: rgba(255, 255, 255, 0);
+  border-top-color: #fff;
+  border-width: 32px;
+  margin-left: -32px;
+}
+
+.trakt-status:hover .trakt-info-box {
+  visibility: visible;
+  opacity: 1;
+  bottom: 63px;
+}
+.trakt-info-box .hover-blocker {
+  position: absolute;
+  bottom: -75px;
+  left: 33%;
+  width: 33%;
+  height: 75px;
 }

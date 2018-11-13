@@ -25,7 +25,7 @@ export default class TraktRoller {
   private _scrobble?: TraktScrobble;
 
   private _connectButton: Element;
-  private _statusButton: Element;
+  private _status: Element;
 
   private _duration: number;
   private _currentTime: number;
@@ -214,18 +214,24 @@ export default class TraktRoller {
       return;
     }
 
-    this._statusButton = render((
-      <button class="trakt-status-button right" onClick={ () => this._onStatusButtonClick() }>
-        <div class="trakt-icon"/>
-      </button>
+    this._status = render((
+      <div class="trakt-status right">
+        <button class="trakt-status-button" onClick={ () => this._onStatusButtonClick() }>
+          <div class="trakt-icon"/>
+        </button>
+        <div class="trakt-info-box">
+          <div class="hover-blocker"></div>
+        </div>
+      </div>
     ), container);
     this._updateStatusButton();
   }
 
   private _updateStatusButton() {
-    if (!this._statusButton) return;
+    if (!this._status) return;
 
-    let classList = this._statusButton.classList;
+    let buton = this._status.querySelector(".trakt-status-button");
+    let classList = buton.classList;
     let toRemove = [];
     for (let i = 0; i < classList.length; i++) {
       let item = classList.item(i)!;
@@ -235,10 +241,10 @@ export default class TraktRoller {
 
     if (!this._scrobble) {
       classList.add('state-error');
-      this._statusButton.setAttribute('title', 'No scrobbler instance');
+      buton.setAttribute('title', 'No scrobbler instance');
     } else {
       classList.add('state-' + TraktScrobbleState[this._scrobble.state].toLowerCase());
-      this._statusButton.setAttribute('title', this._scrobble.error || TraktScrobbleState[this._scrobble.state]);
+      buton.setAttribute('title', this._scrobble.error || TraktScrobbleState[this._scrobble.state]);
     }
   }
 
