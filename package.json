@@ -13,7 +13,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist/*",
-    "dev": "parcel --https source/index.ts",
+    "dev": "parcel watch --no-hmr source/index.ts",
     "build": "npm run clean && parcel build source/index.ts && cat userscript_header.txt"
   },
   "header": "userscript_header.txt",
