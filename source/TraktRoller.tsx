@@ -1,4 +1,4 @@
-import TraktApi, { ITraktScrobbleData } from "./TraktApi";
+import TraktApi, { ITraktScrobbleData, ITraktApiOptions } from "./TraktApi";
 import TraktScrobble, { TraktScrobbleState, PlaybackState } from "./TraktScrobble";
 import Preact, { render } from 'preact';
 import { readFileSync } from "fs";
@@ -9,6 +9,10 @@ const packageInfo = require('../package.json');
 const css = readFileSync("./source/styles.css").toString();
 // Required for TypeScript's jsx transformation, Parcel doesn't pick up and process the h() calls
 const h = Preact.h;
+
+interface ITraktRollerOptions extends ITraktApiOptions {
+  //
+}
 
 const EpisodeRegex = /Episode (\d+)/;
 const SeasonRegex = /Season (\d+)/;
@@ -26,13 +30,10 @@ export default class TraktRoller {
   private _duration: number;
   private _currentTime: number;
 
-  constructor() {
+  constructor(options: ITraktRollerOptions) {
     console.log("TraktRoller");
 
-    this._api = new TraktApi({
-      client_id: '5ac1bf2ba188fc93f941eb0788ef5cb6e0e4bf96b882e914e6d0c17dacc8e7f2',
-      client_secret: '3712241a1c467769e6c03336abb5fb9911f8665354d2aaffaa9f817e147a34ca'
-    });
+    this._api = new TraktApi(options);
     this._api.onAuthenticationChanged.sub(this._onAuthenticationChange.bind(this));
     this._api.loadTokens();
 
