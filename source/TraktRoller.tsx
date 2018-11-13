@@ -43,12 +43,12 @@ export default class TraktRoller {
   }
 
   private _waitForPlayer() {
-    if (window.VILOS_PLAYERJS) {
-      this._loadPlayer(window.VILOS_PLAYERJS);
+    if (unsafeWindow.VILOS_PLAYERJS) {
+      this._loadPlayer(unsafeWindow.VILOS_PLAYERJS);
     } else {
       // Use a setter to wait for the player to be set
       let value: any;
-      Object.defineProperty(window, "VILOS_PLAYERJS", {
+      Object.defineProperty(unsafeWindow, "VILOS_PLAYERJS", {
         get: ()=> value,
         set: (v)=> {
           value = v;
