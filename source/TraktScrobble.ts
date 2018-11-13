@@ -31,6 +31,7 @@ export default class TraktScrobble {
   private _data: ITraktScrobbleData;
 
   private _state: TraktScrobbleState;
+  private _pendingState: TraktScrobbleState;
   private _playbackState: PlaybackState;
   private _error: string;
 
@@ -47,11 +48,11 @@ export default class TraktScrobble {
     this._data.progress = progress;
 
     if (state === PlaybackState.Playing) {
-      if (this._state === TraktScrobbleState.Found || this._state === TraktScrobbleState.Paused) {
+      if (this._pendingState === TraktScrobbleState.Found || this._pendingState === TraktScrobbleState.Paused) {
         this._updateScrobble('start');
       }
     } else if (state === PlaybackState.Paused) {
-      if (this._state === TraktScrobbleState.Started) {
+      if (this._pendingState === TraktScrobbleState.Started) {
         if (this._shouldScrobbleAt(progress)) {
           this._updateScrobble('stop');
         } else {
@@ -59,7 +60,7 @@ export default class TraktScrobble {
         }
       }
     } else if (state === PlaybackState.Ended) {
-      if (this._state === TraktScrobbleState.Started || this._state === TraktScrobbleState.Paused) {
+      if (this._pendingState === TraktScrobbleState.Started || this._pendingState === TraktScrobbleState.Paused) {
         this._updateScrobble('stop');
       }
     }
@@ -88,6 +89,7 @@ export default class TraktScrobble {
   private setState(value: TraktScrobbleState): void {
     if (this._state == value) return;
     this._state = value;
+    this._pendingState = value;
     this.onStateChanged.dispatch(value);
   }
 
@@ -126,6 +128,18 @@ export default class TraktScrobble {
   }
 
   private async _updateScrobble(type: 'start' | 'pause' | 'stop'): Promise<boolean> {
+    switch (type) {
+      case 'start':
+        this._pendingState = TraktScrobbleState.Started;
+        break;
+      case 'pause':
+        this._pendingState = TraktScrobbleState.Paused;
+        break;
+      case 'stop':
+        this._pendingState = TraktScrobbleState.Scrobbled;
+        break;
+    }
+
     let scrobbleResponse = await this._client.scrobble(type, this._data);
     if (this._handleError(scrobbleResponse)) {
       return false;
