@@ -1,0 +1,24 @@
+{
+  "name": "tracktroller",
+  "version": "0.0.1",
+  "description": "Trakt.tv scrobbler for Crunchyroll",
+  "main": "source/index.ts",
+  "author": "Adrian Stutz",
+  "license": "MIT",
+  "browserslist": "> 5%",
+  "devDependencies": {
+    "parcel-bundler": "^1.10.3",
+    "parcel-plugin-header": "file:./parcel-plugin-header",
+    "typescript": "^3.1.6"
+  },
+  "scripts": {
+    "clean": "rm -rf dist/*",
+    "dev": "parcel --https source/index.ts",
+    "build": "npm run clean && parcel build source/index.ts && cat userscript_header.txt"
+  },
+  "header": "userscript_header.txt",
+  "dependencies": {
+    "preact": "^8.3.1",
+    "strongly-typed-events": "^1.4.6"
+  }
+}

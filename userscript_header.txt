@@ -1,0 +1,9 @@
+// ==UserScript==
+// @name          TraktRoller
+// @description   trakt.tv scrobbler for Crunchyroll
+// @namespace     http://github.com/sttz/traktroller
+// @version       0.0.1
+// @include       https://www.crunchyroll.com/*
+// @run-at        document_start
+// @connect       api.trakt.tv
+// ==/UserScript==
