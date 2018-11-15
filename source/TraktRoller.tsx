@@ -1,14 +1,13 @@
 import TraktApi, { ITraktScrobbleData, ITraktApiOptions } from "./TraktApi";
 import TraktScrobble, { TraktScrobbleState, PlaybackState } from "./TraktScrobble";
-import Preact, { render } from 'preact';
 import { readFileSync } from "fs";
+import ConnectButton from "./ui/ConnectButton";
+import StatusButton from "./ui/StatusButton";
+
+import Preact, { render } from 'preact';
+const h = Preact.h;
 
 const packageInfo = require('../package.json');
-
-// Magically include missing dependency "Buffer" by merely mentioning the word. :O
-const css = readFileSync("./source/styles.css").toString();
-// Required for TypeScript's jsx transformation, Parcel doesn't pick up and process the h() calls
-const h = Preact.h;
 
 interface ITraktRollerOptions extends ITraktApiOptions {
   //
@@ -37,7 +36,6 @@ export default class TraktRoller {
     this._api.onAuthenticationChanged.sub(this._onAuthenticationChange.bind(this));
     this._api.loadTokens();
 
-    this._injectCss();
     this._createFooterButton();
     this._waitForPlayer();
   }
@@ -162,18 +160,10 @@ export default class TraktRoller {
     if (!isAuthenticated) {
       this._api.checkAuthenticationResult(window.location.href);
     }
-    this._updateFooterButton();
   }
 
   private _onScrobbleStatusChanged(state: TraktScrobbleState) {
-    this._updateStatusButton();
-  }
-
-  private _injectCss() {
-    const el = document.createElement("style");
-    el.type = "text/css";
-    el.appendChild(document.createTextNode(css));
-    document.head.appendChild(el);
+    //
   }
 
   private _createFooterButton() {
@@ -183,28 +173,12 @@ export default class TraktRoller {
       return;
     }
 
-    let onclick = () => {
-      if (this._api.isAuthenticated()) {
-        this._api.disconnect();
-      } else {
-        this._api.authenticate();
-      }
-    };
     this._connectButton = render(
       <div class="footer-column">
-        <div class="trakt-connect-button" onClick={ onclick }>
-          <div class="trakt-icon"></div>
-          <div class="text"></div>
-        </div>
+        <ConnectButton api={ this._api } />
       </div>,
       footer
     );
-    this._updateFooterButton();
-  }
-
-  private _updateFooterButton() {
-    if (!this._connectButton) return;
-    this._connectButton.getElementsByClassName('text')[0].textContent = !this._api.isAuthenticated() ? 'Connect with Trakt' : 'Disconnect from Trakt';
   }
 
   private _createStatusButton() {
@@ -215,41 +189,7 @@ export default class TraktRoller {
     }
 
     this._status = render((
-      <div class="trakt-status right">
-        <button class="trakt-status-button" onClick={ () => this._onStatusButtonClick() }>
-          <div class="trakt-icon"/>
-        </button>
-        <div class="trakt-info-box">
-          <div class="hover-blocker"></div>
-        </div>
-      </div>
+      <StatusButton api={ this._api } scrobble={ this._scrobble } />
     ), container);
-    this._updateStatusButton();
-  }
-
-  private _updateStatusButton() {
-    if (!this._status) return;
-
-    let buton = this._status.querySelector(".trakt-status-button");
-    let classList = buton.classList;
-    let toRemove = [];
-    for (let i = 0; i < classList.length; i++) {
-      let item = classList.item(i)!;
-      if (item.startsWith('state-')) toRemove.push(item);
-    }
-    classList.remove(...toRemove);
-
-    if (!this._scrobble) {
-      classList.add('state-error');
-      buton.setAttribute('title', 'No scrobbler instance');
-    } else {
-      classList.add('state-' + TraktScrobbleState[this._scrobble.state].toLowerCase());
-      buton.setAttribute('title', this._scrobble.error || TraktScrobbleState[this._scrobble.state]);
-    }
-  }
-
-  private _onStatusButtonClick() {
-    if (!this._scrobble) return;
-    window.open(this._scrobble.scrobbleUrl(), '_blank');
   }
 }
