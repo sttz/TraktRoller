@@ -24,7 +24,7 @@ const popupClassName = css`
   height: 300px;
   z-index: 100;
   left: -185px;
-  border-radius: 10px;
+  border-radius: 4px;
   transition: all 0.2s ease-in;
   transition-delay: 0.2s;
   visibility: hidden;
@@ -44,14 +44,14 @@ const popupClassName = css`
   &:after {
     border-color: rgba(0, 0, 0, 0);
     border-top-color: #000000;
-    border-width: 30px;
-    margin-left: -30px;
+    border-width: 15px;
+    margin-left: -15px;
   }
   &:before {
     border-color: rgba(255, 255, 255, 0);
     border-top-color: #fff;
-    border-width: 32px;
-    margin-left: -32px;
+    border-width: 17px;
+    margin-left: -17px;
   }
   & .hover-blocker {
     position: absolute;
@@ -68,7 +68,7 @@ const className = css`
   &:hover .${popupClassName} {
     visibility: visible;
     opacity: 1;
-    bottom: 63px;
+    bottom: 44px;
   }
 `;
 
