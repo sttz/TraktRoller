@@ -36,6 +36,16 @@ export interface ITraktEpisode {
   ids?: ITraktIDs;
 }
 
+export interface ITraktHistoryItem {
+  id?: number;
+  watched_at: string;
+  action: string;
+  type: 'movie' | 'episode';
+  movie?: ITraktMovie;
+  show?: ITraktShow;
+  episode?: ITraktEpisode;
+}
+
 export interface ITraktSearchResult {
   type: 'movie' | 'show' | 'episode' | 'person' | 'list';
   score: number;
@@ -357,10 +367,21 @@ export default class TraktApi {
     return this._request('GET', `/shows/${showId}/seasons/${season}?extended=${extended ? 'full' : ''}`);
   }
 
-  async scrobble(type: string, data: ITraktScrobbleData): Promise<ITraktScobbleResult | ITraktError> {
+  async scrobble(type: 'start' | 'pause' | 'stop', data: ITraktScrobbleData): Promise<ITraktScobbleResult | ITraktError> {
     if (!this._tokens.access_token) {
       throw new Error('Acess token required.');
     }
     return this._request('POST', `/scrobble/${type}`, data);
+  }
+
+  async history(type?: 'movies' | 'shows' | 'seasons' | 'episodes', id?: number): Promise<ITraktHistoryItem[] | ITraktError> {
+    if (!this._tokens.access_token) {
+      throw new Error('Acess token required.');
+    }
+
+    let url = '/sync/history';
+    if (type) url += '/' + type;
+    if (type && id) url += '/' + id;
+    return this._request('GET', url);
   }
 }

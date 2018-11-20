@@ -1,6 +1,5 @@
 import TraktApi, { ITraktScrobbleData, ITraktApiOptions } from "./TraktApi";
 import TraktScrobble, { TraktScrobbleState, PlaybackState } from "./TraktScrobble";
-import { readFileSync } from "fs";
 import ConnectButton from "./ui/ConnectButton";
 import StatusButton from "./ui/StatusButton";
 
@@ -22,9 +21,6 @@ export default class TraktRoller {
   private _player: playerjs.Player;
   private _api: TraktApi;
   private _scrobble?: TraktScrobble;
-
-  private _connectButton: Element;
-  private _status: Element;
 
   private _duration: number;
   private _currentTime: number;
@@ -173,7 +169,7 @@ export default class TraktRoller {
       return;
     }
 
-    this._connectButton = render(
+    render(
       <div class="footer-column">
         <ConnectButton api={ this._api } />
       </div>,
@@ -188,8 +184,8 @@ export default class TraktRoller {
       return;
     }
 
-    this._status = render((
-      <StatusButton api={ this._api } scrobble={ this._scrobble } />
+    render((
+      <StatusButton scrobble={ this._scrobble } />
     ), container);
   }
 }

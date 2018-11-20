@@ -1,6 +1,6 @@
-import TraktApi from "../TraktApi";
 import TraktScrobble, { TraktScrobbleState } from "../TraktScrobble";
 import TraktIcon from "./TraktIcon";
+import Popup from "./Popup";
 
 import Preact, { Component } from "preact";
 import { css } from "emotion";
@@ -8,7 +8,6 @@ import styled from "preact-emotion";
 const h = Preact.h;
 
 interface StatusButtonProps {
-  api: TraktApi;
   scrobble: TraktScrobble;
 }
 
@@ -21,7 +20,6 @@ const popupClassName = css`
   border: 1px solid #fff;
   position: absolute;
   width: 400px;
-  height: 300px;
   z-index: 100;
   left: -185px;
   border-radius: 4px;
@@ -78,6 +76,8 @@ const buttonClassName = css`
   background: none;
   border: none;
   cursor: pointer;
+  position: relative;
+  z-index: 101;
 
   &.state-lookup, &.state-found {
     filter: opacity(0.5);
@@ -128,6 +128,7 @@ export default class StatusButton extends Component<StatusButtonProps, StatusBut
           <Icon />
         </button>
         <div className={ popupClassName }>
+          <Popup scrobble={ this.props.scrobble } />
           <div class="hover-blocker"></div>
         </div>
       </div>

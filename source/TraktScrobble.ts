@@ -42,6 +42,10 @@ export default class TraktScrobble {
     this._init();
   }
 
+  public get api(): TraktApi {
+    return this._client;
+  }
+
   public setPlaybackState(state: PlaybackState, progress: number): void {
     this._playbackState = state;
     
@@ -91,6 +95,10 @@ export default class TraktScrobble {
     this._state = value;
     this._pendingState = value;
     this.onStateChanged.dispatch(value);
+  }
+
+  public get data(): ITraktScrobbleData {
+    return this._data;
   }
 
   private _handleError(response: any): response is ITraktError {
