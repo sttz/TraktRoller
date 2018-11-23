@@ -1,4 +1,5 @@
 import TraktScrobble, { TraktScrobbleState } from "../TraktScrobble";
+import TraktHistory from "../TraktHistory";
 import TraktIcon from "./TraktIcon";
 import Popup from "./Popup";
 
@@ -9,6 +10,7 @@ const h = Preact.h;
 
 interface StatusButtonProps {
   scrobble: TraktScrobble;
+  history: TraktHistory;
 }
 
 interface StatusButtonState {
@@ -128,7 +130,7 @@ export default class StatusButton extends Component<StatusButtonProps, StatusBut
           <Icon />
         </button>
         <div className={ popupClassName }>
-          <Popup scrobble={ this.props.scrobble } />
+          <Popup scrobble={ this.props.scrobble } history={ this.props.history } />
           <div class="hover-blocker"></div>
         </div>
       </div>

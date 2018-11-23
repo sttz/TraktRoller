@@ -1,4 +1,4 @@
-import TraktApi, { ITraktScrobbleData, ITraktError, ITraktEpisode, ITraktMovie, ITraktShow, ITraktSearchResult } from './TraktApi';
+import TraktApi, { ITraktScrobbleData, ITraktError, ITraktEpisode, ITraktMovie, ITraktShow, ITraktSearchResult, ITraktScobbleResult } from './TraktApi';
 import { SimpleEventDispatcher } from 'ste-simple-events';
 
 export enum PlaybackState {
@@ -25,7 +25,26 @@ enum LookupResult {
 }
 
 export default class TraktScrobble {
+  /** Extract item type from scrobble data */
+  public static typeFromData(data: ITraktScrobbleData): 'movie' | 'episode' | null {
+    if (!data) return null;
+    if (data.movie) return 'movie';
+    if (data.show && data.episode) return 'episode';
+    return null;
+  }
+
+  /** Extract trakt id from scrobble data, returns 0 if id is not set */
+  public static traktIdFromData(data: ITraktScrobbleData): number {
+    if (!data) return 0;
+    let movieId = data.movie && data.movie.ids && data.movie.ids.trakt || null;
+    if (movieId) return movieId;
+    let episodeId = data.episode && data.episode.ids && data.episode.ids.trakt || null;
+    if (episodeId) return episodeId;
+    return 0;
+  }
+
   public onStateChanged = new SimpleEventDispatcher<TraktScrobbleState>();
+  public onScrobbled = new SimpleEventDispatcher<ITraktScobbleResult>();
 
   private _client: TraktApi;
   private _data: ITraktScrobbleData;
@@ -166,6 +185,7 @@ export default class TraktScrobble {
             break;
           case 'scrobble':
             this.setState(TraktScrobbleState.Scrobbled);
+            this.onScrobbled.dispatch(scrobbleResponse);
             break;
         }
         break;

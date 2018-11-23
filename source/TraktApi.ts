@@ -71,6 +71,20 @@ export interface ITraktScobbleResult {
   episode?: ITraktEpisode;
 }
 
+export interface ITraktHistoryRemoveResult {
+  deleted: {
+    movies: number;
+    episodes: number;
+  };
+  not_found: {
+    movies: ITraktMovie[];
+    shows: ITraktShow[];
+    seasons: ITraktSeason[];
+    episodes: ITraktEpisode[];
+    ids: number[];
+  };
+}
+
 export interface ITraktError {
   status: number;
   error: string;
@@ -243,7 +257,7 @@ export default class TraktApi {
     };
   }
 
-  private async _request(method: 'GET' | 'POST', url: string, body?: any): Promise<any> {
+  private async _request(method: 'GET' | 'POST' | 'DELETE', url: string, body?: any): Promise<any> {
     let contentType = null;
     if (body) {
       if (body.contentType) {
@@ -275,6 +289,10 @@ export default class TraktApi {
 
       if (!response.ok) {
         return this._getError(response);
+      }
+
+      if (response.status === 204) {
+        return null; // 204: No Content
       }
 
       return response.json();
@@ -369,19 +387,27 @@ export default class TraktApi {
 
   async scrobble(type: 'start' | 'pause' | 'stop', data: ITraktScrobbleData): Promise<ITraktScobbleResult | ITraktError> {
     if (!this._tokens.access_token) {
-      throw new Error('Acess token required.');
+      throw new Error('Access token required.');
     }
     return this._request('POST', `/scrobble/${type}`, data);
   }
 
   async history(type?: 'movies' | 'shows' | 'seasons' | 'episodes', id?: number): Promise<ITraktHistoryItem[] | ITraktError> {
     if (!this._tokens.access_token) {
-      throw new Error('Acess token required.');
+      throw new Error('Access token required.');
     }
 
     let url = '/sync/history';
     if (type) url += '/' + type;
     if (type && id) url += '/' + id;
     return this._request('GET', url);
+  }
+
+  async historyRemove(id: number): Promise<ITraktHistoryRemoveResult | ITraktError> {
+    if (!this._tokens.access_token) {
+      throw new Error('Access token required.');
+    }
+
+    return this._request('POST', `/sync/history/remove`, { ids: [ id ] });
   }
 }

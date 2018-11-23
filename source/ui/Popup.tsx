@@ -2,6 +2,8 @@ import TraktScrobble, { TraktScrobbleState } from "../TraktScrobble";
 import ScrobbleInfo from "./ScrobbleInfo";
 import Button from "./Button";
 import ScrobbleHistory from "./ScrobbleHistory";
+import { ITraktScrobbleData } from "../TraktApi";
+import TraktHistory from "../TraktHistory";
 
 import Preact, { Component } from "preact";
 import { css } from "emotion";
@@ -9,10 +11,11 @@ const h = Preact.h;
 
 interface PopupProps {
   scrobble: TraktScrobble;
+  history: TraktHistory;
 }
 
 interface PopupState {
-  //
+  scrobbleData: ITraktScrobbleData;
 }
 
 const className = css`
@@ -31,6 +34,11 @@ const className = css`
   & h2 a:hover {
     text-decoration: underline;
   }
+
+  button.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 `;
 
 const controlButtonsClass = css`
@@ -40,17 +48,40 @@ const controlButtonsClass = css`
 `;
 
 export default class Popup extends Component<PopupProps, PopupState> {
+  constructor(props) {
+    super(props);
+
+    this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({ scrobbleData: this.props.scrobble.data });
+    this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
+  }
+
+  componentWillUnmount() {
+    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
+  }
+
+  private _onScrobbleStatusChanged(state: TraktScrobbleState) {
+    this.setState({ scrobbleData: this.props.scrobble.data });
+  }
+
   render() {
     let scrobble = this.props.scrobble;
 
     return (
       <div className={ className }>
-        <ScrobbleInfo scrobble={ scrobble } />
+        <ScrobbleInfo scrobbleData={ this.state.scrobbleData } />
         <div className={ controlButtonsClass }>
-          <Button text="Skip Scrobble" onClick={ null } />
           <Button text="Scrobble Now" onClick={ null } />
+          <Button text="Pause Scrobble" onClick={ null } />
         </div>
-        <ScrobbleHistory scrobble={ scrobble } />
+        <ScrobbleHistory 
+          scrobbleData={ this.state.scrobbleData } 
+          history={ this.props.history } 
+          key={ TraktScrobble.traktIdFromData(this.state.scrobbleData) }
+        />
       </div>
     );
   }

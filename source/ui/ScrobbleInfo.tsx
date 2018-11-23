@@ -6,12 +6,10 @@ import { css } from "emotion";
 const h = Preact.h;
 
 interface ScrobbleInfoProps {
-  scrobble: TraktScrobble;
+  scrobbleData: ITraktScrobbleData;
 }
 
 interface ScrobbleInfoState {
-  scrobbleState: TraktScrobbleState;
-  data: ITraktScrobbleData;
 }
 
 const className = css`
@@ -20,46 +18,21 @@ const className = css`
 export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleInfoState> {
   constructor(props) {
     super(props);
-    this.state = { data: null, scrobbleState: TraktScrobbleState.Undefined };
-
-    this._handleScrobbleStatusChanged = this._handleScrobbleStatusChanged.bind(this);
-  }
-
-  componentWillMount() {
-    this.props.scrobble.onStateChanged.sub(this._handleScrobbleStatusChanged);
-  }
-
-  componentWillUnmount() {
-    this.props.scrobble.onStateChanged.unsub(this._handleScrobbleStatusChanged);
-  }
-
-  private _handleScrobbleStatusChanged(state: TraktScrobbleState) {
-    this.setState({ scrobbleState: state, data: this.props.scrobble.data });
   }
 
   render() {
-    let state = this.state.scrobbleState;
-    let scrobble = this.props.scrobble;
+    let data = this.props.scrobbleData;
     let info;
 
     // Still looking up
-    if (state === TraktScrobbleState.Undefined || state === TraktScrobbleState.Lookup) {
+    if (!data) {
       info = (
         <div class="lookup">Loading…</div>
-      );
-
-    // Lookup or scrobble failed
-    } else if (state === TraktScrobbleState.Error || state === TraktScrobbleState.NotFound) {
-      info = (
-        <div class="error">
-          <h2>Failed to scrobble:</h2>
-          <p>{ scrobble.error || TraktScrobbleState[state] }</p>
-        </div>
       );
     
     // Lookup succeeded
     } else {
-      let data = this.state.data;
+      
       if (data.movie && data.movie.ids) {
         let movieUrl = `https://trakt.tv/movies/${data.movie.ids.slug}`;
         info = (

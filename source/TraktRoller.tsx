@@ -1,9 +1,10 @@
-import TraktApi, { ITraktScrobbleData, ITraktApiOptions } from "./TraktApi";
+import TraktApi, { ITraktScrobbleData, ITraktApiOptions, ITraktScobbleResult, ITraktHistoryItem } from "./TraktApi";
 import TraktScrobble, { TraktScrobbleState, PlaybackState } from "./TraktScrobble";
 import ConnectButton from "./ui/ConnectButton";
 import StatusButton from "./ui/StatusButton";
 
 import Preact, { render } from 'preact';
+import TraktHistory from "./TraktHistory";
 const h = Preact.h;
 
 const packageInfo = require('../package.json');
@@ -21,6 +22,7 @@ export default class TraktRoller {
   private _player: playerjs.Player;
   private _api: TraktApi;
   private _scrobble?: TraktScrobble;
+  private _history: TraktHistory;
 
   private _duration: number;
   private _currentTime: number;
@@ -70,8 +72,11 @@ export default class TraktRoller {
     this._player.on(playerjs.EVENTS.ENDED, () => this._onPlaybackStateChange(PlaybackState.Ended));
     this._player.on(playerjs.EVENTS.ERROR, () => this._onPlaybackStateChange(PlaybackState.Ended));
 
+    this._history = new TraktHistory(this._api);
+
     this._scrobble = new TraktScrobble(this._api, data);
     this._scrobble.onStateChanged.sub(this._onScrobbleStatusChanged.bind(this));
+    this._scrobble.onScrobbled.sub(this._onScrobbled.bind(this));
 
     this._createStatusButton();
   }
@@ -162,6 +167,20 @@ export default class TraktRoller {
     //
   }
 
+  private _onScrobbled(result: ITraktScobbleResult) {
+    var item: ITraktHistoryItem = {
+      id: result.id,
+      watched_at: new Date().toISOString(),
+      action: "scrobble",
+      type: (result.movie ? 'movie' : 'episode'),
+      movie: result.movie,
+      show: result.show,
+      episode: result.episode
+    };
+    let traktId = result.movie ? result.movie.ids.trakt : result.episode.ids.trakt;
+    this._history.add(traktId, item);
+  }
+
   private _createFooterButton() {
     let footer = document.querySelector('#social_media');
     if (!footer) {
@@ -185,7 +204,7 @@ export default class TraktRoller {
     }
 
     render((
-      <StatusButton scrobble={ this._scrobble } />
+      <StatusButton scrobble={ this._scrobble } history={ this._history } />
     ), container);
   }
 }
