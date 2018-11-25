@@ -337,12 +337,10 @@ export default class TraktScrobble {
 
     let episodeResult = LookupResult.NotFound;
 
-    // Lookup absolute episode numbers
-    if (this._data.episode.season > 1) {
-      console.log('trakt scrobbler: trying to look up absolute episode number...');
-      episodeResult = await this._lookupAbsoluteEpisodeNumber(show.ids.trakt, this._data.episode.season, this._data.episode.number);
-      if (episodeResult === LookupResult.Error) return episodeResult;
-    }
+    // Lookup episode numbers
+    console.log('trakt scrobbler: trying to look up episode number...');
+    episodeResult = await this._lookupEpisodeNumber(show.ids.trakt, this._data.episode.season, this._data.episode.number);
+    if (episodeResult === LookupResult.Error) return episodeResult;
 
     // Or lookup by episode title
     if (episodeResult === LookupResult.NotFound && this._data.episode.title !== undefined) {
@@ -354,7 +352,7 @@ export default class TraktScrobble {
     return episodeResult;
   }
 
-  private async _lookupAbsoluteEpisodeNumber(showId: number, season: number, episode: number): Promise<LookupResult> {
+  private async _lookupEpisodeNumber(showId: number, season: number, episode: number): Promise<LookupResult> {
     const seasonResponse = await this._client.season(showId, season, true);
     if (TraktApi.isError(seasonResponse, 404)) {
       console.error('trakt scrobbler: manual lookup could not find season');
@@ -363,16 +361,16 @@ export default class TraktScrobble {
       return LookupResult.Error;
     }
 
-    let numberMatch = seasonResponse.filter(e => e.number_abs === episode);
+    let numberMatch = seasonResponse.filter(e => e.number === episode || e.number_abs === episode);
     if (numberMatch.length > 1) {
-      console.error(`trakt scrobbler: got multiple episode #${episode} (abs) in season`, seasonResponse);
+      console.error(`trakt scrobbler: got multiple episode #${episode} in season`, seasonResponse);
       return LookupResult.NotFound;
     } else if (numberMatch.length === 0) {
       console.error(`trakt scrobbler: episode #${episode} not found in season`, seasonResponse);
       return LookupResult.NotFound;
     }
 
-    console.log(`trakt scrobbler: found episode using absolute episode number`, numberMatch[0]);
+    console.log(`trakt scrobbler: found episode using episode number`, numberMatch[0]);
     this._data.episode = numberMatch[0];
     return LookupResult.Found;
   }
