@@ -1,3 +1,4 @@
+import TraktRoller from "../TraktRoller";
 import TraktScrobble, { TraktScrobbleState } from "../TraktScrobble";
 import TraktHistory from "../TraktHistory";
 import TraktIcon from "./TraktIcon";
@@ -9,21 +10,23 @@ import styled from "preact-emotion";
 const h = Preact.h;
 
 interface StatusButtonProps {
+  roller: TraktRoller;
   scrobble: TraktScrobble;
   history: TraktHistory;
 }
 
 interface StatusButtonState {
   scrobbleState: TraktScrobbleState;
+  enabled: boolean;
 }
 
 const popupClassName = css`
   background: #161616;
   border: 1px solid #fff;
   position: absolute;
-  width: 400px;
+  width: 450px;
   z-index: 100;
-  left: -183px;
+  left: -209px;
   border-radius: 4px;
   transition: all 0.2s ease-in;
   transition-delay: 0.2s;
@@ -81,7 +84,7 @@ const buttonClassName = css`
   position: relative;
   z-index: 101;
 
-  &.state-lookup, &.state-found {
+  &.state-disabled {
     filter: opacity(0.5);
   }
   &.state-scrobbled {
@@ -99,22 +102,29 @@ const Icon = styled(TraktIcon)`
 export default class StatusButton extends Component<StatusButtonProps, StatusButtonState> {
   constructor(props) {
     super(props);
-    this.state = { scrobbleState: TraktScrobbleState.Undefined };
+    this.state = { scrobbleState: this.props.scrobble.state, enabled: this.props.roller.enabled };
 
-    this._handleScrobbleStatusChanged = this._handleScrobbleStatusChanged.bind(this);
+    this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
+    this._onEnabledChanged = this._onEnabledChanged.bind(this);
     this._handleClick = this._handleClick.bind(this);
   }
 
   componentWillMount() {
-    this.props.scrobble.onStateChanged.sub(this._handleScrobbleStatusChanged);
+    this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
+    this.props.roller.onEnabledChanged.sub(this._onEnabledChanged);
   }
 
   componentWillUnmount() {
-    this.props.scrobble.onStateChanged.unsub(this._handleScrobbleStatusChanged);
+    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
+    this.props.roller.onEnabledChanged.unsub(this._onEnabledChanged);
   }
 
-  private _handleScrobbleStatusChanged(state: TraktScrobbleState) {
+  private _onScrobbleStatusChanged(state: TraktScrobbleState) {
     this.setState({ scrobbleState: state });
+  }
+
+  private _onEnabledChanged(enabled: boolean) {
+    this.setState({ enabled: enabled });
   }
 
   private _handleClick() {
@@ -122,15 +132,16 @@ export default class StatusButton extends Component<StatusButtonProps, StatusBut
   }
 
   render() {
-    let stateClass = "state-" + TraktScrobbleState[this.props.scrobble.state].toLowerCase();
-    let title = this.props.scrobble.error || TraktScrobbleState[this.props.scrobble.state];
+    let state = this.state.enabled ? "disabled" : TraktScrobbleState[this.state.scrobbleState].toLowerCase();
+    let stateClass = "state-" + state;
+    let title = this.props.scrobble.error || TraktScrobbleState[this.state.scrobbleState];
     return (
       <div className={ `${className} right` }>
         <button className={ `${buttonClassName} ${stateClass}` } title={ title } onClick={ this._handleClick }>
           <Icon />
         </button>
         <div className={ popupClassName }>
-          <Popup scrobble={ this.props.scrobble } history={ this.props.history } />
+          <Popup roller={ this.props.roller } scrobble={ this.props.scrobble } history={ this.props.history } />
           <div class="hover-blocker"></div>
         </div>
       </div>

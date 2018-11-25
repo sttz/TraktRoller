@@ -1,7 +1,8 @@
-import TraktApi, { ITraktScrobbleData, ITraktApiOptions, ITraktScobbleResult, ITraktHistoryItem } from "./TraktApi";
+import TraktApi, { ITraktScrobbleData, ITraktApiOptions, ITraktScobbleResult, ITraktHistoryItem, IStorage, LocalStorageAdapter } from "./TraktApi";
 import TraktScrobble, { TraktScrobbleState, PlaybackState } from "./TraktScrobble";
 import ConnectButton from "./ui/ConnectButton";
 import StatusButton from "./ui/StatusButton";
+import { SimpleEventDispatcher } from "ste-simple-events";
 
 import Preact, { render } from 'preact';
 import TraktHistory from "./TraktHistory";
@@ -14,13 +15,17 @@ interface ITraktRollerOptions extends ITraktApiOptions {
 const EpisodeRegex = /Episode (\d+)/;
 const SeasonRegex = /Season (\d+)/;
 
+const ScrobblingEnabledKey: string = 'TraktRoller.enabled';
+
 export default class TraktRoller {
-  public scrobbleAbovePercentage = 80;
+  public onEnabledChanged = new SimpleEventDispatcher<boolean>();
 
   private _player: playerjs.Player;
+  private _storage: IStorage;
   private _api: TraktApi;
   private _scrobble?: TraktScrobble;
   private _history: TraktHistory;
+  private _enabled: boolean;
 
   private _duration: number;
   private _currentTime: number;
@@ -28,12 +33,33 @@ export default class TraktRoller {
   constructor(options: ITraktRollerOptions) {
     console.log("TraktRoller");
 
+    this._storage = options.storage || new LocalStorageAdapter();
+    this._loadPrefs();
+
     this._api = new TraktApi(options);
     this._api.onAuthenticationChanged.sub(this._onAuthenticationChange.bind(this));
     this._api.loadTokens();
 
     this._createFooterButton();
     this._waitForPlayer();
+  }
+
+  public get enabled(): boolean {
+    return this._enabled;
+  }
+
+  public set enabled(value: boolean) {
+    if (this._enabled === value) return;
+    this._enabled = value;
+
+    this._storage.setValue(ScrobblingEnabledKey, value ? "true" : "false");
+    if (this._scrobble) this._scrobble.enabled = value;
+
+    this.onEnabledChanged.dispatch(value);
+  }
+
+  private async _loadPrefs() {
+    this._enabled = await this._storage.getValue(ScrobblingEnabledKey) === "true";
   }
 
   private _waitForPlayer() {
@@ -70,6 +96,7 @@ export default class TraktRoller {
     this._history = new TraktHistory(this._api);
 
     this._scrobble = new TraktScrobble(this._api, data);
+    this._scrobble.enabled = this.enabled;
     this._scrobble.onStateChanged.sub(this._onScrobbleStatusChanged.bind(this));
     this._scrobble.onScrobbled.sub(this._onScrobbled.bind(this));
 
@@ -200,7 +227,7 @@ export default class TraktRoller {
     }
 
     render((
-      <StatusButton scrobble={ this._scrobble } history={ this._history } />
+      <StatusButton roller={ this } scrobble={ this._scrobble } history={ this._history } />
     ), container);
   }
 }

@@ -1,16 +1,17 @@
 import TraktScrobble, { TraktScrobbleState } from "../TraktScrobble";
 import ScrobbleInfo from "./ScrobbleInfo";
-import Button from "./Button";
 import ScrobbleHistory from "./ScrobbleHistory";
 import { ITraktScrobbleData } from "../TraktApi";
 import TraktHistory from "../TraktHistory";
+import ScrobbleControl from "./ScrobbleControl";
+import TraktRoller from "../TraktRoller";
 
 import Preact, { Component } from "preact";
 import { css } from "emotion";
-import ScrobbleControl from "./ScrobbleControl";
 const h = Preact.h;
 
 interface PopupProps {
+  roller: TraktRoller;
   scrobble: TraktScrobble;
   history: TraktHistory;
 }
@@ -78,7 +79,7 @@ export default class Popup extends Component<PopupProps, PopupState> {
           history={ this.props.history } 
           key={ TraktScrobble.traktIdFromData(this.state.scrobbleData) }
         />
-        <ScrobbleControl scrobble={ this.props.scrobble } />
+        <ScrobbleControl scrobble={ this.props.scrobble } roller={ this.props.roller } />
       </div>
     );
   }

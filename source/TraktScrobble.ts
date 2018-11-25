@@ -53,6 +53,7 @@ export default class TraktScrobble {
   private _pendingState: TraktScrobbleState;
   private _playbackState: PlaybackState;
   private _error: string;
+  private _enabled: boolean = false;
 
   constructor(client: TraktApi, data: ITraktScrobbleData) {
     this._client = client;
@@ -65,11 +66,38 @@ export default class TraktScrobble {
     return this._client;
   }
 
+  public get enabled(): boolean {
+    return this._enabled;
+  }
+
+  public set enabled(value: boolean) {
+    if (this._enabled === value) return;
+
+    this._enabled = value;
+
+    if (this._enabled) {
+      this._applyState(PlaybackState.Paused);
+    } else {
+      this._applyState(this._playbackState);
+    }
+  }
+
   public setPlaybackState(state: PlaybackState, progress: number): void {
     this._playbackState = state;
-    
     this._data.progress = progress;
 
+    if (!this.enabled) {
+      this._applyState(state);
+    }
+  }
+
+  public scrobbleNow() {
+    this._playbackState = PlaybackState.Ended;
+    this._data.progress = 100;
+    this._applyState(this._playbackState);
+  }
+
+  private _applyState(state) {
     if (state === PlaybackState.Playing) {
       if (this._pendingState === TraktScrobbleState.Found 
           || this._pendingState === TraktScrobbleState.Paused) {
@@ -77,7 +105,7 @@ export default class TraktScrobble {
       }
     } else if (state === PlaybackState.Paused) {
       if (this._pendingState === TraktScrobbleState.Started) {
-        if (this._shouldScrobbleAt(progress)) {
+        if (this._shouldScrobbleAt(this._data.progress)) {
           this._updateScrobble('stop');
         } else {
           this._updateScrobble('pause');

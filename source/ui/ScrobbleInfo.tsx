@@ -47,7 +47,7 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
       } else if (data.show && data.show.ids && data.episode && data.episode.ids) {
         let showUrl = `https://trakt.tv/shows/${data.show.ids.slug}`;
         let episodeUrl = `${showUrl}/seasons/${data.episode.season}/episodes/${data.episode.number}`;
-        let episodeTitle = data.episode.title ? [ <br/>, data.episode.title ] : null;
+        let episodeTitle = data.episode.title ? `: ${data.episode.title}` : null;
         info = (
           <div class="info">
             <h2><a href={ showUrl } target="_blank">{ data.show.title } ({ data.show.year })</a></h2>
