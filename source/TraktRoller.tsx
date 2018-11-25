@@ -147,6 +147,14 @@ export default class TraktRoller {
       return null;
     }
     let episodeTitle = episodeTitleElement.textContent.trim();
+    if (episodeTitle) {
+      if (episodeTitle.startsWith("“")) {
+        episodeTitle = episodeTitle.substring(1);
+      }
+      if (episodeTitle.endsWith("”")) {
+        episodeTitle = episodeTitle.substring(0, episodeTitle.length - 1);
+      }
+    }
 
     let seasonNumber = 1;
     let episodeNumber = 0;
