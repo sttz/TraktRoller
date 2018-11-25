@@ -7,8 +7,6 @@ import Preact, { render } from 'preact';
 import TraktHistory from "./TraktHistory";
 const h = Preact.h;
 
-const packageInfo = require('../package.json');
-
 interface ITraktRollerOptions extends ITraktApiOptions {
   //
 }
@@ -55,13 +53,10 @@ export default class TraktRoller {
   }
 
   private _loadPlayer(player: playerjs.Player) {
-    console.log("Got player:", player);
     player.on(playerjs.EVENTS.READY, () => this._playerReady(player));
   }
 
   private _playerReady(player: playerjs.Player) {
-    console.log("Player ready");
-
     let data = this._getScrobbleData();
     if (!data) return;
 
@@ -104,10 +99,11 @@ export default class TraktRoller {
   }
 
   private _getScrobbleData(): ITraktScrobbleData | null {
+    let buildDate = new Date(process.env.BUILD_DATE);
     const data: ITraktScrobbleData = {
       progress: this._getProgress(),
-      app_version: packageInfo.version,
-      app_date: '2018-12-01'
+      app_version: process.env.VERSION,
+      app_date: `${buildDate.getFullYear()}-${buildDate.getMonth() + 1}-${buildDate.getDate()}`
     };
 
     const titleElement = document.querySelector('#showmedia_about_episode_num');

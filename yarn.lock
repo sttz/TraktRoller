@@ -3415,7 +3415,10 @@ parcel-bundler@^1.10.3:
     v8-compile-cache "^2.0.0"
     ws "^5.1.1"
 
-"parcel-plugin-header@file:./parcel-plugin-header":
+parcel-plugin-buildenv@./parcel-plugin-buildenv:
+  version "0.0.1"
+
+parcel-plugin-header@./parcel-plugin-header:
   version "0.0.1"
 
 parse-asn1@^5.0.0:

@@ -1,0 +1,11 @@
+{
+    "name": "parcel-plugin-buildenv",
+    "version": "0.0.1",
+    "description": "Expose version and build date as environment variables",
+    "main": "index.js",
+    "author": "Adrian Stutz",
+    "license": "MIT",
+    "devDependencies": {
+      "parcel-bundler": "^1.10.3"
+    }
+}
