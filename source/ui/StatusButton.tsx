@@ -18,12 +18,12 @@ interface StatusButtonState {
 }
 
 const popupClassName = css`
-  background: #000000;
+  background: #161616;
   border: 1px solid #fff;
   position: absolute;
   width: 400px;
   z-index: 100;
-  left: -185px;
+  left: -183px;
   border-radius: 4px;
   transition: all 0.2s ease-in;
   transition-delay: 0.2s;

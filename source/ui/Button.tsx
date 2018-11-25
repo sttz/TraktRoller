@@ -5,18 +5,21 @@ const h = Preact.h;
 interface ButtonProps {
   text: string;
   onClick: JSX.EventHandler<MouseEvent>;
+  className?: string;
 }
 
 const className = css`
   font-size: 12px;
+  font-weight: bold;
   color: #eee;
-  border: 1px solid white;
+  background-color: #333;
+  border: none;
   border-radius: 3px;
-  background: none;
   margin: 5px;
   cursor: pointer;
-  padding: 2px 10px 3px 10px;
+  padding: 5px 10px 5px 10px;
   flex-grow: 1;
+  transition: all 0.2s ease;
 
   &:hover {
     background-color: #555;
@@ -26,7 +29,7 @@ const className = css`
 export default class Button extends Component<ButtonProps> {
   render() {
     return (
-      <button className={ className } onClick={ this.props.onClick } >
+      <button className={ `${className} ${this.props.className}` } onClick={ this.props.onClick } >
         { this.props.text }
       </button>
     );

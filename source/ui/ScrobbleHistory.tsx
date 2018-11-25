@@ -28,14 +28,20 @@ const className = css`
   & button {
     flex-grow: 0;
     font-size: 9px;
-    padding: 1px 10px;
+    padding: 2px 10px;
     margin-right: 0;
-    background-color: #eb3b14;
-    border: none;
+    font-weight: normal;
+    opacity: 0;
     visibility: hidden;
+    transition: all 0.2s ease;
+  }
+
+  & button:hover {
+    background-color: #eb3b14;
   }
 
   & div:hover button {
+    opacity: 1;
     visibility: visible;
   }
 `;
@@ -48,9 +54,17 @@ const ActionMap = {
 
 export default class ScrobbleHistory extends Component<ScrobbleHistoryProps, ScrobbleHistoryState> {
   private _traktId: number;
+  private _formatter: Intl.DateTimeFormat;
 
   constructor(props) {
     super(props);
+    this._formatter = new Intl.DateTimeFormat(navigator.language, {
+      year: "numeric",
+      month: "short",
+      day: "numeric", 
+      hour: "numeric", 
+      minute: "numeric"
+    });
     this.state = { historyItems: null };
 
     this._handleHistoryChanged = this._handleHistoryChanged.bind(this);
@@ -91,7 +105,7 @@ export default class ScrobbleHistory extends Component<ScrobbleHistoryProps, Scr
       for (let item of this.state.historyItems) {
         rows.push(
           <div>
-            <span>{ ActionMap[item.action] } at { new Date(item.watched_at).toLocaleString() }</span>
+            <span>{ ActionMap[item.action] } at { this._formatter.format(new Date(item.watched_at)) }</span>
             <Button text="Remove" onClick={ (e) => this._handleRemove(e, item) } />
           </div>
         );

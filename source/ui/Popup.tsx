@@ -7,6 +7,7 @@ import TraktHistory from "../TraktHistory";
 
 import Preact, { Component } from "preact";
 import { css } from "emotion";
+import ScrobbleControl from "./ScrobbleControl";
 const h = Preact.h;
 
 interface PopupProps {
@@ -19,32 +20,31 @@ interface PopupState {
 }
 
 const className = css`
-  padding: 8px;
   color: #eee;
+
+  & > div {
+    padding: 15px;
+  }
 
   & a, & p a {
     color: #eee;
+    transition: color 0.2s ease;
   }
 
   & h2 {
-    font-size: 14px;
+    font-size: 13px;
     margin: 0;
   }
 
-  & h2 a:hover {
-    text-decoration: underline;
+  & h2 a:hover, & p a:hover {
+    color: #ed1c24;
+    text-decoration: none;
   }
 
   button.disabled {
     pointer-events: none;
     opacity: 0.5;
   }
-`;
-
-const controlButtonsClass = css`
-  display: flex;
-  margin: 5px -5px;
-  justify-content: space-between;
 `;
 
 export default class Popup extends Component<PopupProps, PopupState> {
@@ -73,15 +73,12 @@ export default class Popup extends Component<PopupProps, PopupState> {
     return (
       <div className={ className }>
         <ScrobbleInfo scrobbleData={ this.state.scrobbleData } />
-        <div className={ controlButtonsClass }>
-          <Button text="Scrobble Now" onClick={ null } />
-          <Button text="Pause Scrobble" onClick={ null } />
-        </div>
         <ScrobbleHistory 
           scrobbleData={ this.state.scrobbleData } 
           history={ this.props.history } 
           key={ TraktScrobble.traktIdFromData(this.state.scrobbleData) }
         />
+        <ScrobbleControl scrobble={ this.props.scrobble } />
       </div>
     );
   }
