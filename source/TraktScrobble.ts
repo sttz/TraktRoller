@@ -43,6 +43,11 @@ export default class TraktScrobble {
     return 0;
   }
 
+  /** Scrobble once this percentage has been reached */
+  public scrobbleAbovePecentage: number = 80;
+  /** Minimum time of the video that has to have been played before scrobbling (percent of duration) */
+  public scrobbleMimimumPlaybackPercentage: number = 0.1;
+
   public onStateChanged = new SimpleEventDispatcher<TraktScrobbleState>();
   public onScrobbled = new SimpleEventDispatcher<ITraktScobbleResult>();
 
@@ -54,6 +59,9 @@ export default class TraktScrobble {
   private _playbackState: PlaybackState;
   private _error: string;
   private _enabled: boolean = false;
+
+  private _lastPlaybackTime: number = 0;
+  private _playbackTime: number = 0;
 
   constructor(client: TraktApi, data: ITraktScrobbleData) {
     this._client = client;
@@ -82,6 +90,23 @@ export default class TraktScrobble {
     }
   }
 
+  public setPlaybackTime(time: number, duration: number) {
+    let delta = time - this._lastPlaybackTime;
+    if (delta < 0.5) {
+      this._playbackTime += delta;
+    }
+
+    let progress = time / duration * 100;
+    let minimumTime = duration * this.scrobbleMimimumPlaybackPercentage;
+    if (this._state === TraktScrobbleState.Started 
+        && progress > this.scrobbleAbovePecentage
+        && this._playbackTime > minimumTime) {
+      this.setPlaybackState(PlaybackState.Ended, progress);
+    }
+
+    this._lastPlaybackTime = time;
+  }
+
   public setPlaybackState(state: PlaybackState, progress: number): void {
     this._playbackState = state;
     this._data.progress = progress;
@@ -105,11 +130,7 @@ export default class TraktScrobble {
       }
     } else if (state === PlaybackState.Paused) {
       if (this._pendingState === TraktScrobbleState.Started) {
-        if (this._shouldScrobbleAt(this._data.progress)) {
-          this._updateScrobble('stop');
-        } else {
-          this._updateScrobble('pause');
-        }
+        this._updateScrobble('pause');
       }
     } else if (state === PlaybackState.Ended) {
       if (this._pendingState === TraktScrobbleState.Found 
@@ -179,10 +200,6 @@ export default class TraktScrobble {
     } else if (this._playbackState === PlaybackState.Ended) {
       this._updateScrobble('stop');
     }
-  }
-
-  private _shouldScrobbleAt(progress: number): boolean {
-    return progress > 80;
   }
 
   private async _updateScrobble(type: 'start' | 'pause' | 'stop'): Promise<boolean> {

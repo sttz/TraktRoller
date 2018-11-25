@@ -106,6 +106,7 @@ export default class TraktRoller {
   private _onTimeChanged(info: { seconds: number, duration: number }) {
     this._currentTime = info.seconds;
     this._duration = info.duration;
+    if (this._scrobble) this._scrobble.setPlaybackTime(info.seconds, info.duration);
   }
 
   private _onPlaybackStateChange(state: PlaybackState) {
