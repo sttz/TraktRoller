@@ -6,6 +6,7 @@ interface ButtonProps {
   text: string;
   onClick: JSX.EventHandler<MouseEvent>;
   className?: string;
+  disabled?: boolean;
 }
 
 const className = css`
@@ -29,7 +30,7 @@ const className = css`
 export default class Button extends Component<ButtonProps> {
   render() {
     return (
-      <button className={ `${className} ${this.props.className}` } onClick={ this.props.onClick } >
+      <button className={ `${className} ${this.props.className} ${this.props.disabled ? 'disabled' : ''}` } onClick={ this.props.onClick } >
         { this.props.text }
       </button>
     );

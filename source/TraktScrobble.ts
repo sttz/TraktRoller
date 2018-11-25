@@ -71,7 +71,8 @@ export default class TraktScrobble {
     this._data.progress = progress;
 
     if (state === PlaybackState.Playing) {
-      if (this._pendingState === TraktScrobbleState.Found || this._pendingState === TraktScrobbleState.Paused) {
+      if (this._pendingState === TraktScrobbleState.Found 
+          || this._pendingState === TraktScrobbleState.Paused) {
         this._updateScrobble('start');
       }
     } else if (state === PlaybackState.Paused) {
@@ -83,7 +84,9 @@ export default class TraktScrobble {
         }
       }
     } else if (state === PlaybackState.Ended) {
-      if (this._pendingState === TraktScrobbleState.Started || this._pendingState === TraktScrobbleState.Paused) {
+      if (this._pendingState === TraktScrobbleState.Found 
+          || this._pendingState === TraktScrobbleState.Started 
+          || this._pendingState === TraktScrobbleState.Paused) {
         this._updateScrobble('stop');
       }
     }

@@ -1,5 +1,4 @@
-import TraktScrobble, { TraktScrobbleState } from "../TraktScrobble";
-import { ITraktScrobbleData } from "../TraktApi";
+import TraktScrobble, { TraktScrobbleState, PlaybackState } from "../TraktScrobble";
 import Button from "./Button";
 
 import Preact, { Component } from "preact";
@@ -12,6 +11,7 @@ interface ScrobbleControlProps {
 }
 
 interface ScrobbleControlState {
+  scrobbleState: TraktScrobbleState;
 }
 
 const className = css`
@@ -59,18 +59,50 @@ const PauseScrobbleButton = styled(Button)`
   }
 `;
 
+const EnabledStates = [
+  TraktScrobbleState.Found,
+  TraktScrobbleState.Started,
+  TraktScrobbleState.Paused
+];
+
 export default class ScrobbleControl extends Component<ScrobbleControlProps, ScrobbleControlState> {
   constructor(props) {
     super(props);
+    this.state = { scrobbleState: this.props.scrobble.state };
+
+    this._onScrobbleStateChanged = this._onScrobbleStateChanged.bind(this);
+    this._handleScrobbleNowClick = this._handleScrobbleNowClick.bind(this);
+    this._handlePauseScrobbleClick = this._handlePauseScrobbleClick.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.scrobble.onStateChanged.sub(this._onScrobbleStateChanged);
+  }
+
+  componentWillUnmount() {
+    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStateChanged);
+  }
+
+  private _onScrobbleStateChanged(state: TraktScrobbleState) {
+    this.setState({ scrobbleState: state });
+  }
+
+  private _handleScrobbleNowClick() {
+    this.props.scrobble.setPlaybackState(PlaybackState.Ended, 100);
+  }
+
+  private _handlePauseScrobbleClick() {
+    //
   }
 
   render() {
     let title = this.props.scrobble.error || "";
+    let disabled = !EnabledStates.includes(this.state.scrobbleState);
     return (
       <div className={ className }>
         <div class="state" title={ title }>{ TraktScrobbleState[this.props.scrobble.state] }</div>
-        <ScrobbleNowButton text="Scrobble Now" onClick={ null } />
-        <PauseScrobbleButton text="Pause Scrobble" onClick={ null } />
+        <ScrobbleNowButton text="Scrobble Now" onClick={ this._handleScrobbleNowClick } disabled={ disabled } />
+        <PauseScrobbleButton text="Pause Scrobble" onClick={ this._handlePauseScrobbleClick } disabled={ disabled } />
       </div>
     );
   }
