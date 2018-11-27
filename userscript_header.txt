@@ -1,14 +1,20 @@
 // ==UserScript==
 // @name          TraktRoller
-// @description   trakt.tv scrobbler for Crunchyroll
 // @namespace     http://github.com/sttz/TraktRoller
-// @version       0.0.1
+// @description   Trakt scrobbler for Crunchyroll
+// @author        sttz
+// @license       MIT
+// @copyright     2018, Adrian Stutz (https://sttz.ch/)
 // @homepageURL   http://github.com/sttz/TraktRoller
-// @author        Adrian Stutz <adrian@sttz.ch>
+// @supportURL    http://github.com/sttz/TraktRoller/issues
+// @updateURL     https://openuserjs.org/meta/sttz/TraktRoller.meta.js
+// @version       1.0.0
 // @include       https://www.crunchyroll.com/*
-// @run-at        document_start
 // @connect       api.trakt.tv
 // @grant         GM_setValue
 // @grant         GM_getValue
 // @grant         GM_deleteValue
+// @grant         unsafeWindow
+// @run-at        document_start
 // ==/UserScript==
+

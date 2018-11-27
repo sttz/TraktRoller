@@ -1,6 +1,6 @@
 {
   "name": "tracktroller",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Trakt.tv scrobbler for Crunchyroll",
   "main": "source/index.ts",
   "author": "Adrian Stutz",
@@ -16,7 +16,7 @@
   "scripts": {
     "clean": "rm -rf dist/*",
     "dev": "parcel watch --no-hmr source/index.ts",
-    "build": "npm run clean && parcel build source/index.ts && cat userscript_header.txt"
+    "build": "npm run clean && parcel build --out-file TraktRoller.user.js --no-minify source/index.ts"
   },
   "header": "userscript_header.txt",
   "dependencies": {
