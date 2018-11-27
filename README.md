@@ -1,6 +1,6 @@
-# Trakt Roller
+# TraktRoller
 
-Trakt Roller is a User Script that adds [Trakt](trakt.tv) scrobbling to Crunchyroll.
+TraktRoller is a User Script that adds [Trakt](trakt.tv) scrobbling to Crunchyroll.
 
 ## Features
 
@@ -9,15 +9,23 @@ Trakt Roller is a User Script that adds [Trakt](trakt.tv) scrobbling to Crunchyr
 * Turn scrobbling on or off
 * View Trakt watch history and remove entries
 
+# Install
+
+TraktRoller is a Userscript and can only be used together with a Userscript extension.
+
+TraktRoller has been tested with [Violentmonkey](https://violentmonkey.github.io) on the latest Chrome and Firefox versions.
+
+Either go to [TraktRoller on OpenUserJS](https://openuserjs.org/scripts/sttz/TraktRoller) and click on Install or open the [script file](./dist/TraktRoller.user.js?raw=true) directly from GitHub.
+
 # Introduction
 
 Click on the «Connect with Trakt» button in the footer and allow the app to access your Trakt account.
 
-![Connect Button](./screenshots/connect.png)
+![Connect Button](./screenshots/connect.png?raw=true)
 
 Play any video and a Trakt button will appear next to the queue button. Hover on the button to open the popup.
 
-![Popup](./screenshots/popup.png)
+![Popup](./screenshots/popup.png?raw=true)
 
 At the top of the popup you'll see the Trakt episode or movie that has been matched.
 
@@ -27,3 +35,9 @@ The buttons at the bottom:
 - Red: Shows the current scrobbling state
 - Purple: Immediately add the video to the watch history
 - Green: Disable scrobbling permanently until it's reenabled again
+
+# Changelog
+
+### 1.0.0 (2018-11-27)
+
+- Initial release
