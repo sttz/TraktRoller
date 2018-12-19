@@ -143,18 +143,17 @@ export default class TraktRoller {
     }
     let showTitle = titleElement.textContent.trim();
 
+    let episodeTitle: string = undefined;
     const episodeTitleElement = document.querySelector('#showmedia_about_name');
-    if (!episodeTitleElement) {
-      console.error("TraktRoller: Could not find video subtitle");
-      return null;
-    }
-    let episodeTitle = episodeTitleElement.textContent.trim();
-    if (episodeTitle) {
-      if (episodeTitle.startsWith("“")) {
-        episodeTitle = episodeTitle.substring(1);
-      }
-      if (episodeTitle.endsWith("”")) {
-        episodeTitle = episodeTitle.substring(0, episodeTitle.length - 1);
+    if (episodeTitleElement) {
+      episodeTitle = episodeTitleElement.textContent.trim();
+      if (episodeTitle) {
+        if (episodeTitle.startsWith("“")) {
+          episodeTitle = episodeTitle.substring(1);
+        }
+        if (episodeTitle.endsWith("”")) {
+          episodeTitle = episodeTitle.substring(0, episodeTitle.length - 1);
+        }
       }
     }
 
@@ -173,7 +172,7 @@ export default class TraktRoller {
       }
     }
 
-    if (episodeTitle.toLowerCase().includes('movie')) {
+    if (episodeTitle && episodeTitle.toLowerCase().includes('movie')) {
       data.movie = {
         title: showTitle
       };
