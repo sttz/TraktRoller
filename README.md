@@ -38,6 +38,11 @@ The buttons at the bottom:
 
 # Changelog
 
+### 1.0.1 (2018-12-19)
+
+- Fix scrobbling of shows without episode title
+- Fix trying to scrobble even when not connected
+
 ### 1.0.0 (2018-11-27)
 
 - Initial release
