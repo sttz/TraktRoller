@@ -83,6 +83,8 @@ export default class TraktRoller {
   }
 
   private _playerReady(player: playerjs.Player) {
+    if (!this._api.isAuthenticated()) return;
+
     let data = this._getScrobbleData();
     if (!data) return;
 
