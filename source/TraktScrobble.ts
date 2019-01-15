@@ -286,7 +286,7 @@ export default class TraktScrobble {
       console.log('trakt scrobbler: re-trying matching');
       result = await this._scrobbleLookup();
       if (result === LookupResult.Error) return result;
-      if (result === LookupResult.NotFound) continue;
+      if (result === LookupResult.Found) break;
     }
 
     return result;
