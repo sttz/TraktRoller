@@ -314,7 +314,7 @@ export default class TraktScrobble {
       return null;
     }
 
-    const goodMatches = searchResponse.filter(r => r.score > 20);
+    const goodMatches = searchResponse.filter(r => r.score > 10);
     if (searchResponse.length > goodMatches.length) {
       if (goodMatches.length === 0) {
         console.log(`trakt scrobbler: search returned only garbage results.`);
