@@ -8,7 +8,7 @@
 // @homepageURL   http://github.com/sttz/TraktRoller
 // @supportURL    http://github.com/sttz/TraktRoller/issues
 // @updateURL     https://openuserjs.org/meta/sttz/TraktRoller.meta.js
-// @version       1.0.1
+// @version       1.0.2
 // @include       https://www.crunchyroll.com/*
 // @connect       api.trakt.tv
 // @grant         GM_setValue
@@ -124,7 +124,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({"../node_modules/ste-core/dist/management.js":[function(require,module,exports) {
+})({"ZHt3":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -153,7 +153,7 @@ function () {
 }();
 
 exports.EventManagement = EventManagement;
-},{}],"../node_modules/ste-core/dist/subscription.js":[function(require,module,exports) {
+},{}],"BhDi":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -211,7 +211,7 @@ function () {
 }();
 
 exports.Subscription = Subscription;
-},{}],"../node_modules/ste-core/dist/dispatching.js":[function(require,module,exports) {
+},{}],"OuRK":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -537,7 +537,7 @@ function () {
 }();
 
 exports.DispatcherWrapper = DispatcherWrapper;
-},{"./management":"../node_modules/ste-core/dist/management.js","./subscription":"../node_modules/ste-core/dist/subscription.js"}],"../node_modules/ste-core/dist/index.js":[function(require,module,exports) {
+},{"./management":"ZHt3","./subscription":"BhDi"}],"CAoX":[function(require,module,exports) {
 "use strict";
 /*!
  * Strongly Typed Events for TypeScript - Core
@@ -561,7 +561,7 @@ exports.EventListBase = dispatching_1.EventListBase;
 var subscription_1 = require("./subscription");
 
 exports.Subscription = subscription_1.Subscription;
-},{"./dispatching":"../node_modules/ste-core/dist/dispatching.js","./subscription":"../node_modules/ste-core/dist/subscription.js"}],"../node_modules/ste-events/dist/events.js":[function(require,module,exports) {
+},{"./dispatching":"OuRK","./subscription":"BhDi"}],"Xwg8":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -756,7 +756,7 @@ function () {
 }();
 
 exports.EventHandlingBase = EventHandlingBase;
-},{"ste-core":"../node_modules/ste-core/dist/index.js"}],"../node_modules/ste-events/dist/index.js":[function(require,module,exports) {
+},{"ste-core":"CAoX"}],"MjR0":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -768,7 +768,7 @@ var events_1 = require("./events");
 exports.EventDispatcher = events_1.EventDispatcher;
 exports.EventHandlingBase = events_1.EventHandlingBase;
 exports.EventList = events_1.EventList;
-},{"./events":"../node_modules/ste-events/dist/events.js"}],"../node_modules/ste-simple-events/dist/simple-events.js":[function(require,module,exports) {
+},{"./events":"Xwg8"}],"y7s+":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -958,7 +958,7 @@ function () {
 }();
 
 exports.SimpleEventHandlingBase = SimpleEventHandlingBase;
-},{"ste-core":"../node_modules/ste-core/dist/index.js"}],"../node_modules/ste-simple-events/dist/index.js":[function(require,module,exports) {
+},{"ste-core":"CAoX"}],"/WWW":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -970,7 +970,7 @@ var simple_events_1 = require("./simple-events");
 exports.SimpleEventDispatcher = simple_events_1.SimpleEventDispatcher;
 exports.SimpleEventHandlingBase = simple_events_1.SimpleEventHandlingBase;
 exports.SimpleEventList = simple_events_1.SimpleEventList;
-},{"./simple-events":"../node_modules/ste-simple-events/dist/simple-events.js"}],"../node_modules/ste-signals/dist/signals.js":[function(require,module,exports) {
+},{"./simple-events":"y7s+"}],"Bt9s":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -1158,7 +1158,7 @@ function () {
 }();
 
 exports.SignalHandlingBase = SignalHandlingBase;
-},{"ste-core":"../node_modules/ste-core/dist/index.js"}],"../node_modules/ste-signals/dist/index.js":[function(require,module,exports) {
+},{"ste-core":"CAoX"}],"0mVq":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1170,7 +1170,7 @@ var signals_1 = require("./signals");
 exports.SignalDispatcher = signals_1.SignalDispatcher;
 exports.SignalHandlingBase = signals_1.SignalHandlingBase;
 exports.SignalList = signals_1.SignalList;
-},{"./signals":"../node_modules/ste-signals/dist/signals.js"}],"../node_modules/strongly-typed-events/dist/index.js":[function(require,module,exports) {
+},{"./signals":"Bt9s"}],"/nYY":[function(require,module,exports) {
 "use strict";
 /*!
  * Strongly Typed Events for TypeScript
@@ -1209,7 +1209,7 @@ var ste_signals_1 = require("ste-signals");
 exports.SignalDispatcher = ste_signals_1.SignalDispatcher;
 exports.SignalHandlingBase = ste_signals_1.SignalHandlingBase;
 exports.SignalList = ste_signals_1.SignalList;
-},{"ste-core":"../node_modules/ste-core/dist/index.js","ste-events":"../node_modules/ste-events/dist/index.js","ste-simple-events":"../node_modules/ste-simple-events/dist/index.js","ste-signals":"../node_modules/ste-signals/dist/index.js"}],"TraktApi.ts":[function(require,module,exports) {
+},{"ste-core":"CAoX","ste-events":"MjR0","ste-simple-events":"/WWW","ste-signals":"0mVq"}],"bK1h":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -1932,7 +1932,7 @@ function () {
 }();
 
 exports["default"] = TraktApi;
-},{"strongly-typed-events":"../node_modules/strongly-typed-events/dist/index.js"}],"TraktScrobble.ts":[function(require,module,exports) {
+},{"strongly-typed-events":"/nYY"}],"SXC6":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -2479,9 +2479,9 @@ function () {
             if (result === LookupResult.Error) return [2
             /*return*/
             , result];
-            if (result === LookupResult.NotFound) return [3
+            if (result === LookupResult.Found) return [3
             /*break*/
-            , 7];
+            , 8];
             _a.label = 7;
 
           case 7:
@@ -2554,7 +2554,7 @@ function () {
             }
 
             goodMatches = searchResponse.filter(function (r) {
-              return r.score > 20;
+              return r.score > 10;
             });
 
             if (searchResponse.length > goodMatches.length) {
@@ -2744,7 +2744,7 @@ function () {
 }();
 
 exports["default"] = TraktScrobble;
-},{"./TraktApi":"TraktApi.ts","ste-simple-events":"../node_modules/ste-simple-events/dist/index.js"}],"../node_modules/preact/dist/preact.mjs":[function(require,module,exports) {
+},{"./TraktApi":"bK1h","ste-simple-events":"/WWW"}],"OmAK":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3470,7 +3470,7 @@ var preact = {
 };
 var _default = preact;
 exports.default = _default;
-},{}],"../node_modules/@emotion/memoize/dist/memoize.esm.js":[function(require,module,exports) {
+},{}],"MvwA":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3488,7 +3488,7 @@ function memoize(fn) {
 
 var _default = memoize;
 exports.default = _default;
-},{}],"../node_modules/@emotion/unitless/dist/unitless.esm.js":[function(require,module,exports) {
+},{}],"lCo2":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3541,7 +3541,7 @@ var unitlessKeys = {
 };
 var _default = unitlessKeys;
 exports.default = _default;
-},{}],"../node_modules/@emotion/hash/dist/hash.esm.js":[function(require,module,exports) {
+},{}],"XFUu":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3587,7 +3587,7 @@ function murmurhash2_32_gc(str) {
 
 var _default = murmurhash2_32_gc;
 exports.default = _default;
-},{}],"../node_modules/@emotion/stylis/dist/stylis.esm.js":[function(require,module,exports) {
+},{}],"r3ll":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4223,7 +4223,7 @@ function stylis_min(W) {
 
 var _default = stylis_min;
 exports.default = _default;
-},{}],"../node_modules/stylis-rule-sheet/index.js":[function(require,module,exports) {
+},{}],"UYYs":[function(require,module,exports) {
 var define;
 (function (factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? (module['exports'] = factory()) :
@@ -4810,7 +4810,7 @@ function createEmotion(context, options) {
 
 var _default = createEmotion;
 exports.default = _default;
-},{"@emotion/memoize":"../node_modules/@emotion/memoize/dist/memoize.esm.js","@emotion/unitless":"../node_modules/@emotion/unitless/dist/unitless.esm.js","@emotion/hash":"../node_modules/@emotion/hash/dist/hash.esm.js","@emotion/stylis":"../node_modules/@emotion/stylis/dist/stylis.esm.js","stylis-rule-sheet":"../node_modules/stylis-rule-sheet/index.js"}],"../node_modules/emotion/dist/index.esm.js":[function(require,module,exports) {
+},{"@emotion/memoize":"MvwA","@emotion/unitless":"lCo2","@emotion/hash":"XFUu","@emotion/stylis":"r3ll","stylis-rule-sheet":"UYYs"}],"mibh":[function(require,module,exports) {
 var global = arguments[3];
 "use strict";
 
@@ -4847,7 +4847,7 @@ exports.merge = merge;
 exports.cx = cx;
 exports.hydrate = hydrate;
 exports.flush = flush;
-},{"create-emotion":"QdUY"}],"ui/TraktIcon.tsx":[function(require,module,exports) {
+},{"create-emotion":"QdUY"}],"B913":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -4923,7 +4923,7 @@ function (_super) {
 
 exports["default"] = TraktIcon;
 var templateObject_1;
-},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"../node_modules/prop-types/lib/ReactPropTypesSecret.js":[function(require,module,exports) {
+},{"preact":"OmAK","emotion":"mibh"}],"Asjh":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -4998,7 +4998,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":"../node_modules/prop-types/lib/ReactPropTypesSecret.js"}],"5D9O":[function(require,module,exports) {
+},{"./lib/ReactPropTypesSecret":"Asjh"}],"5D9O":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -5021,7 +5021,7 @@ if ("production" !== 'production') {
   // http://fb.me/prop-types-in-prod
   module.exports = require('./factoryWithThrowingShims')();
 }
-},{"./factoryWithThrowingShims":"wVGV"}],"../node_modules/@emotion/is-prop-valid/dist/is-prop-valid.esm.js":[function(require,module,exports) {
+},{"./factoryWithThrowingShims":"wVGV"}],"gPI/":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5037,7 +5037,7 @@ var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|def
 var index = (0, _memoize.default)(reactPropsRegex.test.bind(reactPropsRegex));
 var _default = index;
 exports.default = _default;
-},{"@emotion/memoize":"../node_modules/@emotion/memoize/dist/memoize.esm.js"}],"3Rtg":[function(require,module,exports) {
+},{"@emotion/memoize":"MvwA"}],"3Rtg":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5274,7 +5274,7 @@ function createEmotionStyled(emotion, view) {
 
 var _default = createEmotionStyled;
 exports.default = _default;
-},{"prop-types":"5D9O","@emotion/is-prop-valid":"../node_modules/@emotion/is-prop-valid/dist/is-prop-valid.esm.js"}],"../node_modules/preact-emotion/dist/index.esm.js":[function(require,module,exports) {
+},{"prop-types":"5D9O","@emotion/is-prop-valid":"gPI/"}],"DOVm":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5307,7 +5307,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var index = (0, _createEmotionStyled.default)(emotion, _preact.default);
 var _default = index;
 exports.default = _default;
-},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","create-emotion-styled":"3Rtg"}],"ui/ConnectButton.tsx":[function(require,module,exports) {
+},{"preact":"OmAK","emotion":"mibh","create-emotion-styled":"3Rtg"}],"VnyP":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -5428,7 +5428,7 @@ function (_super) {
 
 exports["default"] = ConnectButton;
 var templateObject_1, templateObject_2;
-},{"./TraktIcon":"ui/TraktIcon.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"ui/ScrobbleInfo.tsx":[function(require,module,exports) {
+},{"./TraktIcon":"B913","preact":"OmAK","emotion":"mibh","preact-emotion":"DOVm"}],"+b4v":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -5540,7 +5540,7 @@ function (_super) {
 
 exports["default"] = ScrobbleInfo;
 var templateObject_1;
-},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/Button.tsx":[function(require,module,exports) {
+},{"preact":"OmAK","emotion":"mibh"}],"YunZ":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -5617,7 +5617,7 @@ function (_super) {
 
 exports["default"] = Button;
 var templateObject_1;
-},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/ScrobbleHistory.tsx":[function(require,module,exports) {
+},{"preact":"OmAK","emotion":"mibh"}],"CZem":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -5930,7 +5930,7 @@ function (_super) {
 
 exports["default"] = ScrobbleHistory;
 var templateObject_1;
-},{"../TraktScrobble":"TraktScrobble.ts","./Button":"ui/Button.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/ScrobbleControl.tsx":[function(require,module,exports) {
+},{"../TraktScrobble":"SXC6","./Button":"YunZ","preact":"OmAK","emotion":"mibh"}],"q6Da":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -6075,7 +6075,7 @@ function (_super) {
 
 exports["default"] = ScrobbleControl;
 var templateObject_1, templateObject_2, templateObject_3;
-},{"../TraktScrobble":"TraktScrobble.ts","./Button":"ui/Button.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"ui/Popup.tsx":[function(require,module,exports) {
+},{"../TraktScrobble":"SXC6","./Button":"YunZ","preact":"OmAK","emotion":"mibh","preact-emotion":"DOVm"}],"a5I5":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -6195,7 +6195,7 @@ function (_super) {
 
 exports["default"] = Popup;
 var templateObject_1;
-},{"../TraktScrobble":"TraktScrobble.ts","./ScrobbleInfo":"ui/ScrobbleInfo.tsx","./ScrobbleHistory":"ui/ScrobbleHistory.tsx","./ScrobbleControl":"ui/ScrobbleControl.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/StatusButton.tsx":[function(require,module,exports) {
+},{"../TraktScrobble":"SXC6","./ScrobbleInfo":"+b4v","./ScrobbleHistory":"CZem","./ScrobbleControl":"q6Da","preact":"OmAK","emotion":"mibh"}],"BUYa":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -6338,7 +6338,7 @@ function (_super) {
 
 exports["default"] = StatusButton;
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
-},{"../TraktScrobble":"TraktScrobble.ts","./TraktIcon":"ui/TraktIcon.tsx","./Popup":"ui/Popup.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"TraktHistory.ts":[function(require,module,exports) {
+},{"../TraktScrobble":"SXC6","./TraktIcon":"B913","./Popup":"a5I5","preact":"OmAK","emotion":"mibh","preact-emotion":"DOVm"}],"NFyx":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -6649,7 +6649,7 @@ function () {
 }();
 
 exports["default"] = TraktHistory;
-},{"./TraktApi":"TraktApi.ts"}],"TraktRoller.tsx":[function(require,module,exports) {
+},{"./TraktApi":"bK1h"}],"n8p7":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -6822,6 +6822,7 @@ var TraktHistory_1 = __importDefault(require("./TraktHistory"));
 var h = preact_1["default"].h;
 var EpisodeRegex = /Episode (\d+)/;
 var SeasonRegex = /Season (\d+)/;
+var MovieRegexes = [/Movie$/i, /Movie (Dub)$/i, /Movie (Sub)$/i, /Movie (Dubbed)$/i, /Movie (Subtitled)$/i, /^Movie - /i, /The Movie/i];
 var ScrobblingEnabledKey = 'TraktRoller.enabled';
 
 var TraktRoller =
@@ -6979,10 +6980,10 @@ function () {
   };
 
   TraktRoller.prototype._getScrobbleData = function () {
-    var buildDate = new Date("2018-12-19T17:32:54.295Z");
+    var buildDate = new Date("2019-01-15T19:21:02.898Z");
     var data = {
       progress: this._getProgress(),
-      app_version: "1.0.0",
+      app_version: "1.0.2",
       app_date: buildDate.getFullYear() + "-" + (buildDate.getMonth() + 1) + "-" + buildDate.getDate()
     };
     var titleElement = document.querySelector('#showmedia_about_episode_num');
@@ -7028,7 +7029,9 @@ function () {
       }
     }
 
-    if (episodeTitle && episodeTitle.toLowerCase().includes('movie')) {
+    if (episodeTitle && MovieRegexes.some(function (r) {
+      return r.test(episodeTitle);
+    })) {
       data.movie = {
         title: showTitle
       };
@@ -7104,7 +7107,7 @@ function () {
 }();
 
 exports["default"] = TraktRoller;
-},{"./TraktApi":"TraktApi.ts","./TraktScrobble":"TraktScrobble.ts","./ui/ConnectButton":"ui/ConnectButton.tsx","./ui/StatusButton":"ui/StatusButton.tsx","ste-simple-events":"../node_modules/ste-simple-events/dist/index.js","preact":"../node_modules/preact/dist/preact.mjs","./TraktHistory":"TraktHistory.ts"}],"index.ts":[function(require,module,exports) {
+},{"./TraktApi":"bK1h","./TraktScrobble":"SXC6","./ui/ConnectButton":"VnyP","./ui/StatusButton":"BUYa","ste-simple-events":"/WWW","preact":"OmAK","./TraktHistory":"NFyx"}],"7QCb":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -7124,5 +7127,5 @@ new TraktRoller_1["default"]({
   client_secret: "3712241a1c467769e6c03336abb5fb9911f8665354d2aaffaa9f817e147a34ca",
   storage: new TraktApi_1.GreaseMonkeyStorageAdapter()
 });
-},{"./TraktRoller":"TraktRoller.tsx","./TraktApi":"TraktApi.ts"}]},{},["index.ts"], null)
+},{"./TraktRoller":"n8p7","./TraktApi":"bK1h"}]},{},["7QCb"], null)
 //# sourceMappingURL=/TraktRoller.user.map

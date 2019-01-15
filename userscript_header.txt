@@ -8,7 +8,7 @@
 // @homepageURL   http://github.com/sttz/TraktRoller
 // @supportURL    http://github.com/sttz/TraktRoller/issues
 // @updateURL     https://openuserjs.org/meta/sttz/TraktRoller.meta.js
-// @version       1.0.1
+// @version       1.0.2
 // @include       https://www.crunchyroll.com/*
 // @connect       api.trakt.tv
 // @grant         GM_setValue

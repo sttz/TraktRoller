@@ -38,6 +38,12 @@ The buttons at the bottom:
 
 # Changelog
 
+### 1.0.2 (2019-01-15)
+
+- Lower minimum score for search results
+- Fix continuing with next search result despite last one being a success
+- More conservative movie classification (fixes some episodes being misdetected as movies)
+
 ### 1.0.1 (2018-12-19)
 
 - Fix scrobbling of shows without episode title
