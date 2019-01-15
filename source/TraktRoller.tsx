@@ -15,6 +15,16 @@ interface ITraktRollerOptions extends ITraktApiOptions {
 const EpisodeRegex = /Episode (\d+)/;
 const SeasonRegex = /Season (\d+)/;
 
+const MovieRegexes = [
+  /Movie$/i,
+  /Movie (Dub)$/i,
+  /Movie (Sub)$/i,
+  /Movie (Dubbed)$/i,
+  /Movie (Subtitled)$/i,
+  /^Movie - /i,
+  /The Movie/i,
+];
+
 const ScrobblingEnabledKey: string = 'TraktRoller.enabled';
 
 export default class TraktRoller {
@@ -172,7 +182,7 @@ export default class TraktRoller {
       }
     }
 
-    if (episodeTitle && episodeTitle.toLowerCase().includes('movie')) {
+    if (episodeTitle && MovieRegexes.some(r => r.test(episodeTitle))) {
       data.movie = {
         title: showTitle
       };
