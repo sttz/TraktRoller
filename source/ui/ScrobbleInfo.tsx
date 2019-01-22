@@ -6,10 +6,13 @@ import { css } from "emotion";
 const h = Preact.h;
 
 interface ScrobbleInfoProps {
-  scrobbleData: ITraktScrobbleData;
+  scrobble: TraktScrobble;
 }
 
 interface ScrobbleInfoState {
+  scrobbleData: ITraktScrobbleData;
+  scrobbleState: TraktScrobbleState;
+  error: string;
 }
 
 const className = css`
@@ -22,18 +25,59 @@ const className = css`
 export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleInfoState> {
   constructor(props) {
     super(props);
+
+    this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({ 
+      scrobbleData: this.props.scrobble.data,
+      scrobbleState: this.props.scrobble.state,
+      error: this.props.scrobble.error
+    });
+    this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
+  }
+
+  componentWillUnmount() {
+    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
+  }
+
+  private _onScrobbleStatusChanged(state: TraktScrobbleState) {
+    this.setState({ 
+      scrobbleData: this.props.scrobble.data,
+      scrobbleState: this.props.scrobble.state,
+      error: this.props.scrobble.error
+    });
   }
 
   render() {
-    let data = this.props.scrobbleData;
+    let data = this.state.scrobbleData;
     let info;
 
     // Still looking up
-    if (!data) {
+    if (this.state.scrobbleState == TraktScrobbleState.Lookup) {
       info = (
         <div class="lookup">Loading…</div>
       );
     
+    // Not found
+    } else if (this.state.scrobbleState == TraktScrobbleState.NotFound) {
+      info = (
+        <div class="error">
+          <h2>Failed to scrobble:</h2>
+          <p>Could not find matching episode on Trakt</p>
+        </div>
+      );
+
+    // Error
+    } else if (this.state.scrobbleState == TraktScrobbleState.Error) {
+      info = (
+        <div class="error">
+          <h2>Failed to scrobble:</h2>
+          <p>{ this.state.error }</p>
+        </div>
+      );
+
     // Lookup succeeded
     } else {
       
@@ -59,7 +103,7 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
       } else {
         info = (
           <div class="error">
-            <h2>Failed to scrobble:</h2>
+            <h2>Internal error:</h2>
             <p>Missing data</p>
           </div>
         );

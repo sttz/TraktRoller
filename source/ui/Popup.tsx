@@ -73,7 +73,7 @@ export default class Popup extends Component<PopupProps, PopupState> {
 
     return (
       <div className={ className }>
-        <ScrobbleInfo scrobbleData={ this.state.scrobbleData } />
+        <ScrobbleInfo scrobble={ this.props.scrobble } />
         <ScrobbleHistory 
           scrobbleData={ this.state.scrobbleData } 
           history={ this.props.history } 
