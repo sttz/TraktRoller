@@ -8,7 +8,7 @@
 // @homepageURL   http://github.com/sttz/TraktRoller
 // @supportURL    http://github.com/sttz/TraktRoller/issues
 // @updateURL     https://openuserjs.org/meta/sttz/TraktRoller.meta.js
-// @version       1.0.2
+// @version       1.0.3
 // @include       https://www.crunchyroll.com/*
 // @connect       api.trakt.tv
 // @grant         GM_setValue
@@ -1860,12 +1860,14 @@ function () {
     });
   };
 
-  TraktApi.prototype.seasons = function (showId, episodes) {
+  TraktApi.prototype.seasons = function (showId, extended) {
     return __awaiter(this, void 0, Promise, function () {
+      var query;
       return __generator(this, function (_a) {
+        query = extended ? '?extended=' + extended.join(",") : '';
         return [2
         /*return*/
-        , this._request('GET', "/shows/" + showId + "/seasons?extended=" + (episodes ? 'episodes' : ''))];
+        , this._request('GET', "/shows/" + showId + "/seasons" + query)];
       });
     });
   };
@@ -2430,9 +2432,14 @@ function () {
             if (results === null) return [2
             /*return*/
             , LookupResult.Error];
-            if (results.length === 0) return [2
-            /*return*/
-            , LookupResult.NotFound];
+
+            if (results.length === 0) {
+              console.warn("trakt scrobbler: manual search for \"" + title + "\" returned no results");
+              return [2
+              /*return*/
+              , LookupResult.NotFound];
+            }
+
             _i = 0, results_1 = results;
             _a.label = 3;
 
@@ -2575,7 +2582,10 @@ function () {
 
   TraktScrobble.prototype._lookupEpisode = function (show) {
     return __awaiter(this, void 0, Promise, function () {
-      var episodeResult;
+      var episodeResult, seasonsResponse, season, _i, seasonsResponse_1, s;
+
+      var _this = this;
+
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
@@ -2593,34 +2603,45 @@ function () {
               , LookupResult.Error];
             }
 
-            episodeResult = LookupResult.NotFound; // Lookup episode numbers
-
-            console.log('trakt scrobbler: trying to look up episode number...');
+            episodeResult = LookupResult.NotFound;
             return [4
             /*yield*/
-            , this._lookupEpisodeNumber(show.ids.trakt, this._data.episode.season, this._data.episode.number)];
+            , this._client.seasons(show.ids.trakt, ['episodes', 'full'])];
 
           case 1:
-            episodeResult = _a.sent();
-            if (episodeResult === LookupResult.Error) return [2
-            /*return*/
-            , episodeResult];
-            if (!(episodeResult === LookupResult.NotFound && this._data.episode.title !== undefined)) return [3
-            /*break*/
-            , 3];
-            console.log('trakt scrobbler: trying to look up episode title...');
-            return [4
-            /*yield*/
-            , this._lookupEpisodeTitle(show.ids.trakt, this._data.episode.title)];
+            seasonsResponse = _a.sent();
 
-          case 2:
-            episodeResult = _a.sent();
-            if (episodeResult === LookupResult.Error) return [2
-            /*return*/
-            , episodeResult];
-            _a.label = 3;
+            if (TraktApi_1["default"].isError(seasonsResponse, 404)) {
+              console.error('trakt scrobbler: manual lookup could not find seasons');
+              return [2
+              /*return*/
+              , LookupResult.NotFound];
+            } else if (this._handleError(seasonsResponse)) {
+              return [2
+              /*return*/
+              , LookupResult.Error];
+            }
 
-          case 3:
+            season = seasonsResponse.find(function (s) {
+              return s.number === _this._data.episode.season;
+            });
+
+            if (!season) {
+              console.warn("trakt scrobbler: could not find season " + this._data.episode.season + " in seasons response", seasonsResponse);
+            } else {
+              episodeResult = this._matchEpisodeOrTitle(season, this._data.episode.number, this._data.episode.title);
+            } // Look through all other seasons
+
+
+            if (episodeResult === LookupResult.NotFound) {
+              for (_i = 0, seasonsResponse_1 = seasonsResponse; _i < seasonsResponse_1.length; _i++) {
+                s = seasonsResponse_1[_i];
+                if (s === season) continue;
+                episodeResult = this._matchEpisodeOrTitle(s, this._data.episode.number, this._data.episode.title);
+                if (episodeResult == LookupResult.Found) break;
+              }
+            }
+
             return [2
             /*return*/
             , episodeResult];
@@ -2629,115 +2650,45 @@ function () {
     });
   };
 
-  TraktScrobble.prototype._lookupEpisodeNumber = function (showId, season, episode) {
-    return __awaiter(this, void 0, Promise, function () {
-      var seasonResponse, numberMatch;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , this._client.season(showId, season, true)];
+  TraktScrobble.prototype._matchEpisodeOrTitle = function (season, episode, title) {
+    var _this = this;
 
-          case 1:
-            seasonResponse = _a.sent();
-
-            if (TraktApi_1["default"].isError(seasonResponse, 404)) {
-              console.error('trakt scrobbler: manual lookup could not find season');
-              return [2
-              /*return*/
-              , LookupResult.NotFound];
-            } else if (this._handleError(seasonResponse)) {
-              return [2
-              /*return*/
-              , LookupResult.Error];
-            }
-
-            numberMatch = seasonResponse.filter(function (e) {
-              return e.number === episode || e.number_abs === episode;
-            });
-
-            if (numberMatch.length > 1) {
-              console.error("trakt scrobbler: got multiple episode #" + episode + " in season", seasonResponse);
-              return [2
-              /*return*/
-              , LookupResult.NotFound];
-            } else if (numberMatch.length === 0) {
-              console.error("trakt scrobbler: episode #" + episode + " not found in season", seasonResponse);
-              return [2
-              /*return*/
-              , LookupResult.NotFound];
-            }
-
-            console.log("trakt scrobbler: found episode using episode number", numberMatch[0]);
-            this._data.episode = numberMatch[0];
-            return [2
-            /*return*/
-            , LookupResult.Found];
-        }
-      });
+    var numberMatch = season.episodes.filter(function (e) {
+      return e.number === episode || e.number_abs === episode;
     });
+
+    if (numberMatch.length > 1) {
+      console.error("trakt scrobbler: got multiple episode #" + episode + " in season", season);
+      return LookupResult.NotFound;
+    } else if (numberMatch.length == 1) {
+      console.log("trakt scrobbler: found episode using episode number", numberMatch[0]);
+      this._data.episode = numberMatch[0];
+      return LookupResult.Found;
+    }
+
+    if (title) {
+      var filteredTitle_1 = this._filterEpisodeTitle(title);
+
+      var titleMatch = season.episodes.filter(function (e) {
+        return e.title && _this._filterEpisodeTitle(e.title) === filteredTitle_1;
+      });
+
+      if (titleMatch.length > 1) {
+        console.error("trakt scrobbler: got multiple episodes titled \"" + title + "\" in show", season);
+        return LookupResult.NotFound;
+      } else if (titleMatch.length == 1) {
+        console.log("trakt scrobbler: found episode using episode title", numberMatch[0]);
+        this._data.episode = numberMatch[0];
+        return LookupResult.Found;
+      }
+    }
+
+    return LookupResult.NotFound;
   };
 
   TraktScrobble.prototype._filterEpisodeTitle = function (title) {
     if (!title) debugger;
     return title.replace(/[^\w\s]/gi, '').toLowerCase();
-  };
-
-  TraktScrobble.prototype._lookupEpisodeTitle = function (showId, title) {
-    return __awaiter(this, void 0, Promise, function () {
-      var seasonResponse, filteredTitle, numberMatch;
-
-      var _this = this;
-
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , this._client.seasons(showId, true)];
-
-          case 1:
-            seasonResponse = _a.sent();
-
-            if (TraktApi_1["default"].isError(seasonResponse, 404)) {
-              console.error('trakt scrobbler: manual lookup could not find seasons');
-              return [2
-              /*return*/
-              , LookupResult.NotFound];
-            } else if (this._handleError(seasonResponse)) {
-              return [2
-              /*return*/
-              , LookupResult.Error];
-            }
-
-            filteredTitle = this._filterEpisodeTitle(title);
-            numberMatch = seasonResponse.reduce(function (acc, s) {
-              return acc.concat(s.episodes);
-            }, new Array()).filter(function (e) {
-              return e.title && _this._filterEpisodeTitle(e.title) === filteredTitle;
-            });
-
-            if (numberMatch.length > 1) {
-              console.error("trakt scrobbler: got multiple episodes titled \"" + title + "\" in show", seasonResponse);
-              return [2
-              /*return*/
-              , LookupResult.NotFound];
-            } else if (numberMatch.length === 0) {
-              console.error("trakt scrobbler: episode titled \"" + title + "\" not found in show", seasonResponse);
-              return [2
-              /*return*/
-              , LookupResult.NotFound];
-            }
-
-            console.log("trakt scrobbler: found episode using episode title", numberMatch[0]);
-            this._data.episode = numberMatch[0];
-            return [2
-            /*return*/
-            , LookupResult.Found];
-        }
-      });
-    });
   };
 
   return TraktScrobble;
@@ -5477,6 +5428,8 @@ var __importStar = this && this.__importStar || function (mod) {
 
 exports.__esModule = true;
 
+var TraktScrobble_1 = require("../TraktScrobble");
+
 var preact_1 = __importStar(require("preact"));
 
 var emotion_1 = require("emotion");
@@ -5490,17 +5443,49 @@ function (_super) {
   __extends(ScrobbleInfo, _super);
 
   function ScrobbleInfo(props) {
-    return _super.call(this, props) || this;
+    var _this = _super.call(this, props) || this;
+
+    _this._onScrobbleStatusChanged = _this._onScrobbleStatusChanged.bind(_this);
+    return _this;
   }
 
+  ScrobbleInfo.prototype.componentWillMount = function () {
+    this.setState({
+      scrobbleData: this.props.scrobble.data,
+      scrobbleState: this.props.scrobble.state,
+      error: this.props.scrobble.error
+    });
+    this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
+  };
+
+  ScrobbleInfo.prototype.componentWillUnmount = function () {
+    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
+  };
+
+  ScrobbleInfo.prototype._onScrobbleStatusChanged = function (state) {
+    this.setState({
+      scrobbleData: this.props.scrobble.data,
+      scrobbleState: this.props.scrobble.state,
+      error: this.props.scrobble.error
+    });
+  };
+
   ScrobbleInfo.prototype.render = function () {
-    var data = this.props.scrobbleData;
+    var data = this.state.scrobbleData;
     var info; // Still looking up
 
-    if (!data) {
+    if (this.state.scrobbleState == TraktScrobble_1.TraktScrobbleState.Lookup) {
       info = h("div", {
         class: "lookup"
-      }, "Loading\u2026"); // Lookup succeeded
+      }, "Loading\u2026"); // Not found
+    } else if (this.state.scrobbleState == TraktScrobble_1.TraktScrobbleState.NotFound) {
+      info = h("div", {
+        class: "error"
+      }, h("h2", null, "Failed to scrobble:"), h("p", null, "Could not find matching episode on Trakt")); // Error
+    } else if (this.state.scrobbleState == TraktScrobble_1.TraktScrobbleState.Error) {
+      info = h("div", {
+        class: "error"
+      }, h("h2", null, "Failed to scrobble:"), h("p", null, this.state.error)); // Lookup succeeded
     } else {
       if (data.movie && data.movie.ids) {
         var movieUrl = "https://trakt.tv/movies/" + data.movie.ids.slug;
@@ -5526,7 +5511,7 @@ function (_super) {
       } else {
         info = h("div", {
           class: "error"
-        }, h("h2", null, "Failed to scrobble:"), h("p", null, "Missing data"));
+        }, h("h2", null, "Internal error:"), h("p", null, "Missing data"));
       }
     }
 
@@ -5540,7 +5525,7 @@ function (_super) {
 
 exports["default"] = ScrobbleInfo;
 var templateObject_1;
-},{"preact":"OmAK","emotion":"mibh"}],"YunZ":[function(require,module,exports) {
+},{"../TraktScrobble":"SXC6","preact":"OmAK","emotion":"mibh"}],"YunZ":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -6179,7 +6164,7 @@ function (_super) {
     return h("div", {
       className: className
     }, h(ScrobbleInfo_1.default, {
-      scrobbleData: this.state.scrobbleData
+      scrobble: this.props.scrobble
     }), h(ScrobbleHistory_1.default, {
       scrobbleData: this.state.scrobbleData,
       history: this.props.history,
@@ -6980,10 +6965,10 @@ function () {
   };
 
   TraktRoller.prototype._getScrobbleData = function () {
-    var buildDate = new Date("2019-01-15T19:21:02.898Z");
+    var buildDate = new Date("2019-01-22T18:51:25.661Z");
     var data = {
       progress: this._getProgress(),
-      app_version: "1.0.2",
+      app_version: "1.0.3",
       app_date: buildDate.getFullYear() + "-" + (buildDate.getMonth() + 1) + "-" + buildDate.getDate()
     };
     var titleElement = document.querySelector('#showmedia_about_episode_num');

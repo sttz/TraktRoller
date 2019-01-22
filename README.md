@@ -38,6 +38,11 @@ The buttons at the bottom:
 
 # Changelog
 
+### 1.0.3 (2019-01-22)
+
+- Improve message in popup when episode couldn't be found or error occurred
+- Fix manual lookup by absolute episode number only searches the current season
+
 ### 1.0.2 (2019-01-15)
 
 - Lower minimum score for search results
