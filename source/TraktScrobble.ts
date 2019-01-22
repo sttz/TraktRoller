@@ -263,7 +263,10 @@ export default class TraktScrobble {
     console.log('trakt scrobbler: trying to search manually...');
     const results = await this._search(type, title);
     if (results === null) return LookupResult.Error;
-    if (results.length === 0) return LookupResult.NotFound;
+    if (results.length === 0) {
+      console.warn(`trakt scrobbler: manual search for "${title}" returned no results`);
+      return LookupResult.NotFound;
+    }
 
     // Try search results in order
     for (const found of results) {
