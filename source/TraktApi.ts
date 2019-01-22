@@ -377,8 +377,9 @@ export default class TraktApi {
     return this._request('GET', `/search/${type}?query=${encodeURIComponent(query)}`);
   }
 
-  async seasons(showId: number | string, episodes?: boolean): Promise<Array<ITraktSeason> | ITraktError> {
-    return this._request('GET', `/shows/${showId}/seasons?extended=${episodes ? 'episodes' : ''}`);
+  async seasons(showId: number | string, extended?: Array<'full' | 'episodes'>): Promise<Array<ITraktSeason> | ITraktError> {
+    let query = extended ? '?extended=' + extended.join(",") : '';
+    return this._request('GET', `/shows/${showId}/seasons${query}`);
   }
 
   async season(showId: number | string, season: number, extended?: boolean): Promise<Array<ITraktEpisode> | ITraktError> {
