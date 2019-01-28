@@ -46,7 +46,7 @@ export default class TraktHistory {
     if (TraktApi.isError(result)) {
       console.error(`TraktRoller: Error removing scrobble (${result.error})`)
       return;
-    } else if (result.not_found.ids.includes(historyId)) {
+    } else if (result.not_found.ids.indexOf(historyId) >= 0) {
       console.warn(`TraktRoller: Could not remove history id ${historyId}, not found on server`);
     }
 

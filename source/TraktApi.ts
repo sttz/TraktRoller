@@ -39,7 +39,7 @@ export interface ITraktEpisode {
 export interface ITraktHistoryItem {
   id?: number;
   watched_at: string;
-  action: string;
+  action: 'scrobble' | 'checkin' | 'watch';
   type: 'movie' | 'episode';
   movie?: ITraktMovie;
   show?: ITraktShow;

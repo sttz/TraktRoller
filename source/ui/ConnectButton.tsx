@@ -1,10 +1,9 @@
 import TraktApi from "../TraktApi";
 import TraktIcon from "./TraktIcon";
 
-import Preact, { Component } from "preact";
+import { Component, h } from "preact";
 import { css } from "emotion";
 import styled from "preact-emotion";
-const h = Preact.h;
 
 interface ConnectButtonProps {
   api: TraktApi;
@@ -39,7 +38,7 @@ const Icon = styled(TraktIcon)`
 `;
 
 export default class ConnectButton extends Component<ConnectButtonProps, ConnectButtonState> {
-  constructor(props) {
+  constructor(props: ConnectButtonProps) {
     super(props);
     this.state = { isConnected: this.props.api.isAuthenticated() };
 

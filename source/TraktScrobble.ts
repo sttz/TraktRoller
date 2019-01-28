@@ -122,7 +122,7 @@ export default class TraktScrobble {
     this._applyState(this._playbackState);
   }
 
-  private _applyState(state) {
+  private _applyState(state: PlaybackState) {
     if (state === PlaybackState.Playing) {
       if (this._pendingState === TraktScrobbleState.Found 
           || this._pendingState === TraktScrobbleState.Paused) {

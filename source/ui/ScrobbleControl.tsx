@@ -2,10 +2,9 @@ import TraktRoller from "../TraktRoller";
 import TraktScrobble, { TraktScrobbleState, PlaybackState } from "../TraktScrobble";
 import Button from "./Button";
 
-import Preact, { Component } from "preact";
+import { Component, h } from "preact";
 import { css } from "emotion";
 import styled from "preact-emotion";
-const h = Preact.h;
 
 interface ScrobbleControlProps {
   roller: TraktRoller;
@@ -69,7 +68,7 @@ const EnabledStates = [
 ];
 
 export default class ScrobbleControl extends Component<ScrobbleControlProps, ScrobbleControlState> {
-  constructor(props) {
+  constructor(props: ScrobbleControlProps) {
     super(props);
     this.state = { scrobbleState: this.props.scrobble.state, scrobblingEnabled: this.props.roller.enabled };
 
@@ -109,7 +108,7 @@ export default class ScrobbleControl extends Component<ScrobbleControlProps, Scr
     let state = this.props.scrobble.enabled ? "Disabled" : TraktScrobbleState[this.props.scrobble.state];
     let title = this.props.scrobble.error || "";
 
-    let disabled = !EnabledStates.includes(this.state.scrobbleState);
+    let disabled = !(EnabledStates.indexOf(this.state.scrobbleState) >= 0);
     let label = this.props.roller.enabled ? "Enable Scrobbling" : "Disable Scrobbling";
 
     return (

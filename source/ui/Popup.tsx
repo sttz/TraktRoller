@@ -6,9 +6,8 @@ import TraktHistory from "../TraktHistory";
 import ScrobbleControl from "./ScrobbleControl";
 import TraktRoller from "../TraktRoller";
 
-import Preact, { Component } from "preact";
+import { Component, h } from "preact";
 import { css } from "emotion";
-const h = Preact.h;
 
 interface PopupProps {
   roller: TraktRoller;
@@ -49,7 +48,7 @@ const className = css`
 `;
 
 export default class Popup extends Component<PopupProps, PopupState> {
-  constructor(props) {
+  constructor(props: PopupProps) {
     super(props);
 
     this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);

@@ -1,9 +1,8 @@
 import TraktScrobble, { TraktScrobbleState } from "../TraktScrobble";
 import { ITraktScrobbleData } from "../TraktApi";
 
-import Preact, { Component } from "preact";
+import { Component, h } from "preact";
 import { css } from "emotion";
-const h = Preact.h;
 
 interface ScrobbleInfoProps {
   scrobble: TraktScrobble;
@@ -23,7 +22,7 @@ const className = css`
 `;
 
 export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleInfoState> {
-  constructor(props) {
+  constructor(props: ScrobbleInfoProps) {
     super(props);
 
     this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);

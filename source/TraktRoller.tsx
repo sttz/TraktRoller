@@ -4,9 +4,8 @@ import ConnectButton from "./ui/ConnectButton";
 import StatusButton from "./ui/StatusButton";
 import { SimpleEventDispatcher } from "ste-simple-events";
 
-import Preact, { render } from 'preact';
+import { render, h } from 'preact';
 import TraktHistory from "./TraktHistory";
-const h = Preact.h;
 
 interface ITraktRollerOptions extends ITraktApiOptions {
   //
@@ -99,7 +98,7 @@ export default class TraktRoller {
     if (!data) return;
 
     this._player = player;
-    this._player.on(playerjs.EVENTS.TIMEUPDATE,  (info) => this._onTimeChanged(info));
+    this._player.on(playerjs.EVENTS.TIMEUPDATE,  (info: { seconds: number, duration: number }) => this._onTimeChanged(info));
     this._player.on(playerjs.EVENTS.PLAY,  () => this._onPlaybackStateChange(PlaybackState.Playing));
     this._player.on(playerjs.EVENTS.PAUSE, () => this._onPlaybackStateChange(PlaybackState.Paused));
     this._player.on(playerjs.EVENTS.ENDED, () => this._onPlaybackStateChange(PlaybackState.Ended));

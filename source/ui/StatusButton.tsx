@@ -4,10 +4,9 @@ import TraktHistory from "../TraktHistory";
 import TraktIcon from "./TraktIcon";
 import Popup from "./Popup";
 
-import Preact, { Component } from "preact";
+import { Component, h } from "preact";
 import { css } from "emotion";
 import styled from "preact-emotion";
-const h = Preact.h;
 
 interface StatusButtonProps {
   roller: TraktRoller;
@@ -100,7 +99,7 @@ const Icon = styled(TraktIcon)`
 `;
 
 export default class StatusButton extends Component<StatusButtonProps, StatusButtonState> {
-  constructor(props) {
+  constructor(props: StatusButtonProps) {
     super(props);
     this.state = { scrobbleState: this.props.scrobble.state, enabled: this.props.roller.enabled };
 

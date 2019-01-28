@@ -1,6 +1,5 @@
-import Preact, { Component } from "preact";
+import { Component, h } from "preact";
 import { css } from "emotion";
-const h = Preact.h;
 
 interface TraktIconProps {
   className?: string;

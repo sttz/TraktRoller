@@ -3,9 +3,8 @@ import TraktApi, { ITraktHistoryItem, ITraktScrobbleData } from "../TraktApi";
 import TraktHistory from "../TraktHistory";
 import Button from "./Button";
 
-import Preact, { Component } from "preact";
+import { Component, h } from "preact";
 import { css } from "emotion";
-const h = Preact.h;
 
 interface ScrobbleHistoryProps {
   scrobbleData: ITraktScrobbleData;
@@ -56,7 +55,7 @@ export default class ScrobbleHistory extends Component<ScrobbleHistoryProps, Scr
   private _traktId: number;
   private _formatter: Intl.DateTimeFormat;
 
-  constructor(props) {
+  constructor(props: ScrobbleHistoryProps) {
     super(props);
     this._formatter = new Intl.DateTimeFormat(navigator.language, {
       year: "numeric",
