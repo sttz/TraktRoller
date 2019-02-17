@@ -253,8 +253,19 @@ export default class TraktScrobble {
     let result = await this._scrobbleLookup();
     if (result !== LookupResult.NotFound) return result;
 
-    // Search for item manually
     let type: 'movie' | 'show' = this._data.movie !== undefined ? 'movie' : 'show';
+
+    // Retry automatic matching with absolute episode number
+    if (type === 'show' && this._data.episode.number_abs === undefined && this._data.episode.number !== undefined) {
+      let data = JSON.parse(JSON.stringify(this._data)) as ITraktScrobbleData;
+      data.episode.number_abs = data.episode.number;
+      delete data.episode.number;
+      
+      result = await this._scrobbleLookup(data);
+      if (result !== LookupResult.NotFound) return result;
+    }
+
+    // Search for item manually
     let title = this._data.movie !== undefined ? this._data.movie.title : this._data.show!.title;
     if (!title) {
       console.error('trakt scrobbler: No title set');
@@ -295,8 +306,8 @@ export default class TraktScrobble {
     return result;
   }
 
-  private async _scrobbleLookup(): Promise<LookupResult> {
-    let scrobbleResponse = await this._client.scrobble('pause', this._data);
+  private async _scrobbleLookup(data?: ITraktScrobbleData): Promise<LookupResult> {
+    let scrobbleResponse = await this._client.scrobble('pause', data || this._data);
     if (TraktApi.isError(scrobbleResponse, 404)) {
       return LookupResult.NotFound;
     } else if (this._handleError(scrobbleResponse)) {
