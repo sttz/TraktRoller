@@ -38,6 +38,10 @@ The buttons at the bottom:
 
 # Changelog
 
+### 1.0.4 (2019-02-17)
+
+- Use new automatic episode lookup with `number_abs` when lookup with `number` failed
+
 ### 1.0.3 (2019-01-22)
 
 - Improve message in popup when episode couldn't be found or error occurred

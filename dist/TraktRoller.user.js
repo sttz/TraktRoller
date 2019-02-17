@@ -8,7 +8,7 @@
 // @homepageURL   http://github.com/sttz/TraktRoller
 // @supportURL    http://github.com/sttz/TraktRoller/issues
 // @updateURL     https://openuserjs.org/meta/sttz/TraktRoller.meta.js
-// @version       1.0.3
+// @version       1.0.4
 // @include       https://www.crunchyroll.com/*
 // @connect       api.trakt.tv
 // @grant         GM_setValue
@@ -124,7 +124,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({"ZHt3":[function(require,module,exports) {
+})({"../node_modules/ste-core/dist/management.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -153,7 +153,7 @@ function () {
 }();
 
 exports.EventManagement = EventManagement;
-},{}],"BhDi":[function(require,module,exports) {
+},{}],"../node_modules/ste-core/dist/subscription.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -211,7 +211,7 @@ function () {
 }();
 
 exports.Subscription = Subscription;
-},{}],"OuRK":[function(require,module,exports) {
+},{}],"../node_modules/ste-core/dist/dispatching.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -537,7 +537,7 @@ function () {
 }();
 
 exports.DispatcherWrapper = DispatcherWrapper;
-},{"./management":"ZHt3","./subscription":"BhDi"}],"CAoX":[function(require,module,exports) {
+},{"./management":"../node_modules/ste-core/dist/management.js","./subscription":"../node_modules/ste-core/dist/subscription.js"}],"../node_modules/ste-core/dist/index.js":[function(require,module,exports) {
 "use strict";
 /*!
  * Strongly Typed Events for TypeScript - Core
@@ -561,7 +561,7 @@ exports.EventListBase = dispatching_1.EventListBase;
 var subscription_1 = require("./subscription");
 
 exports.Subscription = subscription_1.Subscription;
-},{"./dispatching":"OuRK","./subscription":"BhDi"}],"Xwg8":[function(require,module,exports) {
+},{"./dispatching":"../node_modules/ste-core/dist/dispatching.js","./subscription":"../node_modules/ste-core/dist/subscription.js"}],"../node_modules/ste-events/dist/events.js":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -756,7 +756,7 @@ function () {
 }();
 
 exports.EventHandlingBase = EventHandlingBase;
-},{"ste-core":"CAoX"}],"MjR0":[function(require,module,exports) {
+},{"ste-core":"../node_modules/ste-core/dist/index.js"}],"../node_modules/ste-events/dist/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -768,7 +768,7 @@ var events_1 = require("./events");
 exports.EventDispatcher = events_1.EventDispatcher;
 exports.EventHandlingBase = events_1.EventHandlingBase;
 exports.EventList = events_1.EventList;
-},{"./events":"Xwg8"}],"y7s+":[function(require,module,exports) {
+},{"./events":"../node_modules/ste-events/dist/events.js"}],"../node_modules/ste-simple-events/dist/simple-events.js":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -958,7 +958,7 @@ function () {
 }();
 
 exports.SimpleEventHandlingBase = SimpleEventHandlingBase;
-},{"ste-core":"CAoX"}],"/WWW":[function(require,module,exports) {
+},{"ste-core":"../node_modules/ste-core/dist/index.js"}],"../node_modules/ste-simple-events/dist/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -970,7 +970,7 @@ var simple_events_1 = require("./simple-events");
 exports.SimpleEventDispatcher = simple_events_1.SimpleEventDispatcher;
 exports.SimpleEventHandlingBase = simple_events_1.SimpleEventHandlingBase;
 exports.SimpleEventList = simple_events_1.SimpleEventList;
-},{"./simple-events":"y7s+"}],"Bt9s":[function(require,module,exports) {
+},{"./simple-events":"../node_modules/ste-simple-events/dist/simple-events.js"}],"../node_modules/ste-signals/dist/signals.js":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -1158,7 +1158,7 @@ function () {
 }();
 
 exports.SignalHandlingBase = SignalHandlingBase;
-},{"ste-core":"CAoX"}],"0mVq":[function(require,module,exports) {
+},{"ste-core":"../node_modules/ste-core/dist/index.js"}],"../node_modules/ste-signals/dist/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1170,7 +1170,7 @@ var signals_1 = require("./signals");
 exports.SignalDispatcher = signals_1.SignalDispatcher;
 exports.SignalHandlingBase = signals_1.SignalHandlingBase;
 exports.SignalList = signals_1.SignalList;
-},{"./signals":"Bt9s"}],"/nYY":[function(require,module,exports) {
+},{"./signals":"../node_modules/ste-signals/dist/signals.js"}],"../node_modules/strongly-typed-events/dist/index.js":[function(require,module,exports) {
 "use strict";
 /*!
  * Strongly Typed Events for TypeScript
@@ -1209,7 +1209,7 @@ var ste_signals_1 = require("ste-signals");
 exports.SignalDispatcher = ste_signals_1.SignalDispatcher;
 exports.SignalHandlingBase = ste_signals_1.SignalHandlingBase;
 exports.SignalList = ste_signals_1.SignalList;
-},{"ste-core":"CAoX","ste-events":"MjR0","ste-simple-events":"/WWW","ste-signals":"0mVq"}],"bK1h":[function(require,module,exports) {
+},{"ste-core":"../node_modules/ste-core/dist/index.js","ste-events":"../node_modules/ste-events/dist/index.js","ste-simple-events":"../node_modules/ste-simple-events/dist/index.js","ste-signals":"../node_modules/ste-signals/dist/index.js"}],"TraktApi.ts":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -1240,121 +1240,14 @@ var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, gene
   });
 };
 
-var __generator = this && this.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function () {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
+const strongly_typed_events_1 = require("strongly-typed-events");
 
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) try {
-      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-      if (y = 0, t) op = [op[0] & 2, t.value];
-
-      switch (op[0]) {
-        case 0:
-        case 1:
-          t = op;
-          break;
-
-        case 4:
-          _.label++;
-          return {
-            value: op[1],
-            done: false
-          };
-
-        case 5:
-          _.label++;
-          y = op[1];
-          op = [0];
-          continue;
-
-        case 7:
-          op = _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-
-        default:
-          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-            _ = 0;
-            continue;
-          }
-
-          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-            _.label = op[1];
-            break;
-          }
-
-          if (op[0] === 6 && _.label < t[1]) {
-            _.label = t[1];
-            t = op;
-            break;
-          }
-
-          if (t && _.label < t[2]) {
-            _.label = t[2];
-
-            _.ops.push(op);
-
-            break;
-          }
-
-          if (t[2]) _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-      }
-
-      op = body.call(thisArg, _);
-    } catch (e) {
-      op = [6, e];
-      y = 0;
-    } finally {
-      f = t = 0;
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
-
-exports.__esModule = true;
-
-var strongly_typed_events_1 = require("strongly-typed-events");
-
-var TraktTokensKey = 'trakt_tokens';
-var TraktErrorCodes = {
+const TraktTokensKey = 'trakt_tokens';
+const TraktErrorCodes = {
   200: {
     "status": 200,
     "error": "Success"
@@ -1429,16 +1322,12 @@ var TraktErrorCodes = {
   }
 };
 
-var LocalStorageAdapter =
-/** @class */
-function () {
-  function LocalStorageAdapter() {}
-
-  LocalStorageAdapter.prototype.getValue = function (name) {
+class LocalStorageAdapter {
+  getValue(name) {
     return Promise.resolve(window.localStorage.getItem(name));
-  };
+  }
 
-  LocalStorageAdapter.prototype.setValue = function (name, value) {
+  setValue(name, value) {
     if (!value) {
       window.localStorage.removeItem(name);
     } else {
@@ -1446,23 +1335,18 @@ function () {
     }
 
     return Promise.resolve();
-  };
+  }
 
-  return LocalStorageAdapter;
-}();
+}
 
 exports.LocalStorageAdapter = LocalStorageAdapter;
 
-var GreaseMonkeyStorageAdapter =
-/** @class */
-function () {
-  function GreaseMonkeyStorageAdapter() {}
-
-  GreaseMonkeyStorageAdapter.prototype.getValue = function (name) {
+class GreaseMonkeyStorageAdapter {
+  getValue(name) {
     return Promise.resolve(GM_getValue(name));
-  };
+  }
 
-  GreaseMonkeyStorageAdapter.prototype.setValue = function (name, value) {
+  setValue(name, value) {
     if (!value) {
       GM_deleteValue(name);
     } else {
@@ -1470,17 +1354,14 @@ function () {
     }
 
     return Promise.resolve();
-  };
+  }
 
-  return GreaseMonkeyStorageAdapter;
-}();
+}
 
 exports.GreaseMonkeyStorageAdapter = GreaseMonkeyStorageAdapter;
 
-var TraktApi =
-/** @class */
-function () {
-  function TraktApi(options) {
+class TraktApi {
+  constructor(options) {
     this.onAuthenticationChanged = new strongly_typed_events_1.SimpleEventDispatcher();
     this._tokens = {};
     this._client_id = options.client_id;
@@ -1490,451 +1371,270 @@ function () {
     this._storage = options.storage || new LocalStorageAdapter();
   }
 
-  TraktApi.isError = function (obj, code) {
-    var err = obj;
+  static isError(obj, code) {
+    const err = obj;
     return err.status !== undefined && err.error !== undefined && (code === undefined || err.status === code);
-  }; // ------ Authentication ------
+  } // ------ Authentication ------
 
 
-  TraktApi.prototype.loadTokens = function () {
-    return __awaiter(this, void 0, Promise, function () {
-      var data, _a;
+  loadTokens() {
+    return __awaiter(this, void 0, void 0, function* () {
+      const data = yield this._storage.getValue(TraktTokensKey);
 
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , this._storage.getValue(TraktTokensKey)];
+      if (data) {
+        this._tokens = JSON.parse(data);
+      } else {
+        this._tokens = {};
+      }
 
-          case 1:
-            data = _b.sent();
+      if (this._tokens.expires && this._tokens.expires < Date.now()) {
+        this._tokens = yield this._refresh_token();
+        yield this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens));
+      }
 
-            if (data) {
-              this._tokens = JSON.parse(data);
-            } else {
-              this._tokens = {};
-            }
-
-            if (!(this._tokens.expires && this._tokens.expires < Date.now())) return [3
-            /*break*/
-            , 4];
-            _a = this;
-            return [4
-            /*yield*/
-            , this._refresh_token()];
-
-          case 2:
-            _a._tokens = _b.sent();
-            return [4
-            /*yield*/
-            , this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens))];
-
-          case 3:
-            _b.sent();
-
-            _b.label = 4;
-
-          case 4:
-            this.onAuthenticationChanged.dispatch(this.isAuthenticated());
-            return [2
-            /*return*/
-            ];
-        }
-      });
+      this.onAuthenticationChanged.dispatch(this.isAuthenticated());
     });
-  };
+  }
 
-  TraktApi.prototype.isAuthenticated = function () {
+  isAuthenticated() {
     return this._tokens.access_token !== undefined;
-  };
+  }
 
-  TraktApi.prototype.authenticate = function () {
-    return __awaiter(this, void 0, Promise, function () {
-      var state, url;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            state = this._generate_state();
-            url = this._get_url(state); // Save authentication state data
+  authenticate() {
+    return __awaiter(this, void 0, void 0, function* () {
+      const state = this._generate_state();
 
-            this._tokens.authentication_state = state;
-            return [4
-            /*yield*/
-            , this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens))];
+      const url = this._get_url(state); // Save authentication state data
 
-          case 1:
-            _a.sent();
 
-            window.location.href = url;
-            return [2
-            /*return*/
-            ];
-        }
-      });
+      this._tokens.authentication_state = state;
+      yield this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens));
+      window.location.href = url;
     });
-  };
+  }
 
-  TraktApi.prototype.checkAuthenticationResult = function (url) {
-    return __awaiter(this, void 0, Promise, function () {
-      var params, code, state;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            params = new URL(url).searchParams;
-            code = params.get('code');
-            state = params.get('state');
-            if (!code || !state) return [2
-            /*return*/
-            ];
-            return [4
-            /*yield*/
-            , this._exchange_code(code, state)];
+  checkAuthenticationResult(url) {
+    return __awaiter(this, void 0, void 0, function* () {
+      const params = new URL(url).searchParams;
+      const code = params.get('code');
+      const state = params.get('state');
+      if (!code || !state) return;
 
-          case 1:
-            if (!_a.sent()) {
-              console.error('Exchanging oauth code failed!');
-              return [2
-              /*return*/
-              ];
-            }
+      if (!(yield this._exchange_code(code, state))) {
+        console.error('Exchanging oauth code failed!');
+        return;
+      }
 
-            console.log('Trakt authentication successful!');
-            return [4
-            /*yield*/
-            , this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens))];
-
-          case 2:
-            _a.sent();
-
-            window.history.replaceState(null, undefined, window.location.pathname);
-            this.onAuthenticationChanged.dispatch(true);
-            return [2
-            /*return*/
-            ];
-        }
-      });
+      console.log('Trakt authentication successful!');
+      yield this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens));
+      window.history.replaceState(null, undefined, window.location.pathname);
+      this.onAuthenticationChanged.dispatch(true);
     });
-  };
+  }
 
-  TraktApi.prototype.disconnect = function () {
+  disconnect() {
     this._storage.setValue(TraktTokensKey, null);
 
     this.onAuthenticationChanged.dispatch(false);
 
     this._revoke_token();
-  }; // ------ API ------
+  } // ------ API ------
 
 
-  TraktApi.prototype._getError = function (response) {
+  _getError(response) {
     var error = TraktErrorCodes[response.status];
     if (error) return error;
     return {
       status: response.status,
-      error: "Unknown error (" + response.statusText + ")"
+      error: `Unknown error (${response.statusText})`
     };
-  };
+  }
 
-  TraktApi.prototype._request = function (method, url, body) {
-    return __awaiter(this, void 0, Promise, function () {
-      var contentType, headers, response, err_1;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            contentType = null;
+  _request(method, url, body) {
+    return __awaiter(this, void 0, void 0, function* () {
+      let contentType = null;
 
-            if (body) {
-              if (body.contentType) {
-                contentType = body.contentType;
-                body = body.body;
-              }
-
-              if (typeof body !== 'string') {
-                body = JSON.stringify(body);
-              }
-            }
-
-            headers = new Headers();
-            headers.append('trakt-api-version', '2');
-            headers.append('trakt-api-key', this._client_id);
-            headers.append('Content-Type', contentType || 'application/json');
-
-            if (this._tokens && this._tokens.access_token) {
-              headers.append('Authorization', "Bearer " + this._tokens.access_token);
-            }
-
-            _a.label = 1;
-
-          case 1:
-            _a.trys.push([1, 3,, 4]);
-
-            return [4
-            /*yield*/
-            , fetch(this._endpoint + url, {
-              method: method,
-              mode: "cors",
-              headers: headers,
-              body: body
-            })];
-
-          case 2:
-            response = _a.sent();
-
-            if (!response.ok) {
-              return [2
-              /*return*/
-              , this._getError(response)];
-            }
-
-            if (response.status === 204) {
-              return [2
-              /*return*/
-              , null]; // 204: No Content
-            }
-
-            return [2
-            /*return*/
-            , response.json()];
-
-          case 3:
-            err_1 = _a.sent();
-            return [2
-            /*return*/
-            , {
-              status: 0,
-              error: "An error occurred sending the request: " + err_1
-            }];
-
-          case 4:
-            return [2
-            /*return*/
-            ];
+      if (body) {
+        if (body.contentType) {
+          contentType = body.contentType;
+          body = body.body;
         }
-      });
-    });
-  };
 
-  TraktApi.prototype._exchange = function (body) {
-    return __awaiter(this, void 0, Promise, function () {
-      var data, err_2;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            _a.trys.push([0, 2,, 3]);
-
-            return [4
-            /*yield*/
-            , this._request('POST', '/oauth/token', body)];
-
-          case 1:
-            data = _a.sent();
-            return [2
-            /*return*/
-            , {
-              access_token: data.access_token,
-              refresh_token: data.refresh_token,
-              expires: (data.created_at + data.expires_in) * 1000
-            }];
-
-          case 2:
-            err_2 = _a.sent();
-            console.error(err_2);
-            return [2
-            /*return*/
-            , {}];
-
-          case 3:
-            return [2
-            /*return*/
-            ];
+        if (typeof body !== 'string') {
+          body = JSON.stringify(body);
         }
-      });
-    });
-  };
+      }
 
-  TraktApi.prototype._generate_state = function () {
-    var data = new Uint32Array(4);
+      let headers = new Headers();
+      headers.append('trakt-api-version', '2');
+      headers.append('trakt-api-key', this._client_id);
+      headers.append('Content-Type', contentType || 'application/json');
+
+      if (this._tokens && this._tokens.access_token) {
+        headers.append('Authorization', `Bearer ${this._tokens.access_token}`);
+      }
+
+      try {
+        let response = yield fetch(this._endpoint + url, {
+          method: method,
+          mode: "cors",
+          headers: headers,
+          body: body
+        });
+
+        if (!response.ok) {
+          return this._getError(response);
+        }
+
+        if (response.status === 204) {
+          return null; // 204: No Content
+        }
+
+        return response.json();
+      } catch (err) {
+        return {
+          status: 0,
+          error: `An error occurred sending the request: ${err}`
+        };
+      }
+    });
+  }
+
+  _exchange(body) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        const data = yield this._request('POST', '/oauth/token', body);
+        return {
+          access_token: data.access_token,
+          refresh_token: data.refresh_token,
+          expires: (data.created_at + data.expires_in) * 1000
+        };
+      } catch (err) {
+        console.error(err);
+        return {};
+      }
+    });
+  }
+
+  _generate_state() {
+    let data = new Uint32Array(4);
     crypto.getRandomValues(data);
-    var state = '';
+    let state = '';
 
-    for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       state += data[i].toString(16);
     }
 
     return state;
-  };
+  }
 
-  TraktApi.prototype._get_url = function (state) {
+  _get_url(state) {
     // Replace 'api' from the api_url to get the top level trakt domain
-    var base_url = this._endpoint.replace(/api\W/, '');
+    const base_url = this._endpoint.replace(/api\W/, '');
 
-    return base_url + "/oauth/authorize?response_type=code&client_id=" + this._client_id + "&redirect_uri=" + this._redirect_uri + "&state=" + state;
-  };
+    return `${base_url}/oauth/authorize?response_type=code&client_id=${this._client_id}&redirect_uri=${this._redirect_uri}&state=${state}`;
+  }
 
-  TraktApi.prototype._exchange_code = function (code, state) {
-    return __awaiter(this, void 0, Promise, function () {
-      var _a;
+  _exchange_code(code, state) {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (state !== this._tokens.authentication_state) {
+        console.error('Invalid CSRF (State)');
+        return false;
+      }
 
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            if (state !== this._tokens.authentication_state) {
-              console.error('Invalid CSRF (State)');
-              return [2
-              /*return*/
-              , false];
-            }
+      this._tokens = yield this._exchange({
+        code: code,
+        client_id: this._client_id,
+        client_secret: this._client_secret,
+        redirect_uri: this._redirect_uri,
+        grant_type: 'authorization_code'
+      });
+      return this.isAuthenticated();
+    });
+  }
 
-            _a = this;
-            return [4
-            /*yield*/
-            , this._exchange({
-              code: code,
-              client_id: this._client_id,
-              client_secret: this._client_secret,
-              redirect_uri: this._redirect_uri,
-              grant_type: 'authorization_code'
-            })];
-
-          case 1:
-            _a._tokens = _b.sent();
-            return [2
-            /*return*/
-            , this.isAuthenticated()];
-        }
+  _refresh_token() {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (!this._tokens.refresh_token) return {};
+      return yield this._exchange({
+        refresh_token: this._tokens.refresh_token,
+        client_id: this._client_id,
+        client_secret: this._client_secret,
+        redirect_uri: this._redirect_uri,
+        grant_type: 'refresh_token'
       });
     });
-  };
+  }
 
-  TraktApi.prototype._refresh_token = function () {
-    return __awaiter(this, void 0, Promise, function () {
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            if (!this._tokens.refresh_token) return [2
-            /*return*/
-            , {}];
-            return [4
-            /*yield*/
-            , this._exchange({
-              refresh_token: this._tokens.refresh_token,
-              client_id: this._client_id,
-              client_secret: this._client_secret,
-              redirect_uri: this._redirect_uri,
-              grant_type: 'refresh_token'
-            })];
-
-          case 1:
-            return [2
-            /*return*/
-            , _a.sent()];
-        }
+  _revoke_token() {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (!this._tokens.access_token) return;
+      return this._request('POST', '/oauth/revoke', {
+        token: this._tokens.access_token,
+        client_id: this._client_id,
+        client_secret: this._client_secret
       });
     });
-  };
+  }
 
-  TraktApi.prototype._revoke_token = function () {
-    return __awaiter(this, void 0, Promise, function () {
-      return __generator(this, function (_a) {
-        if (!this._tokens.access_token) return [2
-        /*return*/
-        ];
-        return [2
-        /*return*/
-        , this._request('POST', '/oauth/revoke', {
-          token: this._tokens.access_token,
-          client_id: this._client_id,
-          client_secret: this._client_secret
-        })];
+  search(type, query) {
+    return __awaiter(this, void 0, void 0, function* () {
+      return this._request('GET', `/search/${type}?query=${encodeURIComponent(query)}`);
+    });
+  }
+
+  seasons(showId, extended) {
+    return __awaiter(this, void 0, void 0, function* () {
+      let query = extended ? '?extended=' + extended.join(",") : '';
+      return this._request('GET', `/shows/${showId}/seasons${query}`);
+    });
+  }
+
+  season(showId, season, extended) {
+    return __awaiter(this, void 0, void 0, function* () {
+      return this._request('GET', `/shows/${showId}/seasons/${season}?extended=${extended ? 'full' : ''}`);
+    });
+  }
+
+  scrobble(type, data) {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (!this._tokens.access_token) {
+        throw new Error('Access token required.');
+      }
+
+      return this._request('POST', `/scrobble/${type}`, data);
+    });
+  }
+
+  history(type, id) {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (!this._tokens.access_token) {
+        throw new Error('Access token required.');
+      }
+
+      let url = '/sync/history';
+      if (type) url += '/' + type;
+      if (type && id) url += '/' + id;
+      return this._request('GET', url);
+    });
+  }
+
+  historyRemove(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (!this._tokens.access_token) {
+        throw new Error('Access token required.');
+      }
+
+      return this._request('POST', `/sync/history/remove`, {
+        ids: [id]
       });
     });
-  };
+  }
 
-  TraktApi.prototype.search = function (type, query) {
-    return __awaiter(this, void 0, Promise, function () {
-      return __generator(this, function (_a) {
-        return [2
-        /*return*/
-        , this._request('GET', "/search/" + type + "?query=" + encodeURIComponent(query))];
-      });
-    });
-  };
+}
 
-  TraktApi.prototype.seasons = function (showId, extended) {
-    return __awaiter(this, void 0, Promise, function () {
-      var query;
-      return __generator(this, function (_a) {
-        query = extended ? '?extended=' + extended.join(",") : '';
-        return [2
-        /*return*/
-        , this._request('GET', "/shows/" + showId + "/seasons" + query)];
-      });
-    });
-  };
-
-  TraktApi.prototype.season = function (showId, season, extended) {
-    return __awaiter(this, void 0, Promise, function () {
-      return __generator(this, function (_a) {
-        return [2
-        /*return*/
-        , this._request('GET', "/shows/" + showId + "/seasons/" + season + "?extended=" + (extended ? 'full' : ''))];
-      });
-    });
-  };
-
-  TraktApi.prototype.scrobble = function (type, data) {
-    return __awaiter(this, void 0, Promise, function () {
-      return __generator(this, function (_a) {
-        if (!this._tokens.access_token) {
-          throw new Error('Access token required.');
-        }
-
-        return [2
-        /*return*/
-        , this._request('POST', "/scrobble/" + type, data)];
-      });
-    });
-  };
-
-  TraktApi.prototype.history = function (type, id) {
-    return __awaiter(this, void 0, Promise, function () {
-      var url;
-      return __generator(this, function (_a) {
-        if (!this._tokens.access_token) {
-          throw new Error('Access token required.');
-        }
-
-        url = '/sync/history';
-        if (type) url += '/' + type;
-        if (type && id) url += '/' + id;
-        return [2
-        /*return*/
-        , this._request('GET', url)];
-      });
-    });
-  };
-
-  TraktApi.prototype.historyRemove = function (id) {
-    return __awaiter(this, void 0, Promise, function () {
-      return __generator(this, function (_a) {
-        if (!this._tokens.access_token) {
-          throw new Error('Access token required.');
-        }
-
-        return [2
-        /*return*/
-        , this._request('POST', "/sync/history/remove", {
-          ids: [id]
-        })];
-      });
-    });
-  };
-
-  return TraktApi;
-}();
-
-exports["default"] = TraktApi;
-},{"strongly-typed-events":"/nYY"}],"SXC6":[function(require,module,exports) {
+exports.default = TraktApi;
+},{"strongly-typed-events":"../node_modules/strongly-typed-events/dist/index.js"}],"TraktScrobble.ts":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -1965,126 +1665,19 @@ var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, gene
   });
 };
 
-var __generator = this && this.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function () {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) try {
-      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-      if (y = 0, t) op = [op[0] & 2, t.value];
-
-      switch (op[0]) {
-        case 0:
-        case 1:
-          t = op;
-          break;
-
-        case 4:
-          _.label++;
-          return {
-            value: op[1],
-            done: false
-          };
-
-        case 5:
-          _.label++;
-          y = op[1];
-          op = [0];
-          continue;
-
-        case 7:
-          op = _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-
-        default:
-          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-            _ = 0;
-            continue;
-          }
-
-          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-            _.label = op[1];
-            break;
-          }
-
-          if (op[0] === 6 && _.label < t[1]) {
-            _.label = t[1];
-            t = op;
-            break;
-          }
-
-          if (t && _.label < t[2]) {
-            _.label = t[2];
-
-            _.ops.push(op);
-
-            break;
-          }
-
-          if (t[2]) _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-      }
-
-      op = body.call(thisArg, _);
-    } catch (e) {
-      op = [6, e];
-      y = 0;
-    } finally {
-      f = t = 0;
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
-
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
   };
 };
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var TraktApi_1 = __importDefault(require("./TraktApi"));
+const TraktApi_1 = __importDefault(require("./TraktApi"));
 
-var ste_simple_events_1 = require("ste-simple-events");
+const ste_simple_events_1 = require("ste-simple-events");
 
 var PlaybackState;
 
@@ -2115,10 +1708,8 @@ var LookupResult;
   LookupResult[LookupResult["Error"] = 2] = "Error";
 })(LookupResult || (LookupResult = {}));
 
-var TraktScrobble =
-/** @class */
-function () {
-  function TraktScrobble(client, data) {
+class TraktScrobble {
+  constructor(client, data) {
     /** Scrobble once this percentage has been reached */
     this.scrobbleAbovePecentage = 80;
     /** Minimum time of the video that has to have been played before scrobbling (percent of duration) */
@@ -2137,83 +1728,77 @@ function () {
   /** Extract item type from scrobble data */
 
 
-  TraktScrobble.typeFromData = function (data) {
+  static typeFromData(data) {
     if (!data) return null;
     if (data.movie) return 'movie';
     if (data.show && data.episode) return 'episode';
     return null;
-  };
+  }
   /** Extract trakt id from scrobble data, returns 0 if id is not set */
 
 
-  TraktScrobble.traktIdFromData = function (data) {
+  static traktIdFromData(data) {
     if (!data) return 0;
-    var movieId = data.movie && data.movie.ids && data.movie.ids.trakt || null;
+    let movieId = data.movie && data.movie.ids && data.movie.ids.trakt || null;
     if (movieId) return movieId;
-    var episodeId = data.episode && data.episode.ids && data.episode.ids.trakt || null;
+    let episodeId = data.episode && data.episode.ids && data.episode.ids.trakt || null;
     if (episodeId) return episodeId;
     return 0;
-  };
+  }
 
-  Object.defineProperty(TraktScrobble.prototype, "api", {
-    get: function () {
-      return this._client;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(TraktScrobble.prototype, "enabled", {
-    get: function () {
-      return this._enabled;
-    },
-    set: function (value) {
-      if (this._enabled === value) return;
-      this._enabled = value;
+  get api() {
+    return this._client;
+  }
 
-      if (this._enabled) {
-        this._applyState(PlaybackState.Paused);
-      } else {
-        this._applyState(this._playbackState);
-      }
-    },
-    enumerable: true,
-    configurable: true
-  });
+  get enabled() {
+    return this._enabled;
+  }
 
-  TraktScrobble.prototype.setPlaybackTime = function (time, duration) {
-    var delta = time - this._lastPlaybackTime;
+  set enabled(value) {
+    if (this._enabled === value) return;
+    this._enabled = value;
+
+    if (this._enabled) {
+      this._applyState(PlaybackState.Paused);
+    } else {
+      this._applyState(this._playbackState);
+    }
+  }
+
+  setPlaybackTime(time, duration) {
+    let delta = time - this._lastPlaybackTime;
 
     if (delta < 0.5) {
       this._playbackTime += delta;
     }
 
-    var progress = time / duration * 100;
-    var minimumTime = duration * this.scrobbleMimimumPlaybackPercentage;
+    let progress = time / duration * 100;
+    let minimumTime = duration * this.scrobbleMimimumPlaybackPercentage;
 
     if (this._state === TraktScrobbleState.Started && progress > this.scrobbleAbovePecentage && this._playbackTime > minimumTime) {
       this.setPlaybackState(PlaybackState.Ended, progress);
     }
 
     this._lastPlaybackTime = time;
-  };
+  }
 
-  TraktScrobble.prototype.setPlaybackState = function (state, progress) {
+  setPlaybackState(state, progress) {
     this._playbackState = state;
     this._data.progress = progress;
 
     if (!this.enabled) {
       this._applyState(state);
     }
-  };
+  }
 
-  TraktScrobble.prototype.scrobbleNow = function () {
+  scrobbleNow() {
     this._playbackState = PlaybackState.Ended;
     this._data.progress = 100;
 
     this._applyState(this._playbackState);
-  };
+  }
 
-  TraktScrobble.prototype._applyState = function (state) {
+  _applyState(state) {
     if (state === PlaybackState.Playing) {
       if (this._pendingState === TraktScrobbleState.Found || this._pendingState === TraktScrobbleState.Paused) {
         this._updateScrobble('start');
@@ -2227,475 +1812,309 @@ function () {
         this._updateScrobble('stop');
       }
     }
-  };
+  }
 
-  Object.defineProperty(TraktScrobble.prototype, "error", {
-    get: function () {
-      return this._error;
-    },
-    enumerable: true,
-    configurable: true
-  });
+  get error() {
+    return this._error;
+  }
 
-  TraktScrobble.prototype.scrobbleUrl = function () {
-    var url = 'https://trakt.tv/';
+  scrobbleUrl() {
+    let url = 'https://trakt.tv/';
 
     if (this._data.movie !== undefined) {
-      return url + ("movies/" + this._data.movie.ids.slug);
+      return url + `movies/${this._data.movie.ids.slug}`;
     } else if (this._data.show !== undefined && this._data.episode !== undefined) {
-      var show = this._data.show;
-      var episode = this._data.episode;
-      return url + ("shows/" + show.ids.slug + "/seasons/" + episode.season + "/episodes/" + episode.number);
+      const show = this._data.show;
+      const episode = this._data.episode;
+      return url + `shows/${show.ids.slug}/seasons/${episode.season}/episodes/${episode.number}`;
     }
 
     return '';
-  };
+  }
 
-  Object.defineProperty(TraktScrobble.prototype, "state", {
-    get: function () {
-      return this._state;
-    },
-    enumerable: true,
-    configurable: true
-  });
+  get state() {
+    return this._state;
+  }
 
-  TraktScrobble.prototype.setState = function (value) {
+  setState(value) {
     if (this._state == value) return;
     this._state = value;
     this._pendingState = value;
     this.onStateChanged.dispatch(value);
-  };
+  }
 
-  Object.defineProperty(TraktScrobble.prototype, "data", {
-    get: function () {
-      return this._data;
-    },
-    enumerable: true,
-    configurable: true
-  });
+  get data() {
+    return this._data;
+  }
 
-  TraktScrobble.prototype._handleError = function (response) {
-    if (!TraktApi_1["default"].isError(response)) return false;
-    console.error("trakt scrobbler: " + response.error);
+  _handleError(response) {
+    if (!TraktApi_1.default.isError(response)) return false;
+    console.error(`trakt scrobbler: ${response.error}`);
     this._error = response.error;
     this.setState(TraktScrobbleState.Error);
     return true;
-  };
+  }
 
-  TraktScrobble.prototype._init = function () {
-    return __awaiter(this, void 0, Promise, function () {
-      var result;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            this.setState(TraktScrobbleState.Lookup);
-            return [4
-            /*yield*/
-            , this._lookup()];
+  _init() {
+    return __awaiter(this, void 0, void 0, function* () {
+      this.setState(TraktScrobbleState.Lookup);
+      let result = yield this._lookup();
 
-          case 1:
-            result = _a.sent();
+      if (result === LookupResult.NotFound) {
+        this.setState(TraktScrobbleState.NotFound);
+        return;
+      } else if (result === LookupResult.Error) {
+        this.setState(TraktScrobbleState.Error);
+        return;
+      }
 
-            if (result === LookupResult.NotFound) {
-              this.setState(TraktScrobbleState.NotFound);
-              return [2
-              /*return*/
-              ];
-            } else if (result === LookupResult.Error) {
-              this.setState(TraktScrobbleState.Error);
-              return [2
-              /*return*/
-              ];
-            }
+      this.setState(TraktScrobbleState.Found);
 
-            this.setState(TraktScrobbleState.Found);
+      if (this._playbackState === PlaybackState.Playing) {
+        this._updateScrobble('start');
+      } else if (this._playbackState === PlaybackState.Ended) {
+        this._updateScrobble('stop');
+      }
+    });
+  }
 
-            if (this._playbackState === PlaybackState.Playing) {
-              this._updateScrobble('start');
-            } else if (this._playbackState === PlaybackState.Ended) {
-              this._updateScrobble('stop');
-            }
+  _updateScrobble(type) {
+    return __awaiter(this, void 0, void 0, function* () {
+      switch (type) {
+        case 'start':
+          this._pendingState = TraktScrobbleState.Started;
+          break;
 
-            return [2
-            /*return*/
-            ];
+        case 'pause':
+          this._pendingState = TraktScrobbleState.Paused;
+          break;
+
+        case 'stop':
+          this._pendingState = TraktScrobbleState.Scrobbled;
+          break;
+      }
+
+      let scrobbleResponse = yield this._client.scrobble(type, this._data);
+
+      if (this._handleError(scrobbleResponse)) {
+        return false;
+      }
+
+      switch (this._state) {
+        case TraktScrobbleState.Found:
+        case TraktScrobbleState.Started:
+        case TraktScrobbleState.Paused:
+          switch (scrobbleResponse.action) {
+            case 'start':
+              this.setState(TraktScrobbleState.Started);
+              break;
+
+            case 'pause':
+              this.setState(TraktScrobbleState.Paused);
+              break;
+
+            case 'scrobble':
+              this.setState(TraktScrobbleState.Scrobbled);
+              this.onScrobbled.dispatch(scrobbleResponse);
+              break;
+          }
+
+          break;
+      }
+
+      return true;
+    });
+  }
+
+  _lookup() {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (this._data.movie === undefined && this._data.show === undefined) {
+        console.error('trakt scrobbler: either movie or show needs to be set on scrobble data');
+        return LookupResult.Error;
+      } // Start with trakt's automatic matching
+
+
+      console.log('trakt scrobbler: trying automatic matching...');
+      let result = yield this._scrobbleLookup();
+      if (result !== LookupResult.NotFound) return result;
+      let type = this._data.movie !== undefined ? 'movie' : 'show'; // Retry automatic matching with absolute episode number
+
+      if (type === 'show' && this._data.episode.number_abs === undefined && this._data.episode.number !== undefined) {
+        let data = JSON.parse(JSON.stringify(this._data));
+        data.episode.number_abs = data.episode.number;
+        delete data.episode.number;
+        result = yield this._scrobbleLookup(data);
+        if (result !== LookupResult.NotFound) return result;
+      } // Search for item manually
+
+
+      let title = this._data.movie !== undefined ? this._data.movie.title : this._data.show.title;
+
+      if (!title) {
+        console.error('trakt scrobbler: No title set');
+        return LookupResult.Error;
+      }
+
+      console.log('trakt scrobbler: trying to search manually...');
+      const results = yield this._search(type, title);
+      if (results === null) return LookupResult.Error;
+
+      if (results.length === 0) {
+        console.warn(`trakt scrobbler: manual search for "${title}" returned no results`);
+        return LookupResult.NotFound;
+      } // Try search results in order
+
+
+      for (const found of results) {
+        if (type === 'movie') {
+          console.log(`trakt scrobbler: trying result ${found.movie.title}`, found);
+          this._data.movie = found.movie;
+        } else {
+          console.log(`trakt scrobbler: trying result ${found.show.title}`, found);
+          this._data.show = found.show;
+        } // Look up episode for shows
+
+
+        if (type === 'show') {
+          result = yield this._lookupEpisode(found.show);
+          if (result === LookupResult.Error) return result;
+          if (result === LookupResult.NotFound) continue;
+        } // Retry start with new data
+
+
+        console.log('trakt scrobbler: re-trying matching');
+        result = yield this._scrobbleLookup();
+        if (result === LookupResult.Error) return result;
+        if (result === LookupResult.Found) break;
+      }
+
+      return result;
+    });
+  }
+
+  _scrobbleLookup(data) {
+    return __awaiter(this, void 0, void 0, function* () {
+      let scrobbleResponse = yield this._client.scrobble('pause', data || this._data);
+
+      if (TraktApi_1.default.isError(scrobbleResponse, 404)) {
+        return LookupResult.NotFound;
+      } else if (this._handleError(scrobbleResponse)) {
+        return LookupResult.Error;
+      }
+
+      if (scrobbleResponse.movie !== undefined) this._data.movie = scrobbleResponse.movie;
+      if (scrobbleResponse.show !== undefined) this._data.show = scrobbleResponse.show;
+      if (scrobbleResponse.episode !== undefined) this._data.episode = scrobbleResponse.episode;
+      console.log('trakt scrobbler: scrobble lookup succeeded', scrobbleResponse);
+      return LookupResult.Found;
+    });
+  }
+
+  _search(type, title) {
+    return __awaiter(this, void 0, void 0, function* () {
+      const searchResponse = yield this._client.search(type, title);
+
+      if (this._handleError(searchResponse)) {
+        return null;
+      }
+
+      const goodMatches = searchResponse.filter(r => r.score > 10);
+
+      if (searchResponse.length > goodMatches.length) {
+        if (goodMatches.length === 0) {
+          console.log(`trakt scrobbler: search returned only garbage results.`);
+        } else {
+          console.log(`trakt scrobbler: some search results with low scores ignored`);
         }
-      });
+      }
+
+      return goodMatches;
     });
-  };
+  }
 
-  TraktScrobble.prototype._updateScrobble = function (type) {
-    return __awaiter(this, void 0, Promise, function () {
-      var scrobbleResponse;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            switch (type) {
-              case 'start':
-                this._pendingState = TraktScrobbleState.Started;
-                break;
+  _lookupEpisode(show) {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (this._data.episode === undefined || this._data.episode.number === undefined || this._data.episode.season === undefined) {
+        console.error('trakt scrobbler: data has show but episode is not set or incomplete', this._data.episode);
+        return LookupResult.Error;
+      }
 
-              case 'pause':
-                this._pendingState = TraktScrobbleState.Paused;
-                break;
+      if (show.ids === undefined || show.ids.trakt === undefined) {
+        console.error('trakt scrobbler: show data is missing trakt id', this._data.show);
+        return LookupResult.Error;
+      }
 
-              case 'stop':
-                this._pendingState = TraktScrobbleState.Scrobbled;
-                break;
-            }
+      let episodeResult = LookupResult.NotFound;
+      const seasonsResponse = yield this._client.seasons(show.ids.trakt, ['episodes', 'full']);
 
-            return [4
-            /*yield*/
-            , this._client.scrobble(type, this._data)];
+      if (TraktApi_1.default.isError(seasonsResponse, 404)) {
+        console.error('trakt scrobbler: manual lookup could not find seasons');
+        return LookupResult.NotFound;
+      } else if (this._handleError(seasonsResponse)) {
+        return LookupResult.Error;
+      } // First search in matching season
 
-          case 1:
-            scrobbleResponse = _a.sent();
 
-            if (this._handleError(scrobbleResponse)) {
-              return [2
-              /*return*/
-              , false];
-            }
+      const season = seasonsResponse.find(s => s.number === this._data.episode.season);
 
-            switch (this._state) {
-              case TraktScrobbleState.Found:
-              case TraktScrobbleState.Started:
-              case TraktScrobbleState.Paused:
-                switch (scrobbleResponse.action) {
-                  case 'start':
-                    this.setState(TraktScrobbleState.Started);
-                    break;
+      if (!season) {
+        console.warn(`trakt scrobbler: could not find season ${this._data.episode.season} in seasons response`, seasonsResponse);
+      } else {
+        episodeResult = this._matchEpisodeOrTitle(season, this._data.episode.number, this._data.episode.title);
+      } // Look through all other seasons
 
-                  case 'pause':
-                    this.setState(TraktScrobbleState.Paused);
-                    break;
 
-                  case 'scrobble':
-                    this.setState(TraktScrobbleState.Scrobbled);
-                    this.onScrobbled.dispatch(scrobbleResponse);
-                    break;
-                }
-
-                break;
-            }
-
-            return [2
-            /*return*/
-            , true];
+      if (episodeResult === LookupResult.NotFound) {
+        for (let s of seasonsResponse) {
+          if (s === season) continue;
+          episodeResult = this._matchEpisodeOrTitle(s, this._data.episode.number, this._data.episode.title);
+          if (episodeResult == LookupResult.Found) break;
         }
-      });
+      }
+
+      return episodeResult;
     });
-  };
+  }
 
-  TraktScrobble.prototype._lookup = function () {
-    return __awaiter(this, void 0, Promise, function () {
-      var result, type, title, results, _i, results_1, found;
-
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            if (this._data.movie === undefined && this._data.show === undefined) {
-              console.error('trakt scrobbler: either movie or show needs to be set on scrobble data');
-              return [2
-              /*return*/
-              , LookupResult.Error];
-            } // Start with trakt's automatic matching
-
-
-            console.log('trakt scrobbler: trying automatic matching...');
-            return [4
-            /*yield*/
-            , this._scrobbleLookup()];
-
-          case 1:
-            result = _a.sent();
-            if (result !== LookupResult.NotFound) return [2
-            /*return*/
-            , result];
-            type = this._data.movie !== undefined ? 'movie' : 'show';
-            title = this._data.movie !== undefined ? this._data.movie.title : this._data.show.title;
-
-            if (!title) {
-              console.error('trakt scrobbler: No title set');
-              return [2
-              /*return*/
-              , LookupResult.Error];
-            }
-
-            console.log('trakt scrobbler: trying to search manually...');
-            return [4
-            /*yield*/
-            , this._search(type, title)];
-
-          case 2:
-            results = _a.sent();
-            if (results === null) return [2
-            /*return*/
-            , LookupResult.Error];
-
-            if (results.length === 0) {
-              console.warn("trakt scrobbler: manual search for \"" + title + "\" returned no results");
-              return [2
-              /*return*/
-              , LookupResult.NotFound];
-            }
-
-            _i = 0, results_1 = results;
-            _a.label = 3;
-
-          case 3:
-            if (!(_i < results_1.length)) return [3
-            /*break*/
-            , 8];
-            found = results_1[_i];
-
-            if (type === 'movie') {
-              console.log("trakt scrobbler: trying result " + found.movie.title, found);
-              this._data.movie = found.movie;
-            } else {
-              console.log("trakt scrobbler: trying result " + found.show.title, found);
-              this._data.show = found.show;
-            }
-
-            if (!(type === 'show')) return [3
-            /*break*/
-            , 5];
-            return [4
-            /*yield*/
-            , this._lookupEpisode(found.show)];
-
-          case 4:
-            result = _a.sent();
-            if (result === LookupResult.Error) return [2
-            /*return*/
-            , result];
-            if (result === LookupResult.NotFound) return [3
-            /*break*/
-            , 7];
-            _a.label = 5;
-
-          case 5:
-            // Retry start with new data
-            console.log('trakt scrobbler: re-trying matching');
-            return [4
-            /*yield*/
-            , this._scrobbleLookup()];
-
-          case 6:
-            result = _a.sent();
-            if (result === LookupResult.Error) return [2
-            /*return*/
-            , result];
-            if (result === LookupResult.Found) return [3
-            /*break*/
-            , 8];
-            _a.label = 7;
-
-          case 7:
-            _i++;
-            return [3
-            /*break*/
-            , 3];
-
-          case 8:
-            return [2
-            /*return*/
-            , result];
-        }
-      });
-    });
-  };
-
-  TraktScrobble.prototype._scrobbleLookup = function () {
-    return __awaiter(this, void 0, Promise, function () {
-      var scrobbleResponse;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , this._client.scrobble('pause', this._data)];
-
-          case 1:
-            scrobbleResponse = _a.sent();
-
-            if (TraktApi_1["default"].isError(scrobbleResponse, 404)) {
-              return [2
-              /*return*/
-              , LookupResult.NotFound];
-            } else if (this._handleError(scrobbleResponse)) {
-              return [2
-              /*return*/
-              , LookupResult.Error];
-            }
-
-            if (scrobbleResponse.movie !== undefined) this._data.movie = scrobbleResponse.movie;
-            if (scrobbleResponse.show !== undefined) this._data.show = scrobbleResponse.show;
-            if (scrobbleResponse.episode !== undefined) this._data.episode = scrobbleResponse.episode;
-            console.log('trakt scrobbler: scrobble lookup succeeded', scrobbleResponse);
-            return [2
-            /*return*/
-            , LookupResult.Found];
-        }
-      });
-    });
-  };
-
-  TraktScrobble.prototype._search = function (type, title) {
-    return __awaiter(this, void 0, Promise, function () {
-      var searchResponse, goodMatches;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , this._client.search(type, title)];
-
-          case 1:
-            searchResponse = _a.sent();
-
-            if (this._handleError(searchResponse)) {
-              return [2
-              /*return*/
-              , null];
-            }
-
-            goodMatches = searchResponse.filter(function (r) {
-              return r.score > 10;
-            });
-
-            if (searchResponse.length > goodMatches.length) {
-              if (goodMatches.length === 0) {
-                console.log("trakt scrobbler: search returned only garbage results.");
-              } else {
-                console.log("trakt scrobbler: some search results with low scores ignored");
-              }
-            }
-
-            return [2
-            /*return*/
-            , goodMatches];
-        }
-      });
-    });
-  };
-
-  TraktScrobble.prototype._lookupEpisode = function (show) {
-    return __awaiter(this, void 0, Promise, function () {
-      var episodeResult, seasonsResponse, season, _i, seasonsResponse_1, s;
-
-      var _this = this;
-
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            if (this._data.episode === undefined || this._data.episode.number === undefined || this._data.episode.season === undefined) {
-              console.error('trakt scrobbler: data has show but episode is not set or incomplete', this._data.episode);
-              return [2
-              /*return*/
-              , LookupResult.Error];
-            }
-
-            if (show.ids === undefined || show.ids.trakt === undefined) {
-              console.error('trakt scrobbler: show data is missing trakt id', this._data.show);
-              return [2
-              /*return*/
-              , LookupResult.Error];
-            }
-
-            episodeResult = LookupResult.NotFound;
-            return [4
-            /*yield*/
-            , this._client.seasons(show.ids.trakt, ['episodes', 'full'])];
-
-          case 1:
-            seasonsResponse = _a.sent();
-
-            if (TraktApi_1["default"].isError(seasonsResponse, 404)) {
-              console.error('trakt scrobbler: manual lookup could not find seasons');
-              return [2
-              /*return*/
-              , LookupResult.NotFound];
-            } else if (this._handleError(seasonsResponse)) {
-              return [2
-              /*return*/
-              , LookupResult.Error];
-            }
-
-            season = seasonsResponse.find(function (s) {
-              return s.number === _this._data.episode.season;
-            });
-
-            if (!season) {
-              console.warn("trakt scrobbler: could not find season " + this._data.episode.season + " in seasons response", seasonsResponse);
-            } else {
-              episodeResult = this._matchEpisodeOrTitle(season, this._data.episode.number, this._data.episode.title);
-            } // Look through all other seasons
-
-
-            if (episodeResult === LookupResult.NotFound) {
-              for (_i = 0, seasonsResponse_1 = seasonsResponse; _i < seasonsResponse_1.length; _i++) {
-                s = seasonsResponse_1[_i];
-                if (s === season) continue;
-                episodeResult = this._matchEpisodeOrTitle(s, this._data.episode.number, this._data.episode.title);
-                if (episodeResult == LookupResult.Found) break;
-              }
-            }
-
-            return [2
-            /*return*/
-            , episodeResult];
-        }
-      });
-    });
-  };
-
-  TraktScrobble.prototype._matchEpisodeOrTitle = function (season, episode, title) {
-    var _this = this;
-
-    var numberMatch = season.episodes.filter(function (e) {
-      return e.number === episode || e.number_abs === episode;
-    });
+  _matchEpisodeOrTitle(season, episode, title) {
+    let numberMatch = season.episodes.filter(e => e.number === episode || e.number_abs === episode);
 
     if (numberMatch.length > 1) {
-      console.error("trakt scrobbler: got multiple episode #" + episode + " in season", season);
+      console.error(`trakt scrobbler: got multiple episode #${episode} in season`, season);
       return LookupResult.NotFound;
     } else if (numberMatch.length == 1) {
-      console.log("trakt scrobbler: found episode using episode number", numberMatch[0]);
+      console.log(`trakt scrobbler: found episode using episode number`, numberMatch[0]);
       this._data.episode = numberMatch[0];
       return LookupResult.Found;
     }
 
     if (title) {
-      var filteredTitle_1 = this._filterEpisodeTitle(title);
+      const filteredTitle = this._filterEpisodeTitle(title);
 
-      var titleMatch = season.episodes.filter(function (e) {
-        return e.title && _this._filterEpisodeTitle(e.title) === filteredTitle_1;
-      });
+      let titleMatch = season.episodes.filter(e => e.title && this._filterEpisodeTitle(e.title) === filteredTitle);
 
       if (titleMatch.length > 1) {
-        console.error("trakt scrobbler: got multiple episodes titled \"" + title + "\" in show", season);
+        console.error(`trakt scrobbler: got multiple episodes titled "${title}" in show`, season);
         return LookupResult.NotFound;
       } else if (titleMatch.length == 1) {
-        console.log("trakt scrobbler: found episode using episode title", numberMatch[0]);
+        console.log(`trakt scrobbler: found episode using episode title`, numberMatch[0]);
         this._data.episode = numberMatch[0];
         return LookupResult.Found;
       }
     }
 
     return LookupResult.NotFound;
-  };
+  }
 
-  TraktScrobble.prototype._filterEpisodeTitle = function (title) {
+  _filterEpisodeTitle(title) {
     if (!title) debugger;
     return title.replace(/[^\w\s]/gi, '').toLowerCase();
-  };
+  }
 
-  return TraktScrobble;
-}();
+}
 
-exports["default"] = TraktScrobble;
-},{"./TraktApi":"bK1h","ste-simple-events":"/WWW"}],"OmAK":[function(require,module,exports) {
+exports.default = TraktScrobble;
+},{"./TraktApi":"TraktApi.ts","ste-simple-events":"../node_modules/ste-simple-events/dist/index.js"}],"../node_modules/preact/dist/preact.mjs":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3421,7 +2840,7 @@ var preact = {
 };
 var _default = preact;
 exports.default = _default;
-},{}],"MvwA":[function(require,module,exports) {
+},{}],"../node_modules/@emotion/memoize/dist/memoize.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3439,7 +2858,7 @@ function memoize(fn) {
 
 var _default = memoize;
 exports.default = _default;
-},{}],"lCo2":[function(require,module,exports) {
+},{}],"../node_modules/@emotion/unitless/dist/unitless.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3492,7 +2911,7 @@ var unitlessKeys = {
 };
 var _default = unitlessKeys;
 exports.default = _default;
-},{}],"XFUu":[function(require,module,exports) {
+},{}],"../node_modules/@emotion/hash/dist/hash.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3538,7 +2957,7 @@ function murmurhash2_32_gc(str) {
 
 var _default = murmurhash2_32_gc;
 exports.default = _default;
-},{}],"r3ll":[function(require,module,exports) {
+},{}],"../node_modules/@emotion/stylis/dist/stylis.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4174,7 +3593,7 @@ function stylis_min(W) {
 
 var _default = stylis_min;
 exports.default = _default;
-},{}],"UYYs":[function(require,module,exports) {
+},{}],"../node_modules/stylis-rule-sheet/index.js":[function(require,module,exports) {
 var define;
 (function (factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? (module['exports'] = factory()) :
@@ -4761,7 +4180,7 @@ function createEmotion(context, options) {
 
 var _default = createEmotion;
 exports.default = _default;
-},{"@emotion/memoize":"MvwA","@emotion/unitless":"lCo2","@emotion/hash":"XFUu","@emotion/stylis":"r3ll","stylis-rule-sheet":"UYYs"}],"mibh":[function(require,module,exports) {
+},{"@emotion/memoize":"../node_modules/@emotion/memoize/dist/memoize.esm.js","@emotion/unitless":"../node_modules/@emotion/unitless/dist/unitless.esm.js","@emotion/hash":"../node_modules/@emotion/hash/dist/hash.esm.js","@emotion/stylis":"../node_modules/@emotion/stylis/dist/stylis.esm.js","stylis-rule-sheet":"../node_modules/stylis-rule-sheet/index.js"}],"../node_modules/emotion/dist/index.esm.js":[function(require,module,exports) {
 var global = arguments[3];
 "use strict";
 
@@ -4798,83 +4217,34 @@ exports.merge = merge;
 exports.cx = cx;
 exports.hydrate = hydrate;
 exports.flush = flush;
-},{"create-emotion":"QdUY"}],"B913":[function(require,module,exports) {
+},{"create-emotion":"QdUY"}],"ui/TraktIcon.tsx":[function(require,module,exports) {
 "use strict";
 
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const preact_1 = require("preact");
+
+const emotion_1 = require("emotion");
+
+let className = emotion_1.css`
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMTQ0LjggMTQ0LjgiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDE0NC44IDE0NC44IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjcyLjQiIGN5PSI3Mi40IiByPSI3Mi40Ii8+DQoJPHBhdGggZmlsbD0iI0VEMjIyNCIgZD0iTTI5LjUsMTExLjhjMTAuNiwxMS42LDI1LjksMTguOCw0Mi45LDE4LjhjOC43LDAsMTYuOS0xLjksMjQuMy01LjNMNTYuMyw4NUwyOS41LDExMS44eiIvPg0KCTxwYXRoIGZpbGw9IiNFRDIyMjQiIGQ9Ik01Ni4xLDYwLjZMMjUuNSw5MS4xTDIxLjQsODdsMzIuMi0zMi4yaDBsMzcuNi0zNy42Yy01LjktMi0xMi4yLTMuMS0xOC44LTMuMWMtMzIuMiwwLTU4LjMsMjYuMS01OC4zLDU4LjMNCgkJYzAsMTMuMSw0LjMsMjUuMiwxMS43LDM1bDMwLjUtMzAuNWwyLjEsMmw0My43LDQzLjdjMC45LTAuNSwxLjctMSwyLjUtMS42TDU2LjMsNzIuN0wyNywxMDJsLTQuMS00LjFsMzMuNC0zMy40bDIuMSwybDUxLDUwLjkNCgkJYzAuOC0wLjYsMS41LTEuMywyLjItMS45bC01NS01NUw1Ni4xLDYwLjZ6Ii8+DQoJPHBhdGggZmlsbD0iI0VEMUMyNCIgZD0iTTExNS43LDExMS40YzkuMy0xMC4zLDE1LTI0LDE1LTM5YzAtMjMuNC0xMy44LTQzLjUtMzMuNi01Mi44TDYwLjQsNTYuMkwxMTUuNywxMTEuNHogTTc0LjUsNjYuOGwtNC4xLTQuMQ0KCQlsMjguOS0yOC45bDQuMSw0LjFMNzQuNSw2Ni44eiBNMTAxLjksMjcuMUw2OC42LDYwLjRsLTQuMS00LjFMOTcuOCwyM0wxMDEuOSwyNy4xeiIvPg0KCTxnPg0KCQk8Zz4NCgkJCTxwYXRoIGZpbGw9IiNFRDIyMjQiIGQ9Ik03Mi40LDE0NC44QzMyLjUsMTQ0LjgsMCwxMTIuMywwLDcyLjRDMCwzMi41LDMyLjUsMCw3Mi40LDBzNzIuNCwzMi41LDcyLjQsNzIuNA0KCQkJCUMxNDQuOCwxMTIuMywxMTIuMywxNDQuOCw3Mi40LDE0NC44eiBNNzIuNCw3LjNDMzYuNSw3LjMsNy4zLDM2LjUsNy4zLDcyLjRzMjkuMiw2NS4xLDY1LjEsNjUuMXM2NS4xLTI5LjIsNjUuMS02NS4xDQoJCQkJUzEwOC4zLDcuMyw3Mi40LDcuM3oiLz4NCgkJPC9nPg0KCTwvZz4NCjwvZz4NCjwvc3ZnPg0K");
+  background-repeat: no-repeat;
+  background-origin: content-box;
+`;
+
+class TraktIcon extends preact_1.Component {
+  render() {
+    return preact_1.h("div", {
+      className: `${className} ${this.props.className}`
     });
-  } else {
-    cooked.raw = raw;
   }
 
-  return cooked;
-};
+}
 
-var __extends = this && this.__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  result["default"] = mod;
-  return result;
-};
-
-exports.__esModule = true;
-
-var preact_1 = __importStar(require("preact"));
-
-var emotion_1 = require("emotion");
-
-var h = preact_1["default"].h;
-var className = emotion_1.css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background-image: url(\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMTQ0LjggMTQ0LjgiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDE0NC44IDE0NC44IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjcyLjQiIGN5PSI3Mi40IiByPSI3Mi40Ii8+DQoJPHBhdGggZmlsbD0iI0VEMjIyNCIgZD0iTTI5LjUsMTExLjhjMTAuNiwxMS42LDI1LjksMTguOCw0Mi45LDE4LjhjOC43LDAsMTYuOS0xLjksMjQuMy01LjNMNTYuMyw4NUwyOS41LDExMS44eiIvPg0KCTxwYXRoIGZpbGw9IiNFRDIyMjQiIGQ9Ik01Ni4xLDYwLjZMMjUuNSw5MS4xTDIxLjQsODdsMzIuMi0zMi4yaDBsMzcuNi0zNy42Yy01LjktMi0xMi4yLTMuMS0xOC44LTMuMWMtMzIuMiwwLTU4LjMsMjYuMS01OC4zLDU4LjMNCgkJYzAsMTMuMSw0LjMsMjUuMiwxMS43LDM1bDMwLjUtMzAuNWwyLjEsMmw0My43LDQzLjdjMC45LTAuNSwxLjctMSwyLjUtMS42TDU2LjMsNzIuN0wyNywxMDJsLTQuMS00LjFsMzMuNC0zMy40bDIuMSwybDUxLDUwLjkNCgkJYzAuOC0wLjYsMS41LTEuMywyLjItMS45bC01NS01NUw1Ni4xLDYwLjZ6Ii8+DQoJPHBhdGggZmlsbD0iI0VEMUMyNCIgZD0iTTExNS43LDExMS40YzkuMy0xMC4zLDE1LTI0LDE1LTM5YzAtMjMuNC0xMy44LTQzLjUtMzMuNi01Mi44TDYwLjQsNTYuMkwxMTUuNywxMTEuNHogTTc0LjUsNjYuOGwtNC4xLTQuMQ0KCQlsMjguOS0yOC45bDQuMSw0LjFMNzQuNSw2Ni44eiBNMTAxLjksMjcuMUw2OC42LDYwLjRsLTQuMS00LjFMOTcuOCwyM0wxMDEuOSwyNy4xeiIvPg0KCTxnPg0KCQk8Zz4NCgkJCTxwYXRoIGZpbGw9IiNFRDIyMjQiIGQ9Ik03Mi40LDE0NC44QzMyLjUsMTQ0LjgsMCwxMTIuMywwLDcyLjRDMCwzMi41LDMyLjUsMCw3Mi40LDBzNzIuNCwzMi41LDcyLjQsNzIuNA0KCQkJCUMxNDQuOCwxMTIuMywxMTIuMywxNDQuOCw3Mi40LDE0NC44eiBNNzIuNCw3LjNDMzYuNSw3LjMsNy4zLDM2LjUsNy4zLDcyLjRzMjkuMiw2NS4xLDY1LjEsNjUuMXM2NS4xLTI5LjIsNjUuMS02NS4xDQoJCQkJUzEwOC4zLDcuMyw3Mi40LDcuM3oiLz4NCgkJPC9nPg0KCTwvZz4NCjwvZz4NCjwvc3ZnPg0K\");\n  background-repeat: no-repeat;\n  background-origin: content-box;\n"], ["\n  background-image: url(\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMTQ0LjggMTQ0LjgiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDE0NC44IDE0NC44IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjcyLjQiIGN5PSI3Mi40IiByPSI3Mi40Ii8+DQoJPHBhdGggZmlsbD0iI0VEMjIyNCIgZD0iTTI5LjUsMTExLjhjMTAuNiwxMS42LDI1LjksMTguOCw0Mi45LDE4LjhjOC43LDAsMTYuOS0xLjksMjQuMy01LjNMNTYuMyw4NUwyOS41LDExMS44eiIvPg0KCTxwYXRoIGZpbGw9IiNFRDIyMjQiIGQ9Ik01Ni4xLDYwLjZMMjUuNSw5MS4xTDIxLjQsODdsMzIuMi0zMi4yaDBsMzcuNi0zNy42Yy01LjktMi0xMi4yLTMuMS0xOC44LTMuMWMtMzIuMiwwLTU4LjMsMjYuMS01OC4zLDU4LjMNCgkJYzAsMTMuMSw0LjMsMjUuMiwxMS43LDM1bDMwLjUtMzAuNWwyLjEsMmw0My43LDQzLjdjMC45LTAuNSwxLjctMSwyLjUtMS42TDU2LjMsNzIuN0wyNywxMDJsLTQuMS00LjFsMzMuNC0zMy40bDIuMSwybDUxLDUwLjkNCgkJYzAuOC0wLjYsMS41LTEuMywyLjItMS45bC01NS01NUw1Ni4xLDYwLjZ6Ii8+DQoJPHBhdGggZmlsbD0iI0VEMUMyNCIgZD0iTTExNS43LDExMS40YzkuMy0xMC4zLDE1LTI0LDE1LTM5YzAtMjMuNC0xMy44LTQzLjUtMzMuNi01Mi44TDYwLjQsNTYuMkwxMTUuNywxMTEuNHogTTc0LjUsNjYuOGwtNC4xLTQuMQ0KCQlsMjguOS0yOC45bDQuMSw0LjFMNzQuNSw2Ni44eiBNMTAxLjksMjcuMUw2OC42LDYwLjRsLTQuMS00LjFMOTcuOCwyM0wxMDEuOSwyNy4xeiIvPg0KCTxnPg0KCQk8Zz4NCgkJCTxwYXRoIGZpbGw9IiNFRDIyMjQiIGQ9Ik03Mi40LDE0NC44QzMyLjUsMTQ0LjgsMCwxMTIuMywwLDcyLjRDMCwzMi41LDMyLjUsMCw3Mi40LDBzNzIuNCwzMi41LDcyLjQsNzIuNA0KCQkJCUMxNDQuOCwxMTIuMywxMTIuMywxNDQuOCw3Mi40LDE0NC44eiBNNzIuNCw3LjNDMzYuNSw3LjMsNy4zLDM2LjUsNy4zLDcyLjRzMjkuMiw2NS4xLDY1LjEsNjUuMXM2NS4xLTI5LjIsNjUuMS02NS4xDQoJCQkJUzEwOC4zLDcuMyw3Mi40LDcuM3oiLz4NCgkJPC9nPg0KCTwvZz4NCjwvZz4NCjwvc3ZnPg0K\");\n  background-repeat: no-repeat;\n  background-origin: content-box;\n"])));
-
-var TraktIcon =
-/** @class */
-function (_super) {
-  __extends(TraktIcon, _super);
-
-  function TraktIcon() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
-
-  TraktIcon.prototype.render = function () {
-    return h("div", {
-      className: className + " " + this.props.className
-    });
-  };
-
-  return TraktIcon;
-}(preact_1.Component);
-
-exports["default"] = TraktIcon;
-var templateObject_1;
-},{"preact":"OmAK","emotion":"mibh"}],"Asjh":[function(require,module,exports) {
+exports.default = TraktIcon;
+},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"../node_modules/prop-types/lib/ReactPropTypesSecret.js":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -4949,7 +4319,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":"Asjh"}],"5D9O":[function(require,module,exports) {
+},{"./lib/ReactPropTypesSecret":"../node_modules/prop-types/lib/ReactPropTypesSecret.js"}],"5D9O":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -4972,7 +4342,7 @@ if ("production" !== 'production') {
   // http://fb.me/prop-types-in-prod
   module.exports = require('./factoryWithThrowingShims')();
 }
-},{"./factoryWithThrowingShims":"wVGV"}],"gPI/":[function(require,module,exports) {
+},{"./factoryWithThrowingShims":"wVGV"}],"../node_modules/@emotion/is-prop-valid/dist/is-prop-valid.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4988,7 +4358,7 @@ var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|def
 var index = (0, _memoize.default)(reactPropsRegex.test.bind(reactPropsRegex));
 var _default = index;
 exports.default = _default;
-},{"@emotion/memoize":"MvwA"}],"3Rtg":[function(require,module,exports) {
+},{"@emotion/memoize":"../node_modules/@emotion/memoize/dist/memoize.esm.js"}],"3Rtg":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5225,7 +4595,7 @@ function createEmotionStyled(emotion, view) {
 
 var _default = createEmotionStyled;
 exports.default = _default;
-},{"prop-types":"5D9O","@emotion/is-prop-valid":"gPI/"}],"DOVm":[function(require,module,exports) {
+},{"prop-types":"5D9O","@emotion/is-prop-valid":"../node_modules/@emotion/is-prop-valid/dist/is-prop-valid.esm.js"}],"../node_modules/preact-emotion/dist/index.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5258,44 +4628,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var index = (0, _createEmotionStyled.default)(emotion, _preact.default);
 var _default = index;
 exports.default = _default;
-},{"preact":"OmAK","emotion":"mibh","create-emotion-styled":"3Rtg"}],"VnyP":[function(require,module,exports) {
+},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","create-emotion-styled":"3Rtg"}],"ui/ConnectButton.tsx":[function(require,module,exports) {
 "use strict";
-
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
-  }
-
-  return cooked;
-};
-
-var __extends = this && this.__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
 
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
@@ -5303,343 +4637,229 @@ var __importDefault = this && this.__importDefault || function (mod) {
   };
 };
 
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  result["default"] = mod;
-  return result;
-};
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-exports.__esModule = true;
+const TraktIcon_1 = __importDefault(require("./TraktIcon"));
 
-var TraktIcon_1 = __importDefault(require("./TraktIcon"));
+const preact_1 = require("preact");
 
-var preact_1 = __importStar(require("preact"));
+const emotion_1 = require("emotion");
 
-var emotion_1 = require("emotion");
+const preact_emotion_1 = __importDefault(require("preact-emotion"));
 
-var preact_emotion_1 = __importDefault(require("preact-emotion"));
+let className = emotion_1.css`
+  background-color: black;
+  border: 1px solid #222;
+  border-radius: 5px;
+  padding: 2px 7px;
+  color: white;
+  font-size: 11px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 
-var h = preact_1["default"].h;
-var className = emotion_1.css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background-color: black;\n  border: 1px solid #222;\n  border-radius: 5px;\n  padding: 2px 7px;\n  color: white;\n  font-size: 11px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer;\n\n  &:hover {\n    background-color: #444;\n  }\n"], ["\n  background-color: black;\n  border: 1px solid #222;\n  border-radius: 5px;\n  padding: 2px 7px;\n  color: white;\n  font-size: 11px;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer;\n\n  &:hover {\n    background-color: #444;\n  }\n"])));
-var Icon = preact_emotion_1["default"](TraktIcon_1["default"])(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  height: 14px;\n  width: 14px;\n  margin-right: 5px;\n"], ["\n  height: 14px;\n  width: 14px;\n  margin-right: 5px;\n"])));
+  &:hover {
+    background-color: #444;
+  }
+`;
+const Icon = preact_emotion_1.default(TraktIcon_1.default)`
+  height: 14px;
+  width: 14px;
+  margin-right: 5px;
+`;
 
-var ConnectButton =
-/** @class */
-function (_super) {
-  __extends(ConnectButton, _super);
-
-  function ConnectButton(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this.state = {
-      isConnected: _this.props.api.isAuthenticated()
+class ConnectButton extends preact_1.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isConnected: this.props.api.isAuthenticated()
     };
-    _this._handleAuthenticationChanged = _this._handleAuthenticationChanged.bind(_this);
-    _this._handleClick = _this._handleClick.bind(_this);
-    return _this;
+    this._handleAuthenticationChanged = this._handleAuthenticationChanged.bind(this);
+    this._handleClick = this._handleClick.bind(this);
   }
 
-  ConnectButton.prototype.componentWillMount = function () {
+  componentWillMount() {
     this.props.api.onAuthenticationChanged.sub(this._handleAuthenticationChanged);
-  };
+  }
 
-  ConnectButton.prototype.componentWillUnmount = function () {
+  componentWillUnmount() {
     this.props.api.onAuthenticationChanged.unsub(this._handleAuthenticationChanged);
-  };
+  }
 
-  ConnectButton.prototype._handleAuthenticationChanged = function () {
+  _handleAuthenticationChanged() {
     this.setState({
       isConnected: this.props.api.isAuthenticated()
     });
-  };
+  }
 
-  ConnectButton.prototype._handleClick = function () {
-    var api = this.props.api;
+  _handleClick() {
+    let api = this.props.api;
 
     if (api.isAuthenticated()) {
       api.disconnect();
     } else {
       api.authenticate();
     }
-  };
+  }
 
-  ConnectButton.prototype.render = function () {
-    return h("div", {
+  render() {
+    return preact_1.h("div", {
       className: className,
       onClick: this._handleClick
-    }, h(Icon, null), h("div", {
+    }, preact_1.h(Icon, null), preact_1.h("div", {
       class: "text"
     }, this.state.isConnected ? "Disconnect from Trakt" : "Connect with Trakt"));
-  };
+  }
 
-  return ConnectButton;
-}(preact_1.Component);
+}
 
-exports["default"] = ConnectButton;
-var templateObject_1, templateObject_2;
-},{"./TraktIcon":"B913","preact":"OmAK","emotion":"mibh","preact-emotion":"DOVm"}],"+b4v":[function(require,module,exports) {
+exports.default = ConnectButton;
+},{"./TraktIcon":"ui/TraktIcon.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"ui/ScrobbleInfo.tsx":[function(require,module,exports) {
 "use strict";
 
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const TraktScrobble_1 = require("../TraktScrobble");
+
+const preact_1 = require("preact");
+
+const emotion_1 = require("emotion");
+
+const className = emotion_1.css`
+& .info h2 {
+  font-size: 17px;
+  padding-bottom: 4px;
+}
+`;
+
+class ScrobbleInfo extends preact_1.Component {
+  constructor(props) {
+    super(props);
+    this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
   }
 
-  return cooked;
-};
-
-var __extends = this && this.__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  result["default"] = mod;
-  return result;
-};
-
-exports.__esModule = true;
-
-var TraktScrobble_1 = require("../TraktScrobble");
-
-var preact_1 = __importStar(require("preact"));
-
-var emotion_1 = require("emotion");
-
-var h = preact_1["default"].h;
-var className = emotion_1.css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n& .info h2 {\n  font-size: 17px;\n  padding-bottom: 4px;\n}\n"], ["\n& .info h2 {\n  font-size: 17px;\n  padding-bottom: 4px;\n}\n"])));
-
-var ScrobbleInfo =
-/** @class */
-function (_super) {
-  __extends(ScrobbleInfo, _super);
-
-  function ScrobbleInfo(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this._onScrobbleStatusChanged = _this._onScrobbleStatusChanged.bind(_this);
-    return _this;
-  }
-
-  ScrobbleInfo.prototype.componentWillMount = function () {
+  componentWillMount() {
     this.setState({
       scrobbleData: this.props.scrobble.data,
       scrobbleState: this.props.scrobble.state,
       error: this.props.scrobble.error
     });
     this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
-  };
+  }
 
-  ScrobbleInfo.prototype.componentWillUnmount = function () {
+  componentWillUnmount() {
     this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
-  };
+  }
 
-  ScrobbleInfo.prototype._onScrobbleStatusChanged = function (state) {
+  _onScrobbleStatusChanged(state) {
     this.setState({
       scrobbleData: this.props.scrobble.data,
       scrobbleState: this.props.scrobble.state,
       error: this.props.scrobble.error
     });
-  };
+  }
 
-  ScrobbleInfo.prototype.render = function () {
-    var data = this.state.scrobbleData;
-    var info; // Still looking up
+  render() {
+    let data = this.state.scrobbleData;
+    let info; // Still looking up
 
     if (this.state.scrobbleState == TraktScrobble_1.TraktScrobbleState.Lookup) {
-      info = h("div", {
+      info = preact_1.h("div", {
         class: "lookup"
       }, "Loading\u2026"); // Not found
     } else if (this.state.scrobbleState == TraktScrobble_1.TraktScrobbleState.NotFound) {
-      info = h("div", {
+      info = preact_1.h("div", {
         class: "error"
-      }, h("h2", null, "Failed to scrobble:"), h("p", null, "Could not find matching episode on Trakt")); // Error
+      }, preact_1.h("h2", null, "Failed to scrobble:"), preact_1.h("p", null, "Could not find matching episode on Trakt")); // Error
     } else if (this.state.scrobbleState == TraktScrobble_1.TraktScrobbleState.Error) {
-      info = h("div", {
+      info = preact_1.h("div", {
         class: "error"
-      }, h("h2", null, "Failed to scrobble:"), h("p", null, this.state.error)); // Lookup succeeded
+      }, preact_1.h("h2", null, "Failed to scrobble:"), preact_1.h("p", null, this.state.error)); // Lookup succeeded
     } else {
       if (data.movie && data.movie.ids) {
-        var movieUrl = "https://trakt.tv/movies/" + data.movie.ids.slug;
-        info = h("div", {
+        let movieUrl = `https://trakt.tv/movies/${data.movie.ids.slug}`;
+        info = preact_1.h("div", {
           class: "info"
-        }, h("h2", null, h("a", {
+        }, preact_1.h("h2", null, preact_1.h("a", {
           href: movieUrl,
           target: "_blank"
         }, data.movie.title, " (", data.movie.year, ")")));
       } else if (data.show && data.show.ids && data.episode && data.episode.ids) {
-        var showUrl = "https://trakt.tv/shows/" + data.show.ids.slug;
-        var episodeUrl = showUrl + "/seasons/" + data.episode.season + "/episodes/" + data.episode.number;
-        var episodeTitle = data.episode.title ? ": " + data.episode.title : null;
-        info = h("div", {
+        let showUrl = `https://trakt.tv/shows/${data.show.ids.slug}`;
+        let episodeUrl = `${showUrl}/seasons/${data.episode.season}/episodes/${data.episode.number}`;
+        let episodeTitle = data.episode.title ? `: ${data.episode.title}` : null;
+        info = preact_1.h("div", {
           class: "info"
-        }, h("h2", null, h("a", {
+        }, preact_1.h("h2", null, preact_1.h("a", {
           href: showUrl,
           target: "_blank"
-        }, data.show.title, " (", data.show.year, ")")), h("p", null, h("a", {
+        }, data.show.title, " (", data.show.year, ")")), preact_1.h("p", null, preact_1.h("a", {
           href: episodeUrl,
           target: "_blank"
         }, "Season ", data.episode.season, " Episode ", data.episode.number, episodeTitle)));
       } else {
-        info = h("div", {
+        info = preact_1.h("div", {
           class: "error"
-        }, h("h2", null, "Internal error:"), h("p", null, "Missing data"));
+        }, preact_1.h("h2", null, "Internal error:"), preact_1.h("p", null, "Missing data"));
       }
     }
 
-    return h("div", {
+    return preact_1.h("div", {
       className: className
     }, info);
-  };
+  }
 
-  return ScrobbleInfo;
-}(preact_1.Component);
+}
 
-exports["default"] = ScrobbleInfo;
-var templateObject_1;
-},{"../TraktScrobble":"SXC6","preact":"OmAK","emotion":"mibh"}],"YunZ":[function(require,module,exports) {
+exports.default = ScrobbleInfo;
+},{"../TraktScrobble":"TraktScrobble.ts","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/Button.tsx":[function(require,module,exports) {
 "use strict";
 
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const preact_1 = require("preact");
+
+const emotion_1 = require("emotion");
+
+const className = emotion_1.css`
+  font-size: 12px;
+  font-weight: bold;
+  color: #eee;
+  background-color: #333;
+  border: none;
+  border-radius: 3px;
+  margin: 5px;
+  cursor: pointer;
+  padding: 5px 10px 5px 10px;
+  flex-grow: 1;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #555;
   }
+`;
 
-  return cooked;
-};
-
-var __extends = this && this.__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  result["default"] = mod;
-  return result;
-};
-
-exports.__esModule = true;
-
-var preact_1 = __importStar(require("preact"));
-
-var emotion_1 = require("emotion");
-
-var h = preact_1["default"].h;
-var className = emotion_1.css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  font-size: 12px;\n  font-weight: bold;\n  color: #eee;\n  background-color: #333;\n  border: none;\n  border-radius: 3px;\n  margin: 5px;\n  cursor: pointer;\n  padding: 5px 10px 5px 10px;\n  flex-grow: 1;\n  transition: all 0.2s ease;\n\n  &:hover {\n    background-color: #555;\n  }\n"], ["\n  font-size: 12px;\n  font-weight: bold;\n  color: #eee;\n  background-color: #333;\n  border: none;\n  border-radius: 3px;\n  margin: 5px;\n  cursor: pointer;\n  padding: 5px 10px 5px 10px;\n  flex-grow: 1;\n  transition: all 0.2s ease;\n\n  &:hover {\n    background-color: #555;\n  }\n"])));
-
-var Button =
-/** @class */
-function (_super) {
-  __extends(Button, _super);
-
-  function Button() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
-
-  Button.prototype.render = function () {
-    return h("button", {
-      className: className + " " + this.props.className + " " + (this.props.disabled ? 'disabled' : ''),
+class Button extends preact_1.Component {
+  render() {
+    return preact_1.h("button", {
+      className: `${className} ${this.props.className} ${this.props.disabled ? 'disabled' : ''}`,
       onClick: this.props.onClick
     }, this.props.text);
-  };
-
-  return Button;
-}(preact_1.Component);
-
-exports["default"] = Button;
-var templateObject_1;
-},{"preact":"OmAK","emotion":"mibh"}],"CZem":[function(require,module,exports) {
-"use strict";
-
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
   }
 
-  return cooked;
-};
+}
 
-var __extends = this && this.__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
+exports.default = Button;
+},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/ScrobbleHistory.tsx":[function(require,module,exports) {
+"use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
   return new (P || (P = Promise))(function (resolve, reject) {
@@ -5669,290 +4889,131 @@ var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, gene
   });
 };
 
-var __generator = this && this.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function () {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) try {
-      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-      if (y = 0, t) op = [op[0] & 2, t.value];
-
-      switch (op[0]) {
-        case 0:
-        case 1:
-          t = op;
-          break;
-
-        case 4:
-          _.label++;
-          return {
-            value: op[1],
-            done: false
-          };
-
-        case 5:
-          _.label++;
-          y = op[1];
-          op = [0];
-          continue;
-
-        case 7:
-          op = _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-
-        default:
-          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-            _ = 0;
-            continue;
-          }
-
-          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-            _.label = op[1];
-            break;
-          }
-
-          if (op[0] === 6 && _.label < t[1]) {
-            _.label = t[1];
-            t = op;
-            break;
-          }
-
-          if (t && _.label < t[2]) {
-            _.label = t[2];
-
-            _.ops.push(op);
-
-            break;
-          }
-
-          if (t[2]) _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-      }
-
-      op = body.call(thisArg, _);
-    } catch (e) {
-      op = [6, e];
-      y = 0;
-    } finally {
-      f = t = 0;
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
-
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
   };
 };
 
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  result["default"] = mod;
-  return result;
-};
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-exports.__esModule = true;
+const TraktScrobble_1 = __importDefault(require("../TraktScrobble"));
 
-var TraktScrobble_1 = __importDefault(require("../TraktScrobble"));
+const Button_1 = __importDefault(require("./Button"));
 
-var Button_1 = __importDefault(require("./Button"));
+const preact_1 = require("preact");
 
-var preact_1 = __importStar(require("preact"));
+const emotion_1 = require("emotion");
 
-var emotion_1 = require("emotion");
+const className = emotion_1.css`
+  & div {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #666;
+    height: 24px;
+    align-items: flex-end;
+  }
 
-var h = preact_1["default"].h;
-var className = emotion_1.css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  & div {\n    display: flex;\n    justify-content: space-between;\n    border-bottom: 1px solid #666;\n    height: 24px;\n    align-items: flex-end;\n  }\n\n  & button {\n    flex-grow: 0;\n    font-size: 9px;\n    padding: 2px 10px;\n    margin-right: 0;\n    font-weight: normal;\n    opacity: 0;\n    visibility: hidden;\n    transition: all 0.2s ease;\n  }\n\n  & button:hover {\n    background-color: #eb3b14;\n  }\n\n  & div:hover button {\n    opacity: 1;\n    visibility: visible;\n  }\n"], ["\n  & div {\n    display: flex;\n    justify-content: space-between;\n    border-bottom: 1px solid #666;\n    height: 24px;\n    align-items: flex-end;\n  }\n\n  & button {\n    flex-grow: 0;\n    font-size: 9px;\n    padding: 2px 10px;\n    margin-right: 0;\n    font-weight: normal;\n    opacity: 0;\n    visibility: hidden;\n    transition: all 0.2s ease;\n  }\n\n  & button:hover {\n    background-color: #eb3b14;\n  }\n\n  & div:hover button {\n    opacity: 1;\n    visibility: visible;\n  }\n"])));
-var ActionMap = {
+  & button {
+    flex-grow: 0;
+    font-size: 9px;
+    padding: 2px 10px;
+    margin-right: 0;
+    font-weight: normal;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+  }
+
+  & button:hover {
+    background-color: #eb3b14;
+  }
+
+  & div:hover button {
+    opacity: 1;
+    visibility: visible;
+  }
+`;
+const ActionMap = {
   scrobble: "Scrobbled",
   checkin: "Checked in",
   watch: "Watched"
 };
 
-var ScrobbleHistory =
-/** @class */
-function (_super) {
-  __extends(ScrobbleHistory, _super);
-
-  function ScrobbleHistory(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this._formatter = new Intl.DateTimeFormat(navigator.language, {
+class ScrobbleHistory extends preact_1.Component {
+  constructor(props) {
+    super(props);
+    this._formatter = new Intl.DateTimeFormat(navigator.language, {
       year: "numeric",
       month: "short",
       day: "numeric",
       hour: "numeric",
       minute: "numeric"
     });
-    _this.state = {
+    this.state = {
       historyItems: null
     };
-    _this._handleHistoryChanged = _this._handleHistoryChanged.bind(_this);
-    return _this;
+    this._handleHistoryChanged = this._handleHistoryChanged.bind(this);
   }
 
-  ScrobbleHistory.prototype.componentWillMount = function () {
-    var data = this.props.scrobbleData;
-    this._traktId = TraktScrobble_1["default"].traktIdFromData(data);
+  componentWillMount() {
+    let data = this.props.scrobbleData;
+    this._traktId = TraktScrobble_1.default.traktIdFromData(data);
 
     if (this._traktId !== 0) {
-      var type = TraktScrobble_1["default"].typeFromData(data);
+      let type = TraktScrobble_1.default.typeFromData(data);
       this.props.history.sub(this._traktId, this._handleHistoryChanged);
       this.props.history.load(type === "movie" ? "movies" : "episodes", this._traktId);
     }
-  };
+  }
 
-  ScrobbleHistory.prototype.componentWillUnmount = function () {
+  componentWillUnmount() {
     this.props.history.unsub(this._traktId, this._handleHistoryChanged);
-  };
+  }
 
-  ScrobbleHistory.prototype._handleHistoryChanged = function (items) {
+  _handleHistoryChanged(items) {
     this.setState({
       historyItems: items
     });
-  };
+  }
 
-  ScrobbleHistory.prototype._handleRemove = function (e, item) {
-    return __awaiter(this, void 0, void 0, function () {
-      var el;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            el = e.target;
-            el.classList.add("disabled");
-            el.innerText = "Removing...";
-            return [4
-            /*yield*/
-            , this.props.history.remove(item.id)];
-
-          case 1:
-            _a.sent();
-
-            el.classList.remove("disabled");
-            el.innerText = "Remove";
-            return [2
-            /*return*/
-            ];
-        }
-      });
+  _handleRemove(e, item) {
+    return __awaiter(this, void 0, void 0, function* () {
+      let el = e.target;
+      el.classList.add("disabled");
+      el.innerText = "Removing...";
+      yield this.props.history.remove(item.id);
+      el.classList.remove("disabled");
+      el.innerText = "Remove";
     });
-  };
+  }
 
-  ScrobbleHistory.prototype.render = function () {
-    var _this = this;
-
+  render() {
     if (this.state.historyItems && this.state.historyItems.length > 0) {
-      var rows = [];
+      let rows = [];
 
-      var _loop_1 = function (item) {
-        rows.push(h("div", null, h("span", null, ActionMap[item.action], " at ", this_1._formatter.format(new Date(item.watched_at))), h(Button_1.default, {
+      for (let item of this.state.historyItems) {
+        rows.push(preact_1.h("div", null, preact_1.h("span", null, ActionMap[item.action], " at ", this._formatter.format(new Date(item.watched_at))), preact_1.h(Button_1.default, {
           text: "Remove",
-          onClick: function (e) {
-            return _this._handleRemove(e, item);
-          }
+          onClick: e => this._handleRemove(e, item)
         })));
-      };
-
-      var this_1 = this;
-
-      for (var _i = 0, _a = this.state.historyItems; _i < _a.length; _i++) {
-        var item = _a[_i];
-
-        _loop_1(item);
       }
 
-      return h("div", {
+      return preact_1.h("div", {
         className: className
-      }, h("h2", null, "Watch History"), rows);
+      }, preact_1.h("h2", null, "Watch History"), rows);
     } else {
       return null;
     }
-  };
-
-  return ScrobbleHistory;
-}(preact_1.Component);
-
-exports["default"] = ScrobbleHistory;
-var templateObject_1;
-},{"../TraktScrobble":"SXC6","./Button":"YunZ","preact":"OmAK","emotion":"mibh"}],"q6Da":[function(require,module,exports) {
-"use strict";
-
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
   }
 
-  return cooked;
-};
+}
 
-var __extends = this && this.__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
+exports.default = ScrobbleHistory;
+},{"../TraktScrobble":"TraktScrobble.ts","./Button":"ui/Button.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/ScrobbleControl.tsx":[function(require,module,exports) {
+"use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
@@ -5960,144 +5021,132 @@ var __importDefault = this && this.__importDefault || function (mod) {
   };
 };
 
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  result["default"] = mod;
-  return result;
-};
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-exports.__esModule = true;
+const TraktScrobble_1 = require("../TraktScrobble");
 
-var TraktScrobble_1 = require("../TraktScrobble");
+const Button_1 = __importDefault(require("./Button"));
 
-var Button_1 = __importDefault(require("./Button"));
+const preact_1 = require("preact");
 
-var preact_1 = __importStar(require("preact"));
+const emotion_1 = require("emotion");
 
-var emotion_1 = require("emotion");
+const preact_emotion_1 = __importDefault(require("preact-emotion"));
 
-var preact_emotion_1 = __importDefault(require("preact-emotion"));
+const className = emotion_1.css`
+  display: flex;
+  margin: 5px -5px;
+  justify-content: space-between;
 
-var h = preact_1["default"].h;
-var className = emotion_1.css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  margin: 5px -5px;\n  justify-content: space-between;\n\n  & > div, & > button {\n    width: 33%;\n  }\n\n  & .state {\n    font-size: 12px;\n    font-weight: bold;\n    text-align: center;\n    color: #fff;\n    background-color: #ed1c24;\n    border: none;\n    border-radius: 3px;\n    margin: 5px;\n    padding: 5px 10px 5px 10px;\n    width: 20%;\n  }\n"], ["\n  display: flex;\n  margin: 5px -5px;\n  justify-content: space-between;\n\n  & > div, & > button {\n    width: 33%;\n  }\n\n  & .state {\n    font-size: 12px;\n    font-weight: bold;\n    text-align: center;\n    color: #fff;\n    background-color: #ed1c24;\n    border: none;\n    border-radius: 3px;\n    margin: 5px;\n    padding: 5px 10px 5px 10px;\n    width: 20%;\n  }\n"])));
-var ScrobbleNowButton = preact_emotion_1["default"](Button_1["default"])(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  color: #8e44ad;\n  border: 1px solid #8e44ad;\n  background: none;\n\n  &:hover {\n    background-color: #8e44ad;\n    color: #fff;\n  }\n"], ["\n  color: #8e44ad;\n  border: 1px solid #8e44ad;\n  background: none;\n\n  &:hover {\n    background-color: #8e44ad;\n    color: #fff;\n  }\n"])));
-var EnableScrobbleButton = preact_emotion_1["default"](Button_1["default"])(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  color: #16a085;\n  border: 1px solid #16a085;\n  background: none;\n\n  &:hover {\n    background-color: #16a085;\n    color: #fff;\n  }\n"], ["\n  color: #16a085;\n  border: 1px solid #16a085;\n  background: none;\n\n  &:hover {\n    background-color: #16a085;\n    color: #fff;\n  }\n"])));
-var EnabledStates = [TraktScrobble_1.TraktScrobbleState.Found, TraktScrobble_1.TraktScrobbleState.Started, TraktScrobble_1.TraktScrobbleState.Paused];
-
-var ScrobbleControl =
-/** @class */
-function (_super) {
-  __extends(ScrobbleControl, _super);
-
-  function ScrobbleControl(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this.state = {
-      scrobbleState: _this.props.scrobble.state,
-      scrobblingEnabled: _this.props.roller.enabled
-    };
-    _this._onScrobbleStateChanged = _this._onScrobbleStateChanged.bind(_this);
-    _this._onEnabledChanged = _this._onEnabledChanged.bind(_this);
-    _this._handleScrobbleNowClick = _this._handleScrobbleNowClick.bind(_this);
-    _this._handleEnableScrobbleClick = _this._handleEnableScrobbleClick.bind(_this);
-    return _this;
+  & > div, & > button {
+    width: 33%;
   }
 
-  ScrobbleControl.prototype.componentWillMount = function () {
+  & .state {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: #ed1c24;
+    border: none;
+    border-radius: 3px;
+    margin: 5px;
+    padding: 5px 10px 5px 10px;
+    width: 20%;
+  }
+`;
+const ScrobbleNowButton = preact_emotion_1.default(Button_1.default)`
+  color: #8e44ad;
+  border: 1px solid #8e44ad;
+  background: none;
+
+  &:hover {
+    background-color: #8e44ad;
+    color: #fff;
+  }
+`;
+const EnableScrobbleButton = preact_emotion_1.default(Button_1.default)`
+  color: #16a085;
+  border: 1px solid #16a085;
+  background: none;
+
+  &:hover {
+    background-color: #16a085;
+    color: #fff;
+  }
+`;
+const EnabledStates = [TraktScrobble_1.TraktScrobbleState.Found, TraktScrobble_1.TraktScrobbleState.Started, TraktScrobble_1.TraktScrobbleState.Paused];
+
+class ScrobbleControl extends preact_1.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      scrobbleState: this.props.scrobble.state,
+      scrobblingEnabled: this.props.roller.enabled
+    };
+    this._onScrobbleStateChanged = this._onScrobbleStateChanged.bind(this);
+    this._onEnabledChanged = this._onEnabledChanged.bind(this);
+    this._handleScrobbleNowClick = this._handleScrobbleNowClick.bind(this);
+    this._handleEnableScrobbleClick = this._handleEnableScrobbleClick.bind(this);
+  }
+
+  componentWillMount() {
     this.props.scrobble.onStateChanged.sub(this._onScrobbleStateChanged);
     this.props.roller.onEnabledChanged.sub(this._onEnabledChanged);
-  };
+  }
 
-  ScrobbleControl.prototype.componentWillUnmount = function () {
+  componentWillUnmount() {
     this.props.scrobble.onStateChanged.unsub(this._onScrobbleStateChanged);
     this.props.roller.onEnabledChanged.unsub(this._onEnabledChanged);
-  };
+  }
 
-  ScrobbleControl.prototype._onScrobbleStateChanged = function (state) {
+  _onScrobbleStateChanged(state) {
     this.setState({
       scrobbleState: state
     });
-  };
+  }
 
-  ScrobbleControl.prototype._onEnabledChanged = function (enabled) {
+  _onEnabledChanged(enabled) {
     this.setState({
       scrobblingEnabled: enabled
     });
-  };
+  }
 
-  ScrobbleControl.prototype._handleScrobbleNowClick = function () {
+  _handleScrobbleNowClick() {
     this.props.scrobble.scrobbleNow();
-  };
+  }
 
-  ScrobbleControl.prototype._handleEnableScrobbleClick = function () {
+  _handleEnableScrobbleClick() {
     this.props.roller.enabled = !this.props.roller.enabled;
-  };
+  }
 
-  ScrobbleControl.prototype.render = function () {
-    var state = this.props.scrobble.enabled ? "Disabled" : TraktScrobble_1.TraktScrobbleState[this.props.scrobble.state];
-    var title = this.props.scrobble.error || "";
-    var disabled = !EnabledStates.includes(this.state.scrobbleState);
-    var label = this.props.roller.enabled ? "Enable Scrobbling" : "Disable Scrobbling";
-    return h("div", {
+  render() {
+    let state = this.props.scrobble.enabled ? "Disabled" : TraktScrobble_1.TraktScrobbleState[this.props.scrobble.state];
+    let title = this.props.scrobble.error || "";
+    let disabled = !(EnabledStates.indexOf(this.state.scrobbleState) >= 0);
+    let label = this.props.roller.enabled ? "Enable Scrobbling" : "Disable Scrobbling";
+    return preact_1.h("div", {
       className: className
-    }, h("div", {
+    }, preact_1.h("div", {
       class: "state",
       title: title
-    }, state), h(ScrobbleNowButton, {
+    }, state), preact_1.h(ScrobbleNowButton, {
       text: "Scrobble Now",
       onClick: this._handleScrobbleNowClick,
       disabled: disabled
-    }), h(EnableScrobbleButton, {
+    }), preact_1.h(EnableScrobbleButton, {
       text: label,
       onClick: this._handleEnableScrobbleClick
     }));
-  };
-
-  return ScrobbleControl;
-}(preact_1.Component);
-
-exports["default"] = ScrobbleControl;
-var templateObject_1, templateObject_2, templateObject_3;
-},{"../TraktScrobble":"SXC6","./Button":"YunZ","preact":"OmAK","emotion":"mibh","preact-emotion":"DOVm"}],"a5I5":[function(require,module,exports) {
-"use strict";
-
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
   }
 
-  return cooked;
-};
+}
 
-var __extends = this && this.__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
+exports.default = ScrobbleControl;
+},{"../TraktScrobble":"TraktScrobble.ts","./Button":"ui/Button.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"ui/Popup.tsx":[function(require,module,exports) {
+"use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
@@ -6105,119 +5154,94 @@ var __importDefault = this && this.__importDefault || function (mod) {
   };
 };
 
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  result["default"] = mod;
-  return result;
-};
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-exports.__esModule = true;
+const TraktScrobble_1 = __importDefault(require("../TraktScrobble"));
 
-var TraktScrobble_1 = __importDefault(require("../TraktScrobble"));
+const ScrobbleInfo_1 = __importDefault(require("./ScrobbleInfo"));
 
-var ScrobbleInfo_1 = __importDefault(require("./ScrobbleInfo"));
+const ScrobbleHistory_1 = __importDefault(require("./ScrobbleHistory"));
 
-var ScrobbleHistory_1 = __importDefault(require("./ScrobbleHistory"));
+const ScrobbleControl_1 = __importDefault(require("./ScrobbleControl"));
 
-var ScrobbleControl_1 = __importDefault(require("./ScrobbleControl"));
+const preact_1 = require("preact");
 
-var preact_1 = __importStar(require("preact"));
+const emotion_1 = require("emotion");
 
-var emotion_1 = require("emotion");
+const className = emotion_1.css`
+  color: #eee;
 
-var h = preact_1["default"].h;
-var className = emotion_1.css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  color: #eee;\n\n  & > div {\n    padding: 15px;\n  }\n\n  & a, & p a {\n    color: #eee;\n    transition: color 0.2s ease;\n  }\n\n  & h2 {\n    font-size: 13px;\n    margin: 0;\n  }\n\n  & h2 a:hover, & p a:hover {\n    color: #ed1c24;\n    text-decoration: none;\n  }\n\n  button.disabled {\n    pointer-events: none;\n    opacity: 0.5;\n  }\n"], ["\n  color: #eee;\n\n  & > div {\n    padding: 15px;\n  }\n\n  & a, & p a {\n    color: #eee;\n    transition: color 0.2s ease;\n  }\n\n  & h2 {\n    font-size: 13px;\n    margin: 0;\n  }\n\n  & h2 a:hover, & p a:hover {\n    color: #ed1c24;\n    text-decoration: none;\n  }\n\n  button.disabled {\n    pointer-events: none;\n    opacity: 0.5;\n  }\n"])));
-
-var Popup =
-/** @class */
-function (_super) {
-  __extends(Popup, _super);
-
-  function Popup(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this._onScrobbleStatusChanged = _this._onScrobbleStatusChanged.bind(_this);
-    return _this;
+  & > div {
+    padding: 15px;
   }
 
-  Popup.prototype.componentWillMount = function () {
+  & a, & p a {
+    color: #eee;
+    transition: color 0.2s ease;
+  }
+
+  & h2 {
+    font-size: 13px;
+    margin: 0;
+  }
+
+  & h2 a:hover, & p a:hover {
+    color: #ed1c24;
+    text-decoration: none;
+  }
+
+  button.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+`;
+
+class Popup extends preact_1.Component {
+  constructor(props) {
+    super(props);
+    this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
+  }
+
+  componentWillMount() {
     this.setState({
       scrobbleData: this.props.scrobble.data
     });
     this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
-  };
+  }
 
-  Popup.prototype.componentWillUnmount = function () {
+  componentWillUnmount() {
     this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
-  };
+  }
 
-  Popup.prototype._onScrobbleStatusChanged = function (state) {
+  _onScrobbleStatusChanged(state) {
     this.setState({
       scrobbleData: this.props.scrobble.data
     });
-  };
+  }
 
-  Popup.prototype.render = function () {
-    var scrobble = this.props.scrobble;
-    return h("div", {
+  render() {
+    let scrobble = this.props.scrobble;
+    return preact_1.h("div", {
       className: className
-    }, h(ScrobbleInfo_1.default, {
+    }, preact_1.h(ScrobbleInfo_1.default, {
       scrobble: this.props.scrobble
-    }), h(ScrobbleHistory_1.default, {
+    }), preact_1.h(ScrobbleHistory_1.default, {
       scrobbleData: this.state.scrobbleData,
       history: this.props.history,
-      key: TraktScrobble_1["default"].traktIdFromData(this.state.scrobbleData)
-    }), h(ScrobbleControl_1.default, {
+      key: TraktScrobble_1.default.traktIdFromData(this.state.scrobbleData)
+    }), preact_1.h(ScrobbleControl_1.default, {
       scrobble: this.props.scrobble,
       roller: this.props.roller
     }));
-  };
-
-  return Popup;
-}(preact_1.Component);
-
-exports["default"] = Popup;
-var templateObject_1;
-},{"../TraktScrobble":"SXC6","./ScrobbleInfo":"+b4v","./ScrobbleHistory":"CZem","./ScrobbleControl":"q6Da","preact":"OmAK","emotion":"mibh"}],"BUYa":[function(require,module,exports) {
-"use strict";
-
-var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
-  if (Object.defineProperty) {
-    Object.defineProperty(cooked, "raw", {
-      value: raw
-    });
-  } else {
-    cooked.raw = raw;
   }
 
-  return cooked;
-};
+}
 
-var __extends = this && this.__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
+exports.default = Popup;
+},{"../TraktScrobble":"TraktScrobble.ts","./ScrobbleInfo":"ui/ScrobbleInfo.tsx","./ScrobbleHistory":"ui/ScrobbleHistory.tsx","./ScrobbleControl":"ui/ScrobbleControl.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/StatusButton.tsx":[function(require,module,exports) {
+"use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
@@ -6225,105 +5249,161 @@ var __importDefault = this && this.__importDefault || function (mod) {
   };
 };
 
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  result["default"] = mod;
-  return result;
-};
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-exports.__esModule = true;
+const TraktScrobble_1 = require("../TraktScrobble");
 
-var TraktScrobble_1 = require("../TraktScrobble");
+const TraktIcon_1 = __importDefault(require("./TraktIcon"));
 
-var TraktIcon_1 = __importDefault(require("./TraktIcon"));
+const Popup_1 = __importDefault(require("./Popup"));
 
-var Popup_1 = __importDefault(require("./Popup"));
+const preact_1 = require("preact");
 
-var preact_1 = __importStar(require("preact"));
+const emotion_1 = require("emotion");
 
-var emotion_1 = require("emotion");
+const preact_emotion_1 = __importDefault(require("preact-emotion"));
 
-var preact_emotion_1 = __importDefault(require("preact-emotion"));
+const popupClassName = emotion_1.css`
+  background: #161616;
+  border: 1px solid #fff;
+  position: absolute;
+  width: 450px;
+  z-index: 100;
+  left: -209px;
+  border-radius: 4px;
+  transition: all 0.2s ease-in;
+  transition-delay: 0.2s;
+  visibility: hidden;
+  opacity: 0;
+  bottom: 55px;
 
-var h = preact_1["default"].h;
-var popupClassName = emotion_1.css(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  background: #161616;\n  border: 1px solid #fff;\n  position: absolute;\n  width: 450px;\n  z-index: 100;\n  left: -209px;\n  border-radius: 4px;\n  transition: all 0.2s ease-in;\n  transition-delay: 0.2s;\n  visibility: hidden;\n  opacity: 0;\n  bottom: 55px;\n\n  &:after, &:before {\n    top: 100%;\n    left: 50%;\n    border: solid transparent;\n    content: \" \";\n    height: 0;\n    width: 0;\n    position: absolute;\n    pointer-events: none;\n  }\n  &:after {\n    border-color: rgba(0, 0, 0, 0);\n    border-top-color: #000000;\n    border-width: 15px;\n    margin-left: -15px;\n  }\n  &:before {\n    border-color: rgba(255, 255, 255, 0);\n    border-top-color: #fff;\n    border-width: 17px;\n    margin-left: -17px;\n  }\n  & .hover-blocker {\n    position: absolute;\n    bottom: -75px;\n    left: 33%;\n    width: 33%;\n    height: 75px;\n  }\n"], ["\n  background: #161616;\n  border: 1px solid #fff;\n  position: absolute;\n  width: 450px;\n  z-index: 100;\n  left: -209px;\n  border-radius: 4px;\n  transition: all 0.2s ease-in;\n  transition-delay: 0.2s;\n  visibility: hidden;\n  opacity: 0;\n  bottom: 55px;\n\n  &:after, &:before {\n    top: 100%;\n    left: 50%;\n    border: solid transparent;\n    content: \" \";\n    height: 0;\n    width: 0;\n    position: absolute;\n    pointer-events: none;\n  }\n  &:after {\n    border-color: rgba(0, 0, 0, 0);\n    border-top-color: #000000;\n    border-width: 15px;\n    margin-left: -15px;\n  }\n  &:before {\n    border-color: rgba(255, 255, 255, 0);\n    border-top-color: #fff;\n    border-width: 17px;\n    margin-left: -17px;\n  }\n  & .hover-blocker {\n    position: absolute;\n    bottom: -75px;\n    left: 33%;\n    width: 33%;\n    height: 75px;\n  }\n"])));
-var className = emotion_1.css(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  position: relative;\n\n  &:hover .", " {\n    visibility: visible;\n    opacity: 1;\n    bottom: 44px;\n  }\n"], ["\n  position: relative;\n\n  &:hover .", " {\n    visibility: visible;\n    opacity: 1;\n    bottom: 44px;\n  }\n"])), popupClassName);
-var buttonClassName = emotion_1.css(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  width: 38px;\n  height: 24px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  position: relative;\n  z-index: 101;\n\n  &.state-disabled {\n    filter: opacity(0.5);\n  }\n  &.state-scrobbled {\n    filter: hue-rotate(150deg) brightness(1.3);\n  }\n  &.state-error, &.state-notfound {\n    filter: grayscale(1) brightness(2);\n  }\n"], ["\n  width: 38px;\n  height: 24px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  position: relative;\n  z-index: 101;\n\n  &.state-disabled {\n    filter: opacity(0.5);\n  }\n  &.state-scrobbled {\n    filter: hue-rotate(150deg) brightness(1.3);\n  }\n  &.state-error, &.state-notfound {\n    filter: grayscale(1) brightness(2);\n  }\n"])));
-var Icon = preact_emotion_1["default"](TraktIcon_1["default"])(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  height: 100%;\n"], ["\n  height: 100%;\n"])));
+  &:after, &:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  &:after {
+    border-color: rgba(0, 0, 0, 0);
+    border-top-color: #000000;
+    border-width: 15px;
+    margin-left: -15px;
+  }
+  &:before {
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: #fff;
+    border-width: 17px;
+    margin-left: -17px;
+  }
+  & .hover-blocker {
+    position: absolute;
+    bottom: -75px;
+    left: 33%;
+    width: 33%;
+    height: 75px;
+  }
+`;
+const className = emotion_1.css`
+  position: relative;
 
-var StatusButton =
-/** @class */
-function (_super) {
-  __extends(StatusButton, _super);
+  &:hover .${popupClassName} {
+    visibility: visible;
+    opacity: 1;
+    bottom: 44px;
+  }
+`;
+const buttonClassName = emotion_1.css`
+  width: 38px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 101;
 
-  function StatusButton(props) {
-    var _this = _super.call(this, props) || this;
+  &.state-disabled {
+    filter: opacity(0.5);
+  }
+  &.state-scrobbled {
+    filter: hue-rotate(150deg) brightness(1.3);
+  }
+  &.state-error, &.state-notfound {
+    filter: grayscale(1) brightness(2);
+  }
+`;
+const Icon = preact_emotion_1.default(TraktIcon_1.default)`
+  height: 100%;
+`;
 
-    _this.state = {
-      scrobbleState: _this.props.scrobble.state,
-      enabled: _this.props.roller.enabled
+class StatusButton extends preact_1.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      scrobbleState: this.props.scrobble.state,
+      enabled: this.props.roller.enabled
     };
-    _this._onScrobbleStatusChanged = _this._onScrobbleStatusChanged.bind(_this);
-    _this._onEnabledChanged = _this._onEnabledChanged.bind(_this);
-    _this._handleClick = _this._handleClick.bind(_this);
-    return _this;
+    this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
+    this._onEnabledChanged = this._onEnabledChanged.bind(this);
+    this._handleClick = this._handleClick.bind(this);
   }
 
-  StatusButton.prototype.componentWillMount = function () {
+  componentWillMount() {
     this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
     this.props.roller.onEnabledChanged.sub(this._onEnabledChanged);
-  };
+  }
 
-  StatusButton.prototype.componentWillUnmount = function () {
+  componentWillUnmount() {
     this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
     this.props.roller.onEnabledChanged.unsub(this._onEnabledChanged);
-  };
+  }
 
-  StatusButton.prototype._onScrobbleStatusChanged = function (state) {
+  _onScrobbleStatusChanged(state) {
     this.setState({
       scrobbleState: state
     });
-  };
+  }
 
-  StatusButton.prototype._onEnabledChanged = function (enabled) {
+  _onEnabledChanged(enabled) {
     this.setState({
       enabled: enabled
     });
-  };
+  }
 
-  StatusButton.prototype._handleClick = function () {
+  _handleClick() {
     window.open(this.props.scrobble.scrobbleUrl(), '_blank');
-  };
+  }
 
-  StatusButton.prototype.render = function () {
-    var state = this.state.enabled ? "disabled" : TraktScrobble_1.TraktScrobbleState[this.state.scrobbleState].toLowerCase();
-    var stateClass = "state-" + state;
-    var title = this.props.scrobble.error || TraktScrobble_1.TraktScrobbleState[this.state.scrobbleState];
-    return h("div", {
-      className: className + " right"
-    }, h("button", {
-      className: buttonClassName + " " + stateClass,
+  render() {
+    let state = this.state.enabled ? "disabled" : TraktScrobble_1.TraktScrobbleState[this.state.scrobbleState].toLowerCase();
+    let stateClass = "state-" + state;
+    let title = this.props.scrobble.error || TraktScrobble_1.TraktScrobbleState[this.state.scrobbleState];
+    return preact_1.h("div", {
+      className: `${className} right`
+    }, preact_1.h("button", {
+      className: `${buttonClassName} ${stateClass}`,
       title: title,
       onClick: this._handleClick
-    }, h(Icon, null)), h("div", {
+    }, preact_1.h(Icon, null)), preact_1.h("div", {
       className: popupClassName
-    }, h(Popup_1.default, {
+    }, preact_1.h(Popup_1.default, {
       roller: this.props.roller,
       scrobble: this.props.scrobble,
       history: this.props.history
-    }), h("div", {
+    }), preact_1.h("div", {
       class: "hover-blocker"
     })));
-  };
+  }
 
-  return StatusButton;
-}(preact_1.Component);
+}
 
-exports["default"] = StatusButton;
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
-},{"../TraktScrobble":"SXC6","./TraktIcon":"B913","./Popup":"a5I5","preact":"OmAK","emotion":"mibh","preact-emotion":"DOVm"}],"NFyx":[function(require,module,exports) {
+exports.default = StatusButton;
+},{"../TraktScrobble":"TraktScrobble.ts","./TraktIcon":"ui/TraktIcon.tsx","./Popup":"ui/Popup.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"TraktHistory.ts":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -6354,259 +5434,108 @@ var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, gene
   });
 };
 
-var __generator = this && this.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function () {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) try {
-      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-      if (y = 0, t) op = [op[0] & 2, t.value];
-
-      switch (op[0]) {
-        case 0:
-        case 1:
-          t = op;
-          break;
-
-        case 4:
-          _.label++;
-          return {
-            value: op[1],
-            done: false
-          };
-
-        case 5:
-          _.label++;
-          y = op[1];
-          op = [0];
-          continue;
-
-        case 7:
-          op = _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-
-        default:
-          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-            _ = 0;
-            continue;
-          }
-
-          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-            _.label = op[1];
-            break;
-          }
-
-          if (op[0] === 6 && _.label < t[1]) {
-            _.label = t[1];
-            t = op;
-            break;
-          }
-
-          if (t && _.label < t[2]) {
-            _.label = t[2];
-
-            _.ops.push(op);
-
-            break;
-          }
-
-          if (t[2]) _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-      }
-
-      op = body.call(thisArg, _);
-    } catch (e) {
-      op = [6, e];
-      y = 0;
-    } finally {
-      f = t = 0;
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
-
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
   };
 };
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var TraktApi_1 = __importDefault(require("./TraktApi"));
+const TraktApi_1 = __importDefault(require("./TraktApi"));
 /** Load a manage Trakt watched history */
 
 
-var TraktHistory =
-/** @class */
-function () {
-  function TraktHistory(api) {
+class TraktHistory {
+  constructor(api) {
     this._histories = {};
     this._api = api;
   }
   /** Load history for a movie or episode */
 
 
-  TraktHistory.prototype.load = function (type, traktId, reload) {
-    if (reload === void 0) {
-      reload = false;
-    }
+  load(type, traktId, reload = false) {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (!reload && this._histories[traktId] && this._histories[traktId].items) {
+        return this._histories[traktId].items;
+      }
 
-    return __awaiter(this, void 0, Promise, function () {
-      var result;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            if (!reload && this._histories[traktId] && this._histories[traktId].items) {
-              return [2
-              /*return*/
-              , this._histories[traktId].items];
-            }
+      let result = yield this._api.history(type, traktId);
 
-            return [4
-            /*yield*/
-            , this._api.history(type, traktId)];
+      if (TraktApi_1.default.isError(result)) {
+        console.error(`TraktRoller: Error loading scrobble history (${result.error})`);
+        return [];
+      }
 
-          case 1:
-            result = _a.sent();
+      this._update(traktId, result);
 
-            if (TraktApi_1["default"].isError(result)) {
-              console.error("TraktRoller: Error loading scrobble history (" + result.error + ")");
-              return [2
-              /*return*/
-              , []];
-            }
-
-            this._update(traktId, result);
-
-            return [2
-            /*return*/
-            , result];
-        }
-      });
+      return result;
     });
-  };
+  }
   /** Add a new item to the history */
 
 
-  TraktHistory.prototype.add = function (traktId, item) {
-    var history = this._getOrCreateHistory(traktId);
+  add(traktId, item) {
+    let history = this._getOrCreateHistory(traktId);
 
     if (!history.items) history.items = [];
     history.items.push(item);
-    history.items.sort(function (a, b) {
-      return new Date(b.watched_at).valueOf() - new Date(a.watched_at).valueOf();
-    });
+    history.items.sort((a, b) => new Date(b.watched_at).valueOf() - new Date(a.watched_at).valueOf());
 
     this._update(traktId, history.items);
-  };
+  }
   /** Remove a watched entry by its id */
 
 
-  TraktHistory.prototype.remove = function (historyId) {
-    return __awaiter(this, void 0, Promise, function () {
-      var result, _i, _a, traktId, history, i;
+  remove(historyId) {
+    return __awaiter(this, void 0, void 0, function* () {
+      let result = yield this._api.historyRemove(historyId);
 
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , this._api.historyRemove(historyId)];
+      if (TraktApi_1.default.isError(result)) {
+        console.error(`TraktRoller: Error removing scrobble (${result.error})`);
+        return;
+      } else if (result.not_found.ids.indexOf(historyId) >= 0) {
+        console.warn(`TraktRoller: Could not remove history id ${historyId}, not found on server`);
+      }
 
-          case 1:
-            result = _b.sent();
+      outer: for (let traktId of Object.keys(this._histories)) {
+        let history = this._histories[traktId];
+        if (!history.items) continue;
 
-            if (TraktApi_1["default"].isError(result)) {
-              console.error("TraktRoller: Error removing scrobble (" + result.error + ")");
-              return [2
-              /*return*/
-              ];
-            } else if (result.not_found.ids.includes(historyId)) {
-              console.warn("TraktRoller: Could not remove history id " + historyId + ", not found on server");
-            }
+        for (let i = 0; i < history.items.length; i++) {
+          if (history.items[i].id === historyId) {
+            history.items.splice(i, 1);
 
-            outer: for (_i = 0, _a = Object.keys(this._histories); _i < _a.length; _i++) {
-              traktId = _a[_i];
-              history = this._histories[traktId];
-              if (!history.items) continue;
+            this._update(history.traktId, history.items);
 
-              for (i = 0; i < history.items.length; i++) {
-                if (history.items[i].id === historyId) {
-                  history.items.splice(i, 1);
-
-                  this._update(history.traktId, history.items);
-
-                  break outer;
-                }
-              }
-            }
-
-            return [2
-            /*return*/
-            ];
+            break outer;
+          }
         }
-      });
+      }
     });
-  };
+  }
   /** Get notified when the history changes */
 
 
-  TraktHistory.prototype.sub = function (traktId, callback) {
-    var history = this._getOrCreateHistory(traktId);
+  sub(traktId, callback) {
+    let history = this._getOrCreateHistory(traktId);
 
     history.subscribers.push(callback);
-  };
+  }
   /** Remove a history subscriber */
 
 
-  TraktHistory.prototype.unsub = function (traktId, callback) {
-    var history = this._histories[traktId];
+  unsub(traktId, callback) {
+    let history = this._histories[traktId];
     if (!history) return;
-    var index = history.subscribers.indexOf(callback);
+    let index = history.subscribers.indexOf(callback);
     if (index >= 0) history.subscribers.splice(index, 1);
-  };
+  }
 
-  TraktHistory.prototype._getOrCreateHistory = function (traktId) {
-    var history = this._histories[traktId];
+  _getOrCreateHistory(traktId) {
+    let history = this._histories[traktId];
 
     if (!history) {
       history = this._histories[traktId] = {
@@ -6617,24 +5546,22 @@ function () {
     }
 
     return history;
-  };
+  }
 
-  TraktHistory.prototype._update = function (traktId, items) {
-    var history = this._getOrCreateHistory(traktId);
+  _update(traktId, items) {
+    let history = this._getOrCreateHistory(traktId);
 
     history.items = items;
 
-    for (var _i = 0, _a = history.subscribers; _i < _a.length; _i++) {
-      var sub = _a[_i];
+    for (let sub of history.subscribers) {
       sub(items);
     }
-  };
+  }
 
-  return TraktHistory;
-}();
+}
 
-exports["default"] = TraktHistory;
-},{"./TraktApi":"bK1h"}],"n8p7":[function(require,module,exports) {
+exports.default = TraktHistory;
+},{"./TraktApi":"TraktApi.ts"}],"TraktRoller.tsx":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -6665,115 +5592,6 @@ var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, gene
   });
 };
 
-var __generator = this && this.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function () {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) try {
-      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-      if (y = 0, t) op = [op[0] & 2, t.value];
-
-      switch (op[0]) {
-        case 0:
-        case 1:
-          t = op;
-          break;
-
-        case 4:
-          _.label++;
-          return {
-            value: op[1],
-            done: false
-          };
-
-        case 5:
-          _.label++;
-          y = op[1];
-          op = [0];
-          continue;
-
-        case 7:
-          op = _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-
-        default:
-          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-            _ = 0;
-            continue;
-          }
-
-          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-            _.label = op[1];
-            break;
-          }
-
-          if (op[0] === 6 && _.label < t[1]) {
-            _.label = t[1];
-            t = op;
-            break;
-          }
-
-          if (t && _.label < t[2]) {
-            _.label = t[2];
-
-            _.ops.push(op);
-
-            break;
-          }
-
-          if (t[2]) _.ops.pop();
-
-          _.trys.pop();
-
-          continue;
-      }
-
-      op = body.call(thisArg, _);
-    } catch (e) {
-      op = [6, e];
-      y = 0;
-    } finally {
-      f = t = 0;
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
-
 var __importStar = this && this.__importStar || function (mod) {
   if (mod && mod.__esModule) return mod;
   var result = {};
@@ -6788,39 +5606,38 @@ var __importDefault = this && this.__importDefault || function (mod) {
   };
 };
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var TraktApi_1 = __importStar(require("./TraktApi"));
+const TraktApi_1 = __importStar(require("./TraktApi"));
 
-var TraktScrobble_1 = __importStar(require("./TraktScrobble"));
+const TraktScrobble_1 = __importStar(require("./TraktScrobble"));
 
-var ConnectButton_1 = __importDefault(require("./ui/ConnectButton"));
+const ConnectButton_1 = __importDefault(require("./ui/ConnectButton"));
 
-var StatusButton_1 = __importDefault(require("./ui/StatusButton"));
+const StatusButton_1 = __importDefault(require("./ui/StatusButton"));
 
-var ste_simple_events_1 = require("ste-simple-events");
+const ste_simple_events_1 = require("ste-simple-events");
 
-var preact_1 = __importStar(require("preact"));
+const preact_1 = require("preact");
 
-var TraktHistory_1 = __importDefault(require("./TraktHistory"));
+const TraktHistory_1 = __importDefault(require("./TraktHistory"));
 
-var h = preact_1["default"].h;
-var EpisodeRegex = /Episode (\d+)/;
-var SeasonRegex = /Season (\d+)/;
-var MovieRegexes = [/Movie$/i, /Movie (Dub)$/i, /Movie (Sub)$/i, /Movie (Dubbed)$/i, /Movie (Subtitled)$/i, /^Movie - /i, /The Movie/i];
-var ScrobblingEnabledKey = 'TraktRoller.enabled';
+const EpisodeRegex = /Episode (\d+)/;
+const SeasonRegex = /Season (\d+)/;
+const MovieRegexes = [/Movie$/i, /Movie (Dub)$/i, /Movie (Sub)$/i, /Movie (Dubbed)$/i, /Movie (Subtitled)$/i, /^Movie - /i, /The Movie/i];
+const ScrobblingEnabledKey = 'TraktRoller.enabled';
 
-var TraktRoller =
-/** @class */
-function () {
-  function TraktRoller(options) {
+class TraktRoller {
+  constructor(options) {
     this.onEnabledChanged = new ste_simple_events_1.SimpleEventDispatcher();
     console.log("TraktRoller");
     this._storage = options.storage || new TraktApi_1.LocalStorageAdapter();
 
     this._loadPrefs();
 
-    this._api = new TraktApi_1["default"](options);
+    this._api = new TraktApi_1.default(options);
 
     this._api.onAuthenticationChanged.sub(this._onAuthenticationChange.bind(this));
 
@@ -6831,106 +5648,67 @@ function () {
     this._waitForPlayer();
   }
 
-  Object.defineProperty(TraktRoller.prototype, "enabled", {
-    get: function () {
-      return this._enabled;
-    },
-    set: function (value) {
-      if (this._enabled === value) return;
-      this._enabled = value;
+  get enabled() {
+    return this._enabled;
+  }
 
-      this._storage.setValue(ScrobblingEnabledKey, value ? "true" : "false");
+  set enabled(value) {
+    if (this._enabled === value) return;
+    this._enabled = value;
 
-      if (this._scrobble) this._scrobble.enabled = value;
-      this.onEnabledChanged.dispatch(value);
-    },
-    enumerable: true,
-    configurable: true
-  });
+    this._storage.setValue(ScrobblingEnabledKey, value ? "true" : "false");
 
-  TraktRoller.prototype._loadPrefs = function () {
-    return __awaiter(this, void 0, void 0, function () {
-      var _a;
+    if (this._scrobble) this._scrobble.enabled = value;
+    this.onEnabledChanged.dispatch(value);
+  }
 
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            _a = this;
-            return [4
-            /*yield*/
-            , this._storage.getValue(ScrobblingEnabledKey)];
-
-          case 1:
-            _a._enabled = _b.sent() === "true";
-            return [2
-            /*return*/
-            ];
-        }
-      });
+  _loadPrefs() {
+    return __awaiter(this, void 0, void 0, function* () {
+      this._enabled = (yield this._storage.getValue(ScrobblingEnabledKey)) === "true";
     });
-  };
+  }
 
-  TraktRoller.prototype._waitForPlayer = function () {
-    var _this = this;
-
+  _waitForPlayer() {
     if (unsafeWindow.VILOS_PLAYERJS) {
       this._loadPlayer(unsafeWindow.VILOS_PLAYERJS);
     } else {
       // Use a setter to wait for the player to be set
-      var value_1;
+      let value;
       Object.defineProperty(unsafeWindow, "VILOS_PLAYERJS", {
-        get: function () {
-          return value_1;
-        },
-        set: function (v) {
-          value_1 = v;
+        get: () => value,
+        set: v => {
+          value = v;
 
-          _this._loadPlayer(v);
+          this._loadPlayer(v);
         }
       });
     }
-  };
+  }
 
-  TraktRoller.prototype._loadPlayer = function (player) {
-    var _this = this;
+  _loadPlayer(player) {
+    player.on(playerjs.EVENTS.READY, () => this._playerReady(player));
+  }
 
-    player.on(playerjs.EVENTS.READY, function () {
-      return _this._playerReady(player);
-    });
-  };
-
-  TraktRoller.prototype._playerReady = function (player) {
-    var _this = this;
-
+  _playerReady(player) {
     if (!this._api.isAuthenticated()) return;
 
-    var data = this._getScrobbleData();
+    let data = this._getScrobbleData();
 
     if (!data) return;
     this._player = player;
 
-    this._player.on(playerjs.EVENTS.TIMEUPDATE, function (info) {
-      return _this._onTimeChanged(info);
-    });
+    this._player.on(playerjs.EVENTS.TIMEUPDATE, info => this._onTimeChanged(info));
 
-    this._player.on(playerjs.EVENTS.PLAY, function () {
-      return _this._onPlaybackStateChange(TraktScrobble_1.PlaybackState.Playing);
-    });
+    this._player.on(playerjs.EVENTS.PLAY, () => this._onPlaybackStateChange(TraktScrobble_1.PlaybackState.Playing));
 
-    this._player.on(playerjs.EVENTS.PAUSE, function () {
-      return _this._onPlaybackStateChange(TraktScrobble_1.PlaybackState.Paused);
-    });
+    this._player.on(playerjs.EVENTS.PAUSE, () => this._onPlaybackStateChange(TraktScrobble_1.PlaybackState.Paused));
 
-    this._player.on(playerjs.EVENTS.ENDED, function () {
-      return _this._onPlaybackStateChange(TraktScrobble_1.PlaybackState.Ended);
-    });
+    this._player.on(playerjs.EVENTS.ENDED, () => this._onPlaybackStateChange(TraktScrobble_1.PlaybackState.Ended));
 
-    this._player.on(playerjs.EVENTS.ERROR, function () {
-      return _this._onPlaybackStateChange(TraktScrobble_1.PlaybackState.Ended);
-    });
+    this._player.on(playerjs.EVENTS.ERROR, () => this._onPlaybackStateChange(TraktScrobble_1.PlaybackState.Ended));
 
-    this._history = new TraktHistory_1["default"](this._api);
-    this._scrobble = new TraktScrobble_1["default"](this._api, data);
+    this._history = new TraktHistory_1.default(this._api);
+    this._scrobble = new TraktScrobble_1.default(this._api, data);
     this._scrobble.enabled = this.enabled;
 
     this._scrobble.onStateChanged.sub(this._onScrobbleStatusChanged.bind(this));
@@ -6938,23 +5716,23 @@ function () {
     this._scrobble.onScrobbled.sub(this._onScrobbled.bind(this));
 
     this._createStatusButton();
-  };
+  }
 
-  TraktRoller.prototype._onTimeChanged = function (info) {
+  _onTimeChanged(info) {
     this._currentTime = info.seconds;
     this._duration = info.duration;
     if (this._scrobble) this._scrobble.setPlaybackTime(info.seconds, info.duration);
-  };
+  }
 
-  TraktRoller.prototype._onPlaybackStateChange = function (state) {
+  _onPlaybackStateChange(state) {
     if (!this._scrobble) return;
 
     this._scrobble.setPlaybackState(state, this._getProgress());
-  };
+  }
 
-  TraktRoller.prototype._getProgress = function () {
+  _getProgress() {
     if (!this._duration) {
-      console.warn("TraktRoller: Duration is not set (" + this._duration + ")");
+      console.warn(`TraktRoller: Duration is not set (${this._duration})`);
       return 0;
     } else if (this._duration === undefined) {
       console.warn("TraktRoller: Current time is not set");
@@ -6962,25 +5740,25 @@ function () {
     }
 
     return this._currentTime / this._duration * 100;
-  };
+  }
 
-  TraktRoller.prototype._getScrobbleData = function () {
-    var buildDate = new Date("2019-01-22T18:51:25.661Z");
-    var data = {
+  _getScrobbleData() {
+    let buildDate = new Date("2019-02-17T17:44:36.903Z");
+    const data = {
       progress: this._getProgress(),
       app_version: "1.0.3",
-      app_date: buildDate.getFullYear() + "-" + (buildDate.getMonth() + 1) + "-" + buildDate.getDate()
+      app_date: `${buildDate.getFullYear()}-${buildDate.getMonth() + 1}-${buildDate.getDate()}`
     };
-    var titleElement = document.querySelector('#showmedia_about_episode_num');
+    const titleElement = document.querySelector('#showmedia_about_episode_num');
 
     if (!titleElement || titleElement.textContent.length == 0) {
       console.error("TraktRoller: Could not find video title");
       return null;
     }
 
-    var showTitle = titleElement.textContent.trim();
-    var episodeTitle = undefined;
-    var episodeTitleElement = document.querySelector('#showmedia_about_name');
+    let showTitle = titleElement.textContent.trim();
+    let episodeTitle = undefined;
+    const episodeTitleElement = document.querySelector('#showmedia_about_name');
 
     if (episodeTitleElement) {
       episodeTitle = episodeTitleElement.textContent.trim();
@@ -6996,27 +5774,25 @@ function () {
       }
     }
 
-    var seasonNumber = 1;
-    var episodeNumber = 0;
-    var episodeElement = document.querySelector('#showmedia_about_media h4:nth-child(2)');
+    let seasonNumber = 1;
+    let episodeNumber = 0;
+    const episodeElement = document.querySelector('#showmedia_about_media h4:nth-child(2)');
 
     if (episodeElement && episodeElement.textContent.length > 0) {
-      var seasonMatch = SeasonRegex.exec(episodeElement.textContent);
+      const seasonMatch = SeasonRegex.exec(episodeElement.textContent);
 
       if (seasonMatch) {
         seasonNumber = parseInt(seasonMatch[1]);
       }
 
-      var episodeMatch = EpisodeRegex.exec(episodeElement.textContent);
+      const episodeMatch = EpisodeRegex.exec(episodeElement.textContent);
 
       if (episodeMatch) {
         episodeNumber = parseInt(episodeMatch[1]);
       }
     }
 
-    if (episodeTitle && MovieRegexes.some(function (r) {
-      return r.test(episodeTitle);
-    })) {
+    if (episodeTitle && MovieRegexes.some(r => r.test(episodeTitle))) {
       data.movie = {
         title: showTitle
       };
@@ -7032,18 +5808,18 @@ function () {
     }
 
     return data;
-  };
+  }
 
-  TraktRoller.prototype._onAuthenticationChange = function (isAuthenticated) {
+  _onAuthenticationChange(isAuthenticated) {
     if (!isAuthenticated) {
       this._api.checkAuthenticationResult(window.location.href);
     }
-  };
+  }
 
-  TraktRoller.prototype._onScrobbleStatusChanged = function (state) {//
-  };
+  _onScrobbleStatusChanged(state) {//
+  }
 
-  TraktRoller.prototype._onScrobbled = function (result) {
+  _onScrobbled(result) {
     var item = {
       id: result.id,
       watched_at: new Date().toISOString(),
@@ -7053,46 +5829,45 @@ function () {
       show: result.show,
       episode: result.episode
     };
-    var traktId = result.movie ? result.movie.ids.trakt : result.episode.ids.trakt;
+    let traktId = result.movie ? result.movie.ids.trakt : result.episode.ids.trakt;
 
     this._history.add(traktId, item);
-  };
+  }
 
-  TraktRoller.prototype._createFooterButton = function () {
-    var footer = document.querySelector('#social_media');
+  _createFooterButton() {
+    let footer = document.querySelector('#social_media');
 
     if (!footer) {
       console.error("TraktRoller: Could not find footer to add trakt connect button");
       return;
     }
 
-    preact_1.render(h("div", {
+    preact_1.render(preact_1.h("div", {
       class: "footer-column"
-    }, h(ConnectButton_1.default, {
+    }, preact_1.h(ConnectButton_1.default, {
       api: this._api
     })), footer);
-  };
+  }
 
-  TraktRoller.prototype._createStatusButton = function () {
-    var container = document.querySelector('.showmedia-submenu');
+  _createStatusButton() {
+    let container = document.querySelector('.showmedia-submenu');
 
     if (!container) {
       console.error("TraktRoller: Could not find share row to add trakt status button");
       return;
     }
 
-    preact_1.render(h(StatusButton_1.default, {
+    preact_1.render(preact_1.h(StatusButton_1.default, {
       roller: this,
       scrobble: this._scrobble,
       history: this._history
     }), container);
-  };
+  }
 
-  return TraktRoller;
-}();
+}
 
-exports["default"] = TraktRoller;
-},{"./TraktApi":"bK1h","./TraktScrobble":"SXC6","./ui/ConnectButton":"VnyP","./ui/StatusButton":"BUYa","ste-simple-events":"/WWW","preact":"OmAK","./TraktHistory":"NFyx"}],"7QCb":[function(require,module,exports) {
+exports.default = TraktRoller;
+},{"./TraktApi":"TraktApi.ts","./TraktScrobble":"TraktScrobble.ts","./ui/ConnectButton":"ui/ConnectButton.tsx","./ui/StatusButton":"ui/StatusButton.tsx","ste-simple-events":"../node_modules/ste-simple-events/dist/index.js","preact":"../node_modules/preact/dist/preact.mjs","./TraktHistory":"TraktHistory.ts"}],"index.ts":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -7101,16 +5876,18 @@ var __importDefault = this && this.__importDefault || function (mod) {
   };
 };
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var TraktRoller_1 = __importDefault(require("./TraktRoller"));
+const TraktRoller_1 = __importDefault(require("./TraktRoller"));
 
-var TraktApi_1 = require("./TraktApi");
+const TraktApi_1 = require("./TraktApi");
 
-new TraktRoller_1["default"]({
+new TraktRoller_1.default({
   client_id: "5ac1bf2ba188fc93f941eb0788ef5cb6e0e4bf96b882e914e6d0c17dacc8e7f2",
   client_secret: "3712241a1c467769e6c03336abb5fb9911f8665354d2aaffaa9f817e147a34ca",
   storage: new TraktApi_1.GreaseMonkeyStorageAdapter()
 });
-},{"./TraktRoller":"n8p7","./TraktApi":"bK1h"}]},{},["7QCb"], null)
+},{"./TraktRoller":"TraktRoller.tsx","./TraktApi":"TraktApi.ts"}]},{},["index.ts"], null)
 //# sourceMappingURL=/TraktRoller.user.map

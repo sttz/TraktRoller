@@ -1,6 +1,6 @@
 {
   "name": "tracktroller",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Trakt.tv scrobbler for Crunchyroll",
   "main": "source/index.ts",
   "author": "Adrian Stutz",
