@@ -11,7 +11,7 @@ interface ITraktRollerOptions extends ITraktApiOptions {
   //
 }
 
-const EpisodeRegex = /Episode (\d+)/;
+const EpisodeRegex = /Episode ([\d\.]+)/;
 const SeasonRegex = /Season (\d+)/;
 
 const MovieRegexes = [
@@ -177,7 +177,7 @@ export default class TraktRoller {
       
       const episodeMatch = EpisodeRegex.exec(episodeElement.textContent);
       if (episodeMatch) {
-        episodeNumber = parseInt(episodeMatch[1]);
+        episodeNumber = parseFloat(episodeMatch[1]);
       }
     }
 

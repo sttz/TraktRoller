@@ -243,26 +243,35 @@ export default class TraktScrobble {
   }
 
   private async _lookup(): Promise<LookupResult> {
-    if (this._data.movie === undefined && this._data.show === undefined) {
-      console.error('trakt scrobbler: either movie or show needs to be set on scrobble data');
+    if (this._data.movie === undefined && (this._data.show === undefined || this._data.episode === undefined)) {
+      console.error('trakt scrobbler: either movie or show/episode needs to be set on scrobble data');
       return LookupResult.Error;
     }
 
-    // Start with trakt's automatic matching
-    console.log('trakt scrobbler: trying automatic matching...');
-    let result = await this._scrobbleLookup();
-    if (result !== LookupResult.NotFound) return result;
+    console.log('trakt scrobbler: looking up media on trakt...', Object.assign({}, this._data));
 
     let type: 'movie' | 'show' = this._data.movie !== undefined ? 'movie' : 'show';
+    let result: LookupResult;
+  
+    // Special episodes with fractional episode numbers, e.g. 14.5
+    // (Often used for recap episodes)
+    let isSpecialEp = this._data.episode && (this._data.episode.number % 1) !== 0;
 
-    // Retry automatic matching with absolute episode number
-    if (type === 'show' && this._data.episode.number_abs === undefined && this._data.episode.number !== undefined) {
-      let data = JSON.parse(JSON.stringify(this._data)) as ITraktScrobbleData;
-      data.episode.number_abs = data.episode.number;
-      delete data.episode.number;
-      
-      result = await this._scrobbleLookup(data);
+    if (!isSpecialEp) {
+      // Start with trakt's automatic matching
+      console.log('trakt scrobbler: trying automatic matching...');
+      result = await this._scrobbleLookup();
       if (result !== LookupResult.NotFound) return result;
+
+      // Retry automatic matching with absolute episode number
+      if (type === 'show' && this._data.episode.number_abs === undefined && this._data.episode.number !== undefined) {
+        let data = JSON.parse(JSON.stringify(this._data)) as ITraktScrobbleData;
+        data.episode.number_abs = data.episode.number;
+        delete data.episode.number;
+        
+        result = await this._scrobbleLookup(data);
+        if (result !== LookupResult.NotFound) return result;
+      }
     }
 
     // Search for item manually
