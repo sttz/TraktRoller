@@ -398,8 +398,8 @@ export default class TraktScrobble {
         console.error(`trakt scrobbler: got multiple episodes titled "${title}" in show`, season);
         return LookupResult.NotFound;
       } else if (titleMatch.length == 1) {
-        console.log(`trakt scrobbler: found episode using episode title`, numberMatch[0]);
-        this._data.episode = numberMatch[0];
+        console.log(`trakt scrobbler: found episode using episode title`, titleMatch[0]);
+        this._data.episode = titleMatch[0];
         return LookupResult.Found;
       }
     }
