@@ -38,6 +38,11 @@ The buttons at the bottom:
 
 # Changelog
 
+### 1.0.5 (2019-05-06)
+
+- Handle fractional episode numbers (only supports lookup by title)
+- Fix episode lookup by title
+
 ### 1.0.4 (2019-02-17)
 
 - Use new automatic episode lookup with `number_abs` when lookup with `number` failed

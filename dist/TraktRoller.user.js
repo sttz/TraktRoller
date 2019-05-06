@@ -8,7 +8,7 @@
 // @homepageURL   http://github.com/sttz/TraktRoller
 // @supportURL    http://github.com/sttz/TraktRoller/issues
 // @updateURL     https://openuserjs.org/meta/sttz/TraktRoller.meta.js
-// @version       1.0.4
+// @version       1.0.5
 // @include       https://www.crunchyroll.com/*
 // @connect       api.trakt.tv
 // @grant         GM_setValue
@@ -25,8 +25,6 @@
 //
 // anything defined in a previous bundle is accessed via the
 // orig method which is the require for previous bundles
-
-// eslint-disable-next-line no-global-assign
 parcelRequire = (function (modules, cache, entry, globalName) {
   // Save the require from previous bundle to this closure if any
   var previousRequire = typeof parcelRequire === 'function' && parcelRequire;
@@ -97,8 +95,16 @@ parcelRequire = (function (modules, cache, entry, globalName) {
     }, {}];
   };
 
+  var error;
   for (var i = 0; i < entry.length; i++) {
-    newRequire(entry[i]);
+    try {
+      newRequire(entry[i]);
+    } catch (e) {
+      // Save first error but execute all entries
+      if (!error) {
+        error = e;
+      }
+    }
   }
 
   if (entry.length) {
@@ -123,6 +129,13 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   // Override the current require with this new one
+  parcelRequire = newRequire;
+
+  if (error) {
+    // throw error from earlier, _after updating parcelRequire_
+    throw error;
+  }
+
   return newRequire;
 })({"../node_modules/ste-core/dist/management.js":[function(require,module,exports) {
 "use strict";
@@ -1928,23 +1941,31 @@ class TraktScrobble {
 
   _lookup() {
     return __awaiter(this, void 0, void 0, function* () {
-      if (this._data.movie === undefined && this._data.show === undefined) {
-        console.error('trakt scrobbler: either movie or show needs to be set on scrobble data');
+      if (this._data.movie === undefined && (this._data.show === undefined || this._data.episode === undefined)) {
+        console.error('trakt scrobbler: either movie or show/episode needs to be set on scrobble data');
         return LookupResult.Error;
-      } // Start with trakt's automatic matching
+      }
 
+      console.log('trakt scrobbler: looking up media on trakt...', Object.assign({}, this._data));
+      let type = this._data.movie !== undefined ? 'movie' : 'show';
+      let result; // Special episodes with fractional episode numbers, e.g. 14.5
+      // (Often used for recap episodes)
 
-      console.log('trakt scrobbler: trying automatic matching...');
-      let result = yield this._scrobbleLookup();
-      if (result !== LookupResult.NotFound) return result;
-      let type = this._data.movie !== undefined ? 'movie' : 'show'; // Retry automatic matching with absolute episode number
+      let isSpecialEp = this._data.episode && this._data.episode.number % 1 !== 0;
 
-      if (type === 'show' && this._data.episode.number_abs === undefined && this._data.episode.number !== undefined) {
-        let data = JSON.parse(JSON.stringify(this._data));
-        data.episode.number_abs = data.episode.number;
-        delete data.episode.number;
-        result = yield this._scrobbleLookup(data);
-        if (result !== LookupResult.NotFound) return result;
+      if (!isSpecialEp) {
+        // Start with trakt's automatic matching
+        console.log('trakt scrobbler: trying automatic matching...');
+        result = yield this._scrobbleLookup();
+        if (result !== LookupResult.NotFound) return result; // Retry automatic matching with absolute episode number
+
+        if (type === 'show' && this._data.episode.number_abs === undefined && this._data.episode.number !== undefined) {
+          let data = JSON.parse(JSON.stringify(this._data));
+          data.episode.number_abs = data.episode.number;
+          delete data.episode.number;
+          result = yield this._scrobbleLookup(data);
+          if (result !== LookupResult.NotFound) return result;
+        }
       } // Search for item manually
 
 
@@ -2097,8 +2118,8 @@ class TraktScrobble {
         console.error(`trakt scrobbler: got multiple episodes titled "${title}" in show`, season);
         return LookupResult.NotFound;
       } else if (titleMatch.length == 1) {
-        console.log(`trakt scrobbler: found episode using episode title`, numberMatch[0]);
-        this._data.episode = numberMatch[0];
+        console.log(`trakt scrobbler: found episode using episode title`, titleMatch[0]);
+        this._data.episode = titleMatch[0];
         return LookupResult.Found;
       }
     }
@@ -2122,6 +2143,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createElement = exports.h = h;
 exports.cloneElement = cloneElement;
+exports.createRef = createRef;
 exports.Component = Component;
 exports.render = render;
 exports.rerender = rerender;
@@ -2191,6 +2213,12 @@ function extend(obj, props) {
   return obj;
 }
 
+function applyRef(ref, value) {
+  if (ref != null) {
+    if (typeof ref == 'function') ref(value);else ref.current = value;
+  }
+}
+
 var defer = typeof Promise == 'function' ? Promise.resolve().then.bind(Promise.resolve()) : setTimeout;
 
 function cloneElement(vnode, props) {
@@ -2207,11 +2235,9 @@ function enqueueRender(component) {
 }
 
 function rerender() {
-  var p,
-      list = items;
-  items = [];
+  var p;
 
-  while (p = list.pop()) {
+  while (p = items.pop()) {
     if (p._dirty) renderComponent(p);
   }
 }
@@ -2263,8 +2289,8 @@ function setAccessor(node, name, old, value, isSvg) {
   if (name === 'className') name = 'class';
 
   if (name === 'key') {} else if (name === 'ref') {
-    if (old) old(null);
-    if (value) value(node);
+    applyRef(old, null);
+    applyRef(value, node);
   } else if (name === 'class' && !isSvg) {
     node.className = value || '';
   } else if (name === 'style') {
@@ -2325,7 +2351,7 @@ var hydrating = false;
 function flushMounts() {
   var c;
 
-  while (c = mounts.pop()) {
+  while (c = mounts.shift()) {
     if (options.afterMount) options.afterMount(c);
     if (c.componentDidMount) c.componentDidMount();
   }
@@ -2504,7 +2530,7 @@ function recollectNodeTree(node, unmountOnly) {
   if (component) {
     unmountComponent(component);
   } else {
-    if (node['__preactattr_'] != null && node['__preactattr_'].ref) node['__preactattr_'].ref(null);
+    if (node['__preactattr_'] != null) applyRef(node['__preactattr_'].ref, null);
 
     if (unmountOnly === false || node['__preactattr_'] == null) {
       removeNode(node);
@@ -2603,7 +2629,7 @@ function setComponentProps(component, props, renderMode, context, mountAll) {
     }
   }
 
-  if (component.__ref) component.__ref(component);
+  applyRef(component.__ref, component);
 }
 
 function renderComponent(component, renderMode, mountAll, isChild) {
@@ -2726,7 +2752,7 @@ function renderComponent(component, renderMode, mountAll, isChild) {
   }
 
   if (!isUpdate || mountAll) {
-    mounts.unshift(component);
+    mounts.push(component);
   } else if (!skip) {
     if (component.componentDidUpdate) {
       component.componentDidUpdate(previousProps, previousState, snapshot);
@@ -2793,14 +2819,14 @@ function unmountComponent(component) {
   if (inner) {
     unmountComponent(inner);
   } else if (base) {
-    if (base['__preactattr_'] && base['__preactattr_'].ref) base['__preactattr_'].ref(null);
+    if (base['__preactattr_'] != null) applyRef(base['__preactattr_'].ref, null);
     component.nextBase = base;
     removeNode(base);
     recyclerComponents.push(component);
     removeChildren(base);
   }
 
-  if (component.__ref) component.__ref(null);
+  applyRef(component.__ref, null);
 }
 
 function Component(props, context) {
@@ -2829,10 +2855,15 @@ function render(vnode, parent, merge) {
   return diff(merge, vnode, {}, false, parent, false);
 }
 
+function createRef() {
+  return {};
+}
+
 var preact = {
   h: h,
   createElement: h,
   cloneElement: cloneElement,
+  createRef: createRef,
   Component: Component,
   render: render,
   rerender: rerender,
@@ -2840,124 +2871,150 @@ var preact = {
 };
 var _default = preact;
 exports.default = _default;
-},{}],"../node_modules/@emotion/memoize/dist/memoize.esm.js":[function(require,module,exports) {
+},{}],"kwH3":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.StyleSheet = void 0;
 
-function memoize(fn) {
-  var cache = {};
-  return function (arg) {
-    if (cache[arg] === undefined) cache[arg] = fn(arg);
-    return cache[arg];
+/*
+
+Based off glamor's StyleSheet, thanks Sunil ❤️
+
+high performance StyleSheet for css-in-js systems
+
+- uses multiple style tags behind the scenes for millions of rules
+- uses `insertRule` for appending in production for *much* faster performance
+
+// usage
+
+import { StyleSheet } from '@emotion/sheet'
+
+let styleSheet = new StyleSheet({ key: '', container: document.head })
+
+styleSheet.insert('#box { border: 1px solid red; }')
+- appends a css rule into the stylesheet
+
+styleSheet.flush()
+- empties the stylesheet of all its contents
+
+*/
+// $FlowFixMe
+function sheetForTag(tag) {
+  if (tag.sheet) {
+    // $FlowFixMe
+    return tag.sheet;
+  } // this weirdness brought to you by firefox
+
+  /* istanbul ignore next */
+
+
+  for (var i = 0; i < document.styleSheets.length; i++) {
+    if (document.styleSheets[i].ownerNode === tag) {
+      // $FlowFixMe
+      return document.styleSheets[i];
+    }
+  }
+}
+
+function createStyleElement(options) {
+  var tag = document.createElement('style');
+  tag.setAttribute('data-emotion', options.key);
+
+  if (options.nonce !== undefined) {
+    tag.setAttribute('nonce', options.nonce);
+  }
+
+  tag.appendChild(document.createTextNode(''));
+  return tag;
+}
+
+var StyleSheet =
+/*#__PURE__*/
+function () {
+  function StyleSheet(options) {
+    this.isSpeedy = options.speedy === undefined ? "production" === 'production' : options.speedy;
+    this.tags = [];
+    this.ctr = 0;
+    this.nonce = options.nonce; // key is the value of the data-emotion attribute, it's used to identify different sheets
+
+    this.key = options.key;
+    this.container = options.container;
+    this.before = null;
+  }
+
+  var _proto = StyleSheet.prototype;
+
+  _proto.insert = function insert(rule) {
+    // the max length is how many rules we have per style tag, it's 65000 in speedy mode
+    // it's 1 in dev because we insert source maps that map a single rule to a location
+    // and you can only have one source map per style tag
+    if (this.ctr % (this.isSpeedy ? 65000 : 1) === 0) {
+      var _tag = createStyleElement(this);
+
+      var before;
+
+      if (this.tags.length === 0) {
+        before = this.before;
+      } else {
+        before = this.tags[this.tags.length - 1].nextSibling;
+      }
+
+      this.container.insertBefore(_tag, before);
+      this.tags.push(_tag);
+    }
+
+    var tag = this.tags[this.tags.length - 1];
+
+    if (this.isSpeedy) {
+      var sheet = sheetForTag(tag);
+
+      try {
+        // this is a really hot path
+        // we check the second character first because having "i"
+        // as the second character will happen less often than
+        // having "@" as the first character
+        var isImportRule = rule.charCodeAt(1) === 105 && rule.charCodeAt(0) === 64; // this is the ultrafast version, works across browsers
+        // the big drawback is that the css won't be editable in devtools
+
+        sheet.insertRule(rule, // we need to insert @import rules before anything else
+        // otherwise there will be an error
+        // technically this means that the @import rules will
+        // _usually_(not always since there could be multiple style tags)
+        // be the first ones in prod and generally later in dev
+        // this shouldn't really matter in the real world though
+        // @import is generally only used for font faces from google fonts and etc.
+        // so while this could be technically correct then it would be slower and larger
+        // for a tiny bit of correctness that won't matter in the real world
+        isImportRule ? 0 : sheet.cssRules.length);
+      } catch (e) {
+        if ("production" !== 'production') {
+          console.warn("There was a problem inserting the following rule: \"" + rule + "\"", e);
+        }
+      }
+    } else {
+      tag.appendChild(document.createTextNode(rule));
+    }
+
+    this.ctr++;
   };
-}
 
-var _default = memoize;
-exports.default = _default;
-},{}],"../node_modules/@emotion/unitless/dist/unitless.esm.js":[function(require,module,exports) {
-"use strict";
+  _proto.flush = function flush() {
+    // $FlowFixMe
+    this.tags.forEach(function (tag) {
+      return tag.parentNode.removeChild(tag);
+    });
+    this.tags = [];
+    this.ctr = 0;
+  };
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var unitlessKeys = {
-  animationIterationCount: 1,
-  borderImageOutset: 1,
-  borderImageSlice: 1,
-  borderImageWidth: 1,
-  boxFlex: 1,
-  boxFlexGroup: 1,
-  boxOrdinalGroup: 1,
-  columnCount: 1,
-  columns: 1,
-  flex: 1,
-  flexGrow: 1,
-  flexPositive: 1,
-  flexShrink: 1,
-  flexNegative: 1,
-  flexOrder: 1,
-  gridRow: 1,
-  gridRowEnd: 1,
-  gridRowSpan: 1,
-  gridRowStart: 1,
-  gridColumn: 1,
-  gridColumnEnd: 1,
-  gridColumnSpan: 1,
-  gridColumnStart: 1,
-  fontWeight: 1,
-  lineHeight: 1,
-  opacity: 1,
-  order: 1,
-  orphans: 1,
-  tabSize: 1,
-  widows: 1,
-  zIndex: 1,
-  zoom: 1,
-  WebkitLineClamp: 1,
-  // SVG-related properties
-  fillOpacity: 1,
-  floodOpacity: 1,
-  stopOpacity: 1,
-  strokeDasharray: 1,
-  strokeDashoffset: 1,
-  strokeMiterlimit: 1,
-  strokeOpacity: 1,
-  strokeWidth: 1
-};
-var _default = unitlessKeys;
-exports.default = _default;
-},{}],"../node_modules/@emotion/hash/dist/hash.esm.js":[function(require,module,exports) {
-"use strict";
+  return StyleSheet;
+}();
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-/* eslint-disable */
-// murmurhash2 via https://github.com/garycourt/murmurhash-js/blob/master/murmurhash2_gc.js
-function murmurhash2_32_gc(str) {
-  var l = str.length,
-      h = l ^ l,
-      i = 0,
-      k;
-
-  while (l >= 4) {
-    k = str.charCodeAt(i) & 0xff | (str.charCodeAt(++i) & 0xff) << 8 | (str.charCodeAt(++i) & 0xff) << 16 | (str.charCodeAt(++i) & 0xff) << 24;
-    k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-    k ^= k >>> 24;
-    k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-    h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16) ^ k;
-    l -= 4;
-    ++i;
-  }
-
-  switch (l) {
-    case 3:
-      h ^= (str.charCodeAt(i + 2) & 0xff) << 16;
-
-    case 2:
-      h ^= (str.charCodeAt(i + 1) & 0xff) << 8;
-
-    case 1:
-      h ^= str.charCodeAt(i) & 0xff;
-      h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-  }
-
-  h ^= h >>> 13;
-  h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-  h ^= h >>> 15;
-  return (h >>> 0).toString(36);
-}
-
-var _default = murmurhash2_32_gc;
-exports.default = _default;
-},{}],"../node_modules/@emotion/stylis/dist/stylis.esm.js":[function(require,module,exports) {
+exports.StyleSheet = StyleSheet;
+},{}],"../node_modules/@emotion/cache/node_modules/@emotion/stylis/dist/stylis.browser.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3512,22 +3569,9 @@ function stylis_min(W) {
         break;
 
       default:
-        switch (d.constructor) {
-          case Array:
-            for (var c = 0, e = d.length; c < e; ++c) {
-              T(d[c]);
-            }
-
-            break;
-
-          case Function:
-            S[A++] = d;
-            break;
-
-          case Boolean:
-            Y = !!d | 0;
-        }
-
+        if ('function' === typeof d) S[A++] = d;else if ('object' === typeof d) for (var c = 0, e = d.length; c < e; ++c) {
+          T(d[c]);
+        } else Y = !!d | 0;
     }
 
     return T;
@@ -3593,58 +3637,7 @@ function stylis_min(W) {
 
 var _default = stylis_min;
 exports.default = _default;
-},{}],"../node_modules/stylis-rule-sheet/index.js":[function(require,module,exports) {
-var define;
-(function (factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? (module['exports'] = factory()) :
-		typeof define === 'function' && define['amd'] ? define(factory()) :
-			(window['stylisRuleSheet'] = factory())
-}(function () {
-
-	'use strict'
-
-	return function (insertRule) {
-		var delimiter = '/*|*/'
-		var needle = delimiter+'}'
-
-		function toSheet (block) {
-			if (block)
-				try {
-					insertRule(block + '}')
-				} catch (e) {}
-		}
-
-		return function ruleSheet (context, content, selectors, parents, line, column, length, ns, depth, at) {
-			switch (context) {
-				// property
-				case 1:
-					// @import
-					if (depth === 0 && content.charCodeAt(0) === 64)
-						return insertRule(content+';'), ''
-					break
-				// selector
-				case 2:
-					if (ns === 0)
-						return content + delimiter
-					break
-				// at-rule
-				case 3:
-					switch (ns) {
-						// @font-face, @page
-						case 102:
-						case 112:
-							return insertRule(selectors[0]+content), ''
-						default:
-							return content + (at === 0 ? delimiter : '')
-					}
-				case -2:
-					content.split(needle).forEach(toSheet)
-			}
-		}
-	}
-}))
-
-},{}],"QdUY":[function(require,module,exports) {
+},{}],"../node_modules/@emotion/weak-memoize/dist/weak-memoize.browser.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3652,19 +3645,385 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _memoize = _interopRequireDefault(require("@emotion/memoize"));
+var weakMemoize = function weakMemoize(func) {
+  // $FlowFixMe flow doesn't include all non-primitive types as allowed for weakmaps
+  var cache = new WeakMap();
+  return function (arg) {
+    if (cache.has(arg)) {
+      // $FlowFixMe
+      return cache.get(arg);
+    }
 
-var _unitless = _interopRequireDefault(require("@emotion/unitless"));
+    var ret = func(arg);
+    cache.set(arg, ret);
+    return ret;
+  };
+};
 
-var _hash = _interopRequireDefault(require("@emotion/hash"));
+var _default = weakMemoize;
+exports.default = _default;
+},{}],"dqFm":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _sheet = require("@emotion/sheet");
 
 var _stylis = _interopRequireDefault(require("@emotion/stylis"));
 
-var _stylisRuleSheet = _interopRequireDefault(require("stylis-rule-sheet"));
+require("@emotion/weak-memoize");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// https://github.com/thysultan/stylis.js/tree/master/plugins/rule-sheet
+// inlined to avoid umd wrapper and peerDep warnings/installing stylis
+// since we use stylis after closure compiler
+var delimiter = '/*|*/';
+var needle = delimiter + '}';
+
+function toSheet(block) {
+  if (block) {
+    Sheet.current.insert(block + '}');
+  }
+}
+
+var Sheet = {
+  current: null
+};
+
+var ruleSheet = function ruleSheet(context, content, selectors, parents, line, column, length, ns, depth, at) {
+  switch (context) {
+    // property
+    case 1:
+      {
+        switch (content.charCodeAt(0)) {
+          case 64:
+            {
+              // @import
+              Sheet.current.insert(content + ';');
+              return '';
+            }
+          // charcode for l
+
+          case 108:
+            {
+              // charcode for b
+              // this ignores label
+              if (content.charCodeAt(2) === 98) {
+                return '';
+              }
+            }
+        }
+
+        break;
+      }
+    // selector
+
+    case 2:
+      {
+        if (ns === 0) return content + delimiter;
+        break;
+      }
+    // at-rule
+
+    case 3:
+      {
+        switch (ns) {
+          // @font-face, @page
+          case 102:
+          case 112:
+            {
+              Sheet.current.insert(selectors[0] + content);
+              return '';
+            }
+
+          default:
+            {
+              return content + (at === 0 ? delimiter : '');
+            }
+        }
+      }
+
+    case -2:
+      {
+        content.split(needle).forEach(toSheet);
+      }
+  }
+};
+
+var createCache = function createCache(options) {
+  if (options === undefined) options = {};
+  var key = options.key || 'css';
+  var stylisOptions;
+
+  if (options.prefix !== undefined) {
+    stylisOptions = {
+      prefix: options.prefix
+    };
+  }
+
+  var stylis = new _stylis.default(stylisOptions);
+
+  if ("production" !== 'production') {
+    // $FlowFixMe
+    if (/[^a-z-]/.test(key)) {
+      throw new Error("Emotion key must only contain lower case alphabetical characters and - but \"" + key + "\" was passed");
+    }
+  }
+
+  var inserted = {}; // $FlowFixMe
+
+  var container;
+  {
+    container = options.container || document.head;
+    var nodes = document.querySelectorAll("style[data-emotion-" + key + "]");
+    Array.prototype.forEach.call(nodes, function (node) {
+      var attrib = node.getAttribute("data-emotion-" + key); // $FlowFixMe
+
+      attrib.split(' ').forEach(function (id) {
+        inserted[id] = true;
+      });
+
+      if (node.parentNode !== container) {
+        container.appendChild(node);
+      }
+    });
+  }
+
+  var _insert;
+
+  {
+    stylis.use(options.stylisPlugins)(ruleSheet);
+
+    _insert = function insert(selector, serialized, sheet, shouldCache) {
+      var name = serialized.name;
+      Sheet.current = sheet;
+
+      if ("production" !== 'production' && serialized.map !== undefined) {
+        var map = serialized.map;
+        Sheet.current = {
+          insert: function insert(rule) {
+            sheet.insert(rule + map);
+          }
+        };
+      }
+
+      stylis(selector, serialized.styles);
+
+      if (shouldCache) {
+        cache.inserted[name] = true;
+      }
+    };
+  }
+
+  if ("production" !== 'production') {
+    // https://esbench.com/bench/5bf7371a4cd7e6009ef61d0a
+    var commentStart = /\/\*/g;
+    var commentEnd = /\*\//g;
+    stylis.use(function (context, content) {
+      switch (context) {
+        case -1:
+          {
+            while (commentStart.test(content)) {
+              commentEnd.lastIndex = commentStart.lastIndex;
+
+              if (commentEnd.test(content)) {
+                commentStart.lastIndex = commentEnd.lastIndex;
+                continue;
+              }
+
+              throw new Error('Your styles have an unterminated comment ("/*" without corresponding "*/").');
+            }
+
+            commentStart.lastIndex = 0;
+            break;
+          }
+      }
+    });
+    stylis.use(function (context, content, selectors) {
+      switch (context) {
+        case -1:
+          {
+            var flag = 'emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason';
+            var unsafePseudoClasses = content.match(/(:first|:nth|:nth-last)-child/g);
+
+            if (unsafePseudoClasses) {
+              unsafePseudoClasses.forEach(function (unsafePseudoClass) {
+                var ignoreRegExp = new RegExp(unsafePseudoClass + ".*\\/\\* " + flag + " \\*\\/");
+                var ignore = ignoreRegExp.test(content);
+
+                if (unsafePseudoClass && !ignore) {
+                  console.error("The pseudo class \"" + unsafePseudoClass + "\" is potentially unsafe when doing server-side rendering. Try changing it to \"" + unsafePseudoClass.split('-child')[0] + "-of-type\".");
+                }
+              });
+            }
+
+            break;
+          }
+      }
+    });
+  }
+
+  var cache = {
+    key: key,
+    sheet: new _sheet.StyleSheet({
+      key: key,
+      container: container,
+      nonce: options.nonce,
+      speedy: options.speedy
+    }),
+    nonce: options.nonce,
+    inserted: inserted,
+    registered: {},
+    insert: _insert
+  };
+  return cache;
+};
+
+var _default = createCache;
+exports.default = _default;
+},{"@emotion/sheet":"kwH3","@emotion/stylis":"../node_modules/@emotion/cache/node_modules/@emotion/stylis/dist/stylis.browser.esm.js","@emotion/weak-memoize":"../node_modules/@emotion/weak-memoize/dist/weak-memoize.browser.esm.js"}],"../node_modules/@emotion/serialize/node_modules/@emotion/hash/dist/hash.browser.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+/* eslint-disable */
+// murmurhash2 via https://github.com/garycourt/murmurhash-js/blob/master/murmurhash2_gc.js
+function murmurhash2_32_gc(str) {
+  var l = str.length,
+      h = l ^ l,
+      i = 0,
+      k;
+
+  while (l >= 4) {
+    k = str.charCodeAt(i) & 0xff | (str.charCodeAt(++i) & 0xff) << 8 | (str.charCodeAt(++i) & 0xff) << 16 | (str.charCodeAt(++i) & 0xff) << 24;
+    k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+    k ^= k >>> 24;
+    k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+    h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16) ^ k;
+    l -= 4;
+    ++i;
+  }
+
+  switch (l) {
+    case 3:
+      h ^= (str.charCodeAt(i + 2) & 0xff) << 16;
+
+    case 2:
+      h ^= (str.charCodeAt(i + 1) & 0xff) << 8;
+
+    case 1:
+      h ^= str.charCodeAt(i) & 0xff;
+      h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+  }
+
+  h ^= h >>> 13;
+  h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+  h ^= h >>> 15;
+  return (h >>> 0).toString(36);
+}
+
+var _default = murmurhash2_32_gc;
+exports.default = _default;
+},{}],"../node_modules/@emotion/unitless/dist/unitless.browser.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var unitlessKeys = {
+  animationIterationCount: 1,
+  borderImageOutset: 1,
+  borderImageSlice: 1,
+  borderImageWidth: 1,
+  boxFlex: 1,
+  boxFlexGroup: 1,
+  boxOrdinalGroup: 1,
+  columnCount: 1,
+  columns: 1,
+  flex: 1,
+  flexGrow: 1,
+  flexPositive: 1,
+  flexShrink: 1,
+  flexNegative: 1,
+  flexOrder: 1,
+  gridRow: 1,
+  gridRowEnd: 1,
+  gridRowSpan: 1,
+  gridRowStart: 1,
+  gridColumn: 1,
+  gridColumnEnd: 1,
+  gridColumnSpan: 1,
+  gridColumnStart: 1,
+  msGridRow: 1,
+  msGridRowSpan: 1,
+  msGridColumn: 1,
+  msGridColumnSpan: 1,
+  fontWeight: 1,
+  lineHeight: 1,
+  opacity: 1,
+  order: 1,
+  orphans: 1,
+  tabSize: 1,
+  widows: 1,
+  zIndex: 1,
+  zoom: 1,
+  WebkitLineClamp: 1,
+  // SVG-related properties
+  fillOpacity: 1,
+  floodOpacity: 1,
+  stopOpacity: 1,
+  strokeDasharray: 1,
+  strokeDashoffset: 1,
+  strokeMiterlimit: 1,
+  strokeOpacity: 1,
+  strokeWidth: 1
+};
+var _default = unitlessKeys;
+exports.default = _default;
+},{}],"../node_modules/@emotion/serialize/node_modules/@emotion/memoize/dist/memoize.browser.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function memoize(fn) {
+  var cache = {};
+  return function (arg) {
+    if (cache[arg] === undefined) cache[arg] = fn(arg);
+    return cache[arg];
+  };
+}
+
+var _default = memoize;
+exports.default = _default;
+},{}],"WPNE":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.serializeStyles = void 0;
+
+var _hash = _interopRequireDefault(require("@emotion/hash"));
+
+var _unitless = _interopRequireDefault(require("@emotion/unitless"));
+
+var _memoize = _interopRequireDefault(require("@emotion/memoize"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var hyphenateRegex = /[A-Z]|^ms/g;
+var animationRegex = /_EMO_([^_]+?)_([^]*?)_EMO_/g;
 var processStyleName = (0, _memoize.default)(function (styleName) {
   return styleName.replace(hyphenateRegex, '-$&').toLowerCase();
 });
@@ -3674,8 +4033,25 @@ var processStyleValue = function processStyleValue(key, value) {
     return '';
   }
 
+  switch (key) {
+    case 'animation':
+    case 'animationName':
+      {
+        if (typeof value === 'string') {
+          value = value.replace(animationRegex, function (match, p1, p2) {
+            cursor = {
+              name: p1,
+              styles: p2,
+              next: cursor
+            };
+            return p1;
+          });
+        }
+      }
+  }
+
   if (_unitless.default[key] !== 1 && key.charCodeAt(1) !== 45 && // custom properties
-  !isNaN(value) && value !== 0) {
+  typeof value === 'number' && value !== 0) {
     return value + 'px';
   }
 
@@ -3686,6 +4062,9 @@ if ("production" !== 'production') {
   var contentValuePattern = /(attr|calc|counters?|url)\(/;
   var contentValues = ['normal', 'none', 'counter', 'open-quote', 'close-quote', 'no-open-quote', 'no-close-quote', 'initial', 'inherit', 'unset'];
   var oldProcessStyleValue = processStyleValue;
+  var msPattern = /^-ms-/;
+  var hyphenPattern = /-(.)/g;
+  var hyphenatedCache = {};
 
   processStyleValue = function processStyleValue(key, value) {
     if (key === 'content') {
@@ -3694,30 +4073,391 @@ if ("production" !== 'production') {
       }
     }
 
-    return oldProcessStyleValue(key, value);
+    var processed = oldProcessStyleValue(key, value);
+    var isCssVariable = key.charCodeAt(1) === 45;
+
+    if (processed !== '' && !isCssVariable && key.indexOf('-') !== -1 && hyphenatedCache[key] === undefined) {
+      hyphenatedCache[key] = true;
+      console.error("Using kebab-case for css properties in objects is not supported. Did you mean " + key.replace(msPattern, 'ms-').replace(hyphenPattern, function (str, char) {
+        return char.toUpperCase();
+      }) + "?");
+    }
+
+    return processed;
   };
 }
 
+var shouldWarnAboutInterpolatingClassNameFromCss = true;
+
+function handleInterpolation(mergedProps, registered, interpolation, couldBeSelectorInterpolation) {
+  if (interpolation == null) {
+    return '';
+  }
+
+  if (interpolation.__emotion_styles !== undefined) {
+    if ("production" !== 'production' && interpolation.toString() === 'NO_COMPONENT_SELECTOR') {
+      throw new Error('Component selectors can only be used in conjunction with babel-plugin-emotion.');
+    }
+
+    return interpolation;
+  }
+
+  switch (typeof interpolation) {
+    case 'boolean':
+      {
+        return '';
+      }
+
+    case 'object':
+      {
+        if (interpolation.anim === 1) {
+          cursor = {
+            name: interpolation.name,
+            styles: interpolation.styles,
+            next: cursor
+          };
+          return interpolation.name;
+        }
+
+        if (interpolation.styles !== undefined) {
+          var next = interpolation.next;
+
+          if (next !== undefined) {
+            // not the most efficient thing ever but this is a pretty rare case
+            // and there will be very few iterations of this generally
+            while (next !== undefined) {
+              cursor = {
+                name: next.name,
+                styles: next.styles,
+                next: cursor
+              };
+              next = next.next;
+            }
+          }
+
+          var styles = interpolation.styles;
+
+          if ("production" !== 'production' && interpolation.map !== undefined) {
+            styles += interpolation.map;
+          }
+
+          return styles;
+        }
+
+        return createStringFromObject(mergedProps, registered, interpolation);
+      }
+
+    case 'function':
+      {
+        if (mergedProps !== undefined) {
+          var previousCursor = cursor;
+          var result = interpolation(mergedProps);
+          cursor = previousCursor;
+          return handleInterpolation(mergedProps, registered, result, couldBeSelectorInterpolation);
+        } else if ("production" !== 'production') {
+          console.error('Functions that are interpolated in css calls will be stringified.\n' + 'If you want to have a css call based on props, create a function that returns a css call like this\n' + 'let dynamicStyle = (props) => css`color: ${props.color}`\n' + 'It can be called directly with props or interpolated in a styled call like this\n' + "let SomeComponent = styled('div')`${dynamicStyle}`");
+        }
+      }
+    // eslint-disable-next-line no-fallthrough
+
+    default:
+      {
+        if (registered == null) {
+          return interpolation;
+        }
+
+        var cached = registered[interpolation];
+
+        if ("production" !== 'production' && couldBeSelectorInterpolation && shouldWarnAboutInterpolatingClassNameFromCss && cached !== undefined) {
+          console.error('Interpolating a className from css`` is not recommended and will cause problems with composition.\n' + 'Interpolating a className from css`` will be completely unsupported in a future major version of Emotion');
+          shouldWarnAboutInterpolatingClassNameFromCss = false;
+        }
+
+        return cached !== undefined && !couldBeSelectorInterpolation ? cached : interpolation;
+      }
+  }
+}
+
+function createStringFromObject(mergedProps, registered, obj) {
+  var string = '';
+
+  if (Array.isArray(obj)) {
+    for (var i = 0; i < obj.length; i++) {
+      string += handleInterpolation(mergedProps, registered, obj[i], false);
+    }
+  } else {
+    for (var _key in obj) {
+      var value = obj[_key];
+
+      if (typeof value !== 'object') {
+        if (registered != null && registered[value] !== undefined) {
+          string += _key + "{" + registered[value] + "}";
+        } else {
+          string += processStyleName(_key) + ":" + processStyleValue(_key, value) + ";";
+        }
+      } else {
+        if (_key === 'NO_COMPONENT_SELECTOR' && "production" !== 'production') {
+          throw new Error('Component selectors can only be used in conjunction with babel-plugin-emotion.');
+        }
+
+        if (Array.isArray(value) && typeof value[0] === 'string' && (registered == null || registered[value[0]] === undefined)) {
+          for (var _i = 0; _i < value.length; _i++) {
+            string += processStyleName(_key) + ":" + processStyleValue(_key, value[_i]) + ";";
+          }
+        } else {
+          string += _key + "{" + handleInterpolation(mergedProps, registered, value, false) + "}";
+        }
+      }
+    }
+  }
+
+  return string;
+}
+
+var labelPattern = /label:\s*([^\s;\n{]+)\s*;/g;
+var sourceMapPattern;
+
+if ("production" !== 'production') {
+  sourceMapPattern = /\/\*#\ssourceMappingURL=data:application\/json;\S+\s+\*\//;
+} // this is the cursor for keyframes
+// keyframes are stored on the SerializedStyles object as a linked list
+
+
+var cursor;
+
+var serializeStyles = function serializeStyles(args, registered, mergedProps) {
+  if (args.length === 1 && typeof args[0] === 'object' && args[0] !== null && args[0].styles !== undefined) {
+    return args[0];
+  }
+
+  var stringMode = true;
+  var styles = '';
+  cursor = undefined;
+  var strings = args[0];
+
+  if (strings == null || strings.raw === undefined) {
+    stringMode = false;
+    styles += handleInterpolation(mergedProps, registered, strings, false);
+  } else {
+    styles += strings[0];
+  } // we start at 1 since we've already handled the first arg
+
+
+  for (var i = 1; i < args.length; i++) {
+    styles += handleInterpolation(mergedProps, registered, args[i], styles.charCodeAt(styles.length - 1) === 46);
+
+    if (stringMode) {
+      styles += strings[i];
+    }
+  }
+
+  var sourceMap;
+
+  if ("production" !== 'production') {
+    styles = styles.replace(sourceMapPattern, function (match) {
+      sourceMap = match;
+      return '';
+    });
+  } // using a global regex with .exec is stateful so lastIndex has to be reset each time
+
+
+  labelPattern.lastIndex = 0;
+  var identifierName = '';
+  var match; // https://esbench.com/bench/5b809c2cf2949800a0f61fb5
+
+  while ((match = labelPattern.exec(styles)) !== null) {
+    identifierName += '-' + // $FlowFixMe we know it's not null
+    match[1];
+  }
+
+  var name = (0, _hash.default)(styles) + identifierName;
+
+  if ("production" !== 'production') {
+    return {
+      name: name,
+      styles: styles,
+      map: sourceMap,
+      next: cursor
+    };
+  }
+
+  return {
+    name: name,
+    styles: styles,
+    next: cursor
+  };
+};
+
+exports.serializeStyles = serializeStyles;
+},{"@emotion/hash":"../node_modules/@emotion/serialize/node_modules/@emotion/hash/dist/hash.browser.esm.js","@emotion/unitless":"../node_modules/@emotion/unitless/dist/unitless.browser.esm.js","@emotion/memoize":"../node_modules/@emotion/serialize/node_modules/@emotion/memoize/dist/memoize.browser.esm.js"}],"../node_modules/@emotion/utils/dist/utils.browser.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getRegisteredStyles = getRegisteredStyles;
+exports.insertStyles = void 0;
+var isBrowser = "object" !== 'undefined';
+
+function getRegisteredStyles(registered, registeredStyles, classNames) {
+  var rawClassName = '';
+  classNames.split(' ').forEach(function (className) {
+    if (registered[className] !== undefined) {
+      registeredStyles.push(registered[className]);
+    } else {
+      rawClassName += className + " ";
+    }
+  });
+  return rawClassName;
+}
+
+var insertStyles = function insertStyles(cache, serialized, isStringTag) {
+  var className = cache.key + "-" + serialized.name;
+
+  if ( // we only need to add the styles to the registered cache if the
+  // class name could be used further down
+  // the tree but if it's a string tag, we know it won't
+  // so we don't have to add it to registered cache.
+  // this improves memory usage since we can avoid storing the whole style string
+  (isStringTag === false || // we need to always store it if we're in compat mode and
+  // in node since emotion-server relies on whether a style is in
+  // the registered cache to know whether a style is global or not
+  // also, note that this check will be dead code eliminated in the browser
+  isBrowser === false && cache.compat !== undefined) && cache.registered[className] === undefined) {
+    cache.registered[className] = serialized.styles;
+  }
+
+  if (cache.inserted[serialized.name] === undefined) {
+    var current = serialized;
+
+    do {
+      var maybeStyles = cache.insert("." + className, current, cache.sheet, true);
+      current = current.next;
+    } while (current !== undefined);
+  }
+};
+
+exports.insertStyles = insertStyles;
+},{}],"Q2eU":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _cache = _interopRequireDefault(require("@emotion/cache"));
+
+var _serialize = require("@emotion/serialize");
+
+var _utils = require("@emotion/utils");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function insertWithoutScoping(cache, serialized) {
+  if (cache.inserted[serialized.name] === undefined) {
+    return cache.insert('', serialized, cache.sheet, true);
+  }
+}
+
+function merge(registered, css, className) {
+  var registeredStyles = [];
+  var rawClassName = (0, _utils.getRegisteredStyles)(registered, registeredStyles, className);
+
+  if (registeredStyles.length < 2) {
+    return className;
+  }
+
+  return rawClassName + css(registeredStyles);
+}
+
+var createEmotion = function createEmotion(options) {
+  var cache = (0, _cache.default)(options); // $FlowFixMe
+
+  cache.sheet.speedy = function (value) {
+    if ("production" !== 'production' && this.ctr !== 0) {
+      throw new Error('speedy must be changed before any rules are inserted');
+    }
+
+    this.isSpeedy = value;
+  };
+
+  cache.compat = true;
+
+  var css = function css() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var serialized = (0, _serialize.serializeStyles)(args, cache.registered, this !== undefined ? this.mergedProps : undefined);
+    (0, _utils.insertStyles)(cache, serialized, false);
+    return cache.key + "-" + serialized.name;
+  };
+
+  var keyframes = function keyframes() {
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    var serialized = (0, _serialize.serializeStyles)(args, cache.registered);
+    var animation = "animation-" + serialized.name;
+    insertWithoutScoping(cache, {
+      name: serialized.name,
+      styles: "@keyframes " + animation + "{" + serialized.styles + "}"
+    });
+    return animation;
+  };
+
+  var injectGlobal = function injectGlobal() {
+    for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      args[_key3] = arguments[_key3];
+    }
+
+    var serialized = (0, _serialize.serializeStyles)(args, cache.registered);
+    insertWithoutScoping(cache, serialized);
+  };
+
+  var cx = function cx() {
+    for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+      args[_key4] = arguments[_key4];
+    }
+
+    return merge(cache.registered, css, classnames(args));
+  };
+
+  return {
+    css: css,
+    cx: cx,
+    injectGlobal: injectGlobal,
+    keyframes: keyframes,
+    hydrate: function hydrate(ids) {
+      ids.forEach(function (key) {
+        cache.inserted[key] = true;
+      });
+    },
+    flush: function flush() {
+      cache.registered = {};
+      cache.inserted = {};
+      cache.sheet.flush();
+    },
+    // $FlowFixMe
+    sheet: cache.sheet,
+    cache: cache,
+    getRegisteredStyles: _utils.getRegisteredStyles.bind(null, cache.registered),
+    merge: merge.bind(null, cache.registered, css)
+  };
+};
+
 var classnames = function classnames(args) {
-  var len = args.length;
-  var i = 0;
   var cls = '';
 
-  for (; i < len; i++) {
+  for (var i = 0; i < args.length; i++) {
     var arg = args[i];
     if (arg == null) continue;
     var toAdd = void 0;
 
     switch (typeof arg) {
       case 'boolean':
-        break;
-
-      case 'function':
-        if ("production" !== 'production') {
-          console.error('Passing functions to cx is deprecated and will be removed in the next major version of Emotion.\n' + 'Please call the function before passing it to cx.');
-        }
-
-        toAdd = classnames([arg()]);
         break;
 
       case 'object':
@@ -3753,449 +4493,21 @@ var classnames = function classnames(args) {
   return cls;
 };
 
-var isBrowser = typeof document !== 'undefined';
-/*
-
-high performance StyleSheet for css-in-js systems
-
-- uses multiple style tags behind the scenes for millions of rules
-- uses `insertRule` for appending in production for *much* faster performance
-- 'polyfills' on server side
-
-// usage
-
-import StyleSheet from 'glamor/lib/sheet'
-let styleSheet = new StyleSheet()
-
-styleSheet.inject()
-- 'injects' the stylesheet into the page (or into memory if on server)
-
-styleSheet.insert('#box { border: 1px solid red; }')
-- appends a css rule into the stylesheet
-
-styleSheet.flush()
-- empties the stylesheet of all its contents
-
-*/
-// $FlowFixMe
-
-function sheetForTag(tag) {
-  if (tag.sheet) {
-    // $FlowFixMe
-    return tag.sheet;
-  } // this weirdness brought to you by firefox
-
-
-  for (var i = 0; i < document.styleSheets.length; i++) {
-    if (document.styleSheets[i].ownerNode === tag) {
-      // $FlowFixMe
-      return document.styleSheets[i];
-    }
-  }
-}
-
-function makeStyleTag(opts) {
-  var tag = document.createElement('style');
-  tag.setAttribute('data-emotion', opts.key || '');
-
-  if (opts.nonce !== undefined) {
-    tag.setAttribute('nonce', opts.nonce);
-  }
-
-  tag.appendChild(document.createTextNode('')) // $FlowFixMe
-  ;
-  (opts.container !== undefined ? opts.container : document.head).appendChild(tag);
-  return tag;
-}
-
-var StyleSheet =
-/*#__PURE__*/
-function () {
-  function StyleSheet(options) {
-    this.isSpeedy = "production" === 'production'; // the big drawback here is that the css won't be editable in devtools
-
-    this.tags = [];
-    this.ctr = 0;
-    this.opts = options;
-  }
-
-  var _proto = StyleSheet.prototype;
-
-  _proto.inject = function inject() {
-    if (this.injected) {
-      throw new Error('already injected!');
-    }
-
-    this.tags[0] = makeStyleTag(this.opts);
-    this.injected = true;
-  };
-
-  _proto.speedy = function speedy(bool) {
-    if (this.ctr !== 0) {
-      // cannot change speedy mode after inserting any rule to sheet. Either call speedy(${bool}) earlier in your app, or call flush() before speedy(${bool})
-      throw new Error("cannot change speedy now");
-    }
-
-    this.isSpeedy = !!bool;
-  };
-
-  _proto.insert = function insert(rule, sourceMap) {
-    // this is the ultrafast version, works across browsers
-    if (this.isSpeedy) {
-      var tag = this.tags[this.tags.length - 1];
-      var sheet = sheetForTag(tag);
-
-      try {
-        sheet.insertRule(rule, sheet.cssRules.length);
-      } catch (e) {
-        if ("production" !== 'production') {
-          console.warn('illegal rule', rule); // eslint-disable-line no-console
-        }
-      }
-    } else {
-      var _tag = makeStyleTag(this.opts);
-
-      this.tags.push(_tag);
-
-      _tag.appendChild(document.createTextNode(rule + (sourceMap || '')));
-    }
-
-    this.ctr++;
-
-    if (this.ctr % 65000 === 0) {
-      this.tags.push(makeStyleTag(this.opts));
-    }
-  };
-
-  _proto.flush = function flush() {
-    // $FlowFixMe
-    this.tags.forEach(function (tag) {
-      return tag.parentNode.removeChild(tag);
-    });
-    this.tags = [];
-    this.ctr = 0; // todo - look for remnants in document.styleSheets
-
-    this.injected = false;
-  };
-
-  return StyleSheet;
-}();
-
-function createEmotion(context, options) {
-  if (context.__SECRET_EMOTION__ !== undefined) {
-    return context.__SECRET_EMOTION__;
-  }
-
-  if (options === undefined) options = {};
-  var key = options.key || 'css';
-
-  if ("production" !== 'production') {
-    if (/[^a-z-]/.test(key)) {
-      throw new Error("Emotion key must only contain lower case alphabetical characters and - but \"" + key + "\" was passed");
-    }
-  }
-
-  var current;
-
-  function insertRule(rule) {
-    current += rule;
-
-    if (isBrowser) {
-      sheet.insert(rule, currentSourceMap);
-    }
-  }
-
-  var insertionPlugin = (0, _stylisRuleSheet.default)(insertRule);
-  var stylisOptions;
-
-  if (options.prefix !== undefined) {
-    stylisOptions = {
-      prefix: options.prefix
-    };
-  }
-
-  var caches = {
-    registered: {},
-    inserted: {},
-    nonce: options.nonce,
-    key: key
-  };
-  var sheet = new StyleSheet(options);
-
-  if (isBrowser) {
-    // 🚀
-    sheet.inject();
-  }
-
-  var stylis = new _stylis.default(stylisOptions);
-  stylis.use(options.stylisPlugins)(insertionPlugin);
-  var currentSourceMap = '';
-
-  function handleInterpolation(interpolation, couldBeSelectorInterpolation) {
-    if (interpolation == null) {
-      return '';
-    }
-
-    switch (typeof interpolation) {
-      case 'boolean':
-        return '';
-
-      case 'function':
-        if (interpolation.__emotion_styles !== undefined) {
-          var selector = interpolation.toString();
-
-          if (selector === 'NO_COMPONENT_SELECTOR' && "production" !== 'production') {
-            throw new Error('Component selectors can only be used in conjunction with babel-plugin-emotion.');
-          }
-
-          return selector;
-        }
-
-        if (this === undefined && "production" !== 'production') {
-          console.error('Interpolating functions in css calls is deprecated and will be removed in the next major version of Emotion.\n' + 'If you want to have a css call based on props, create a function that returns a css call like this\n' + 'let dynamicStyle = (props) => css`color: ${props.color}`\n' + 'It can be called directly with props or interpolated in a styled call like this\n' + "let SomeComponent = styled('div')`${dynamicStyle}`");
-        }
-
-        return handleInterpolation.call(this, this === undefined ? interpolation() : // $FlowFixMe
-        interpolation(this.mergedProps, this.context), couldBeSelectorInterpolation);
-
-      case 'object':
-        return createStringFromObject.call(this, interpolation);
-
-      default:
-        var cached = caches.registered[interpolation];
-        return couldBeSelectorInterpolation === false && cached !== undefined ? cached : interpolation;
-    }
-  }
-
-  var objectToStringCache = new WeakMap();
-
-  function createStringFromObject(obj) {
-    if (objectToStringCache.has(obj)) {
-      // $FlowFixMe
-      return objectToStringCache.get(obj);
-    }
-
-    var string = '';
-
-    if (Array.isArray(obj)) {
-      obj.forEach(function (interpolation) {
-        string += handleInterpolation.call(this, interpolation, false);
-      }, this);
-    } else {
-      Object.keys(obj).forEach(function (key) {
-        if (typeof obj[key] !== 'object') {
-          if (caches.registered[obj[key]] !== undefined) {
-            string += key + "{" + caches.registered[obj[key]] + "}";
-          } else {
-            string += processStyleName(key) + ":" + processStyleValue(key, obj[key]) + ";";
-          }
-        } else {
-          if (key === 'NO_COMPONENT_SELECTOR' && "production" !== 'production') {
-            throw new Error('Component selectors can only be used in conjunction with babel-plugin-emotion.');
-          }
-
-          if (Array.isArray(obj[key]) && typeof obj[key][0] === 'string' && caches.registered[obj[key][0]] === undefined) {
-            obj[key].forEach(function (value) {
-              string += processStyleName(key) + ":" + processStyleValue(key, value) + ";";
-            });
-          } else {
-            string += key + "{" + handleInterpolation.call(this, obj[key], false) + "}";
-          }
-        }
-      }, this);
-    }
-
-    objectToStringCache.set(obj, string);
-    return string;
-  }
-
-  var name;
-  var stylesWithLabel;
-  var labelPattern = /label:\s*([^\s;\n{]+)\s*;/g;
-
-  var createClassName = function createClassName(styles, identifierName) {
-    return (0, _hash.default)(styles + identifierName) + identifierName;
-  };
-
-  if ("production" !== 'production') {
-    var oldCreateClassName = createClassName;
-    var sourceMappingUrlPattern = /\/\*#\ssourceMappingURL=data:application\/json;\S+\s+\*\//g;
-
-    createClassName = function createClassName(styles, identifierName) {
-      return oldCreateClassName(styles.replace(sourceMappingUrlPattern, function (sourceMap) {
-        currentSourceMap = sourceMap;
-        return '';
-      }), identifierName);
-    };
-  }
-
-  var createStyles = function createStyles(strings) {
-    var stringMode = true;
-    var styles = '';
-    var identifierName = '';
-
-    if (strings == null || strings.raw === undefined) {
-      stringMode = false;
-      styles += handleInterpolation.call(this, strings, false);
-    } else {
-      styles += strings[0];
-    }
-
-    for (var _len = arguments.length, interpolations = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      interpolations[_key - 1] = arguments[_key];
-    }
-
-    interpolations.forEach(function (interpolation, i) {
-      styles += handleInterpolation.call(this, interpolation, styles.charCodeAt(styles.length - 1) === 46 // .
-      );
-
-      if (stringMode === true && strings[i + 1] !== undefined) {
-        styles += strings[i + 1];
-      }
-    }, this);
-    stylesWithLabel = styles;
-    styles = styles.replace(labelPattern, function (match, p1) {
-      identifierName += "-" + p1;
-      return '';
-    });
-    name = createClassName(styles, identifierName);
-    return styles;
-  };
-
-  if ("production" !== 'production') {
-    var oldStylis = stylis;
-
-    stylis = function stylis(selector, styles) {
-      oldStylis(selector, styles);
-      currentSourceMap = '';
-    };
-  }
-
-  function insert(scope, styles) {
-    if (caches.inserted[name] === undefined) {
-      current = '';
-      stylis(scope, styles);
-      caches.inserted[name] = current;
-    }
-  }
-
-  var css = function css() {
-    var styles = createStyles.apply(this, arguments);
-    var selector = key + "-" + name;
-
-    if (caches.registered[selector] === undefined) {
-      caches.registered[selector] = stylesWithLabel;
-    }
-
-    insert("." + selector, styles);
-    return selector;
-  };
-
-  var keyframes = function keyframes() {
-    var styles = createStyles.apply(this, arguments);
-    var animation = "animation-" + name;
-    insert('', "@keyframes " + animation + "{" + styles + "}");
-    return animation;
-  };
-
-  var injectGlobal = function injectGlobal() {
-    var styles = createStyles.apply(this, arguments);
-    insert('', styles);
-  };
-
-  function getRegisteredStyles(registeredStyles, classNames) {
-    var rawClassName = '';
-    classNames.split(' ').forEach(function (className) {
-      if (caches.registered[className] !== undefined) {
-        registeredStyles.push(className);
-      } else {
-        rawClassName += className + " ";
-      }
-    });
-    return rawClassName;
-  }
-
-  function merge(className, sourceMap) {
-    var registeredStyles = [];
-    var rawClassName = getRegisteredStyles(registeredStyles, className);
-
-    if (registeredStyles.length < 2) {
-      return className;
-    }
-
-    return rawClassName + css(registeredStyles, sourceMap);
-  }
-
-  function cx() {
-    for (var _len2 = arguments.length, classNames = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      classNames[_key2] = arguments[_key2];
-    }
-
-    return merge(classnames(classNames));
-  }
-
-  function hydrateSingleId(id) {
-    caches.inserted[id] = true;
-  }
-
-  function hydrate(ids) {
-    ids.forEach(hydrateSingleId);
-  }
-
-  function flush() {
-    if (isBrowser) {
-      sheet.flush();
-      sheet.inject();
-    }
-
-    caches.inserted = {};
-    caches.registered = {};
-  }
-
-  if (isBrowser) {
-    var chunks = document.querySelectorAll("[data-emotion-" + key + "]");
-    Array.prototype.forEach.call(chunks, function (node) {
-      // $FlowFixMe
-      sheet.tags[0].parentNode.insertBefore(node, sheet.tags[0]); // $FlowFixMe
-
-      node.getAttribute("data-emotion-" + key).split(' ').forEach(hydrateSingleId);
-    });
-  }
-
-  var emotion = {
-    flush: flush,
-    hydrate: hydrate,
-    cx: cx,
-    merge: merge,
-    getRegisteredStyles: getRegisteredStyles,
-    injectGlobal: injectGlobal,
-    keyframes: keyframes,
-    css: css,
-    sheet: sheet,
-    caches: caches
-  };
-  context.__SECRET_EMOTION__ = emotion;
-  return emotion;
-}
-
 var _default = createEmotion;
 exports.default = _default;
-},{"@emotion/memoize":"../node_modules/@emotion/memoize/dist/memoize.esm.js","@emotion/unitless":"../node_modules/@emotion/unitless/dist/unitless.esm.js","@emotion/hash":"../node_modules/@emotion/hash/dist/hash.esm.js","@emotion/stylis":"../node_modules/@emotion/stylis/dist/stylis.esm.js","stylis-rule-sheet":"../node_modules/stylis-rule-sheet/index.js"}],"../node_modules/emotion/dist/index.esm.js":[function(require,module,exports) {
-var global = arguments[3];
+},{"@emotion/cache":"dqFm","@emotion/serialize":"WPNE","@emotion/utils":"../node_modules/@emotion/utils/dist/utils.browser.esm.js"}],"../node_modules/emotion/dist/emotion.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.caches = exports.sheet = exports.css = exports.keyframes = exports.injectGlobal = exports.getRegisteredStyles = exports.merge = exports.cx = exports.hydrate = exports.flush = void 0;
+exports.cache = exports.sheet = exports.css = exports.keyframes = exports.injectGlobal = exports.getRegisteredStyles = exports.merge = exports.cx = exports.hydrate = exports.flush = void 0;
 
 var _createEmotion2 = _interopRequireDefault(require("create-emotion"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var context = typeof global !== 'undefined' ? global : {};
-
-var _createEmotion = (0, _createEmotion2.default)(context),
+var _createEmotion = (0, _createEmotion2.default)(),
     flush = _createEmotion.flush,
     hydrate = _createEmotion.hydrate,
     cx = _createEmotion.cx,
@@ -4205,9 +4517,9 @@ var _createEmotion = (0, _createEmotion2.default)(context),
     keyframes = _createEmotion.keyframes,
     css = _createEmotion.css,
     sheet = _createEmotion.sheet,
-    caches = _createEmotion.caches;
+    cache = _createEmotion.cache;
 
-exports.caches = caches;
+exports.cache = cache;
 exports.sheet = sheet;
 exports.css = css;
 exports.keyframes = keyframes;
@@ -4217,7 +4529,7 @@ exports.merge = merge;
 exports.cx = cx;
 exports.hydrate = hydrate;
 exports.flush = flush;
-},{"create-emotion":"QdUY"}],"ui/TraktIcon.tsx":[function(require,module,exports) {
+},{"create-emotion":"Q2eU"}],"ui/TraktIcon.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4244,7 +4556,7 @@ class TraktIcon extends preact_1.Component {
 }
 
 exports.default = TraktIcon;
-},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"../node_modules/prop-types/lib/ReactPropTypesSecret.js":[function(require,module,exports) {
+},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/emotion.esm.js"}],"../node_modules/prop-types/lib/ReactPropTypesSecret.js":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -4271,6 +4583,8 @@ module.exports = ReactPropTypesSecret;
 var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
 
 function emptyFunction() {}
+function emptyFunctionWithReset() {}
+emptyFunctionWithReset.resetWarningCache = emptyFunction;
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -4304,16 +4618,19 @@ module.exports = function() {
     any: shim,
     arrayOf: getShim,
     element: shim,
+    elementType: shim,
     instanceOf: getShim,
     node: shim,
     objectOf: getShim,
     oneOf: getShim,
     oneOfType: getShim,
     shape: getShim,
-    exact: getShim
+    exact: getShim,
+
+    checkPropTypes: emptyFunctionWithReset,
+    resetWarningCache: emptyFunction
   };
 
-  ReactPropTypes.checkPropTypes = emptyFunction;
   ReactPropTypes.PropTypes = ReactPropTypes;
 
   return ReactPropTypes;
@@ -4327,16 +4644,12 @@ module.exports = function() {
  * LICENSE file in the root directory of this source tree.
  */
 if ("production" !== 'production') {
-  var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element') || 0xeac7;
-
-  var isValidElement = function (object) {
-    return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-  }; // By explicitly using `prop-types` you are opting into new development behavior.
+  var ReactIs = require('react-is'); // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
 
 
   var throwOnDirectAccess = true;
-  module.exports = require('./factoryWithTypeCheckers')(isValidElement, throwOnDirectAccess);
+  module.exports = require('./factoryWithTypeCheckers')(ReactIs.isElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -4358,7 +4671,7 @@ var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|def
 var index = (0, _memoize.default)(reactPropsRegex.test.bind(reactPropsRegex));
 var _default = index;
 exports.default = _default;
-},{"@emotion/memoize":"../node_modules/@emotion/memoize/dist/memoize.esm.js"}],"3Rtg":[function(require,module,exports) {
+},{"@emotion/memoize":"../node_modules/@emotion/serialize/node_modules/@emotion/memoize/dist/memoize.browser.esm.js"}],"3Rtg":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4628,7 +4941,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var index = (0, _createEmotionStyled.default)(emotion, _preact.default);
 var _default = index;
 exports.default = _default;
-},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","create-emotion-styled":"3Rtg"}],"ui/ConnectButton.tsx":[function(require,module,exports) {
+},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/emotion.esm.js","create-emotion-styled":"3Rtg"}],"ui/ConnectButton.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -4718,7 +5031,7 @@ class ConnectButton extends preact_1.Component {
 }
 
 exports.default = ConnectButton;
-},{"./TraktIcon":"ui/TraktIcon.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"ui/ScrobbleInfo.tsx":[function(require,module,exports) {
+},{"./TraktIcon":"ui/TraktIcon.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/emotion.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"ui/ScrobbleInfo.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4818,7 +5131,7 @@ class ScrobbleInfo extends preact_1.Component {
 }
 
 exports.default = ScrobbleInfo;
-},{"../TraktScrobble":"TraktScrobble.ts","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/Button.tsx":[function(require,module,exports) {
+},{"../TraktScrobble":"TraktScrobble.ts","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/emotion.esm.js"}],"ui/Button.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4858,7 +5171,7 @@ class Button extends preact_1.Component {
 }
 
 exports.default = Button;
-},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/ScrobbleHistory.tsx":[function(require,module,exports) {
+},{"preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/emotion.esm.js"}],"ui/ScrobbleHistory.tsx":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -5012,7 +5325,7 @@ class ScrobbleHistory extends preact_1.Component {
 }
 
 exports.default = ScrobbleHistory;
-},{"../TraktScrobble":"TraktScrobble.ts","./Button":"ui/Button.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/ScrobbleControl.tsx":[function(require,module,exports) {
+},{"../TraktScrobble":"TraktScrobble.ts","./Button":"ui/Button.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/emotion.esm.js"}],"ui/ScrobbleControl.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -5145,7 +5458,7 @@ class ScrobbleControl extends preact_1.Component {
 }
 
 exports.default = ScrobbleControl;
-},{"../TraktScrobble":"TraktScrobble.ts","./Button":"ui/Button.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"ui/Popup.tsx":[function(require,module,exports) {
+},{"../TraktScrobble":"TraktScrobble.ts","./Button":"ui/Button.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/emotion.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"ui/Popup.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -5240,7 +5553,7 @@ class Popup extends preact_1.Component {
 }
 
 exports.default = Popup;
-},{"../TraktScrobble":"TraktScrobble.ts","./ScrobbleInfo":"ui/ScrobbleInfo.tsx","./ScrobbleHistory":"ui/ScrobbleHistory.tsx","./ScrobbleControl":"ui/ScrobbleControl.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js"}],"ui/StatusButton.tsx":[function(require,module,exports) {
+},{"../TraktScrobble":"TraktScrobble.ts","./ScrobbleInfo":"ui/ScrobbleInfo.tsx","./ScrobbleHistory":"ui/ScrobbleHistory.tsx","./ScrobbleControl":"ui/ScrobbleControl.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/emotion.esm.js"}],"ui/StatusButton.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -5403,7 +5716,7 @@ class StatusButton extends preact_1.Component {
 }
 
 exports.default = StatusButton;
-},{"../TraktScrobble":"TraktScrobble.ts","./TraktIcon":"ui/TraktIcon.tsx","./Popup":"ui/Popup.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/index.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"TraktHistory.ts":[function(require,module,exports) {
+},{"../TraktScrobble":"TraktScrobble.ts","./TraktIcon":"ui/TraktIcon.tsx","./Popup":"ui/Popup.tsx","preact":"../node_modules/preact/dist/preact.mjs","emotion":"../node_modules/emotion/dist/emotion.esm.js","preact-emotion":"../node_modules/preact-emotion/dist/index.esm.js"}],"TraktHistory.ts":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -5561,7 +5874,7 @@ class TraktHistory {
 }
 
 exports.default = TraktHistory;
-},{"./TraktApi":"TraktApi.ts"}],"TraktRoller.tsx":[function(require,module,exports) {
+},{"./TraktApi":"TraktApi.ts"}],"n8p7":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -5624,7 +5937,7 @@ const preact_1 = require("preact");
 
 const TraktHistory_1 = __importDefault(require("./TraktHistory"));
 
-const EpisodeRegex = /Episode (\d+)/;
+const EpisodeRegex = /Episode ([\d\.]+)/;
 const SeasonRegex = /Season (\d+)/;
 const MovieRegexes = [/Movie$/i, /Movie (Dub)$/i, /Movie (Sub)$/i, /Movie (Dubbed)$/i, /Movie (Subtitled)$/i, /^Movie - /i, /The Movie/i];
 const ScrobblingEnabledKey = 'TraktRoller.enabled';
@@ -5743,10 +6056,10 @@ class TraktRoller {
   }
 
   _getScrobbleData() {
-    let buildDate = new Date("2019-02-17T17:44:36.903Z");
+    let buildDate = new Date("2019-05-06T16:59:03.562Z");
     const data = {
       progress: this._getProgress(),
-      app_version: "1.0.3",
+      app_version: "1.0.5",
       app_date: `${buildDate.getFullYear()}-${buildDate.getMonth() + 1}-${buildDate.getDate()}`
     };
     const titleElement = document.querySelector('#showmedia_about_episode_num');
@@ -5788,7 +6101,7 @@ class TraktRoller {
       const episodeMatch = EpisodeRegex.exec(episodeElement.textContent);
 
       if (episodeMatch) {
-        episodeNumber = parseInt(episodeMatch[1]);
+        episodeNumber = parseFloat(episodeMatch[1]);
       }
     }
 
@@ -5889,5 +6202,5 @@ new TraktRoller_1.default({
   client_secret: "3712241a1c467769e6c03336abb5fb9911f8665354d2aaffaa9f817e147a34ca",
   storage: new TraktApi_1.GreaseMonkeyStorageAdapter()
 });
-},{"./TraktRoller":"TraktRoller.tsx","./TraktApi":"TraktApi.ts"}]},{},["index.ts"], null)
-//# sourceMappingURL=/TraktRoller.user.map
+},{"./TraktRoller":"n8p7","./TraktApi":"TraktApi.ts"}]},{},["index.ts"], null)
+//# sourceMappingURL=/TraktRoller.user.js.map
