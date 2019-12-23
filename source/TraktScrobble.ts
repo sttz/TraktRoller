@@ -332,7 +332,8 @@ export default class TraktScrobble {
   }
 
   private async _search(type: 'movie' | 'show', title: string): Promise<Array<ITraktSearchResult> | null> {
-    const searchResponse = await this._client.search(type, title);
+    const escapedTitle = `\"${title}\"`
+    const searchResponse = await this._client.search(type, escapedTitle);
     if (this._handleError(searchResponse)) {
       return null;
     }
