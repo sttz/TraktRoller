@@ -38,6 +38,10 @@ The buttons at the bottom:
 
 # Changelog
 
+### 1.0.6 (2019-12-26)
+
+- Fix special characters interfering with title search
+
 ### 1.0.5 (2019-05-06)
 
 - Handle fractional episode numbers (only supports lookup by title)
