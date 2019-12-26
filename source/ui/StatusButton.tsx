@@ -66,7 +66,7 @@ const popupClassName = css`
 const className = css`
   position: relative;
 
-  &:hover .${popupClassName} {
+  &:hover .popup {
     visibility: visible;
     opacity: 1;
     bottom: 44px;
@@ -138,7 +138,7 @@ export default class StatusButton extends Component<StatusButtonProps, StatusBut
         <button className={ `${buttonClassName} ${stateClass}` } title={ title } onClick={ this._handleClick }>
           <TraktIcon className={ iconStyles } />
         </button>
-        <div className={ popupClassName }>
+        <div className={ `${popupClassName} popup` }>
           <Popup roller={ this.props.roller } scrobble={ this.props.scrobble } history={ this.props.history } />
           <div class="hover-blocker"></div>
         </div>
