@@ -332,6 +332,9 @@ export default class TraktScrobble {
   }
 
   private async _search(type: 'movie' | 'show', title: string): Promise<Array<ITraktSearchResult> | null> {
+    // Quote and escape title to avoid special search characters interfereing with the query
+    // See https://github.com/trakt/api-help/issues/76
+    title = `"${title.replace(/[\\"']/g, '\\$&')}"`;
     const searchResponse = await this._client.search(type, title);
     if (this._handleError(searchResponse)) {
       return null;
