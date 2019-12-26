@@ -3,7 +3,7 @@ import { css } from "emotion";
 
 interface ButtonProps {
   text: string;
-  onClick: JSX.EventHandler<MouseEvent>;
+  onClick: h.JSX.MouseEventHandler<HTMLButtonElement>;
   className?: string;
   disabled?: boolean;
 }

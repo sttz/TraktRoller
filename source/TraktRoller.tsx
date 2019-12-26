@@ -2,10 +2,10 @@ import TraktApi, { ITraktScrobbleData, ITraktApiOptions, ITraktScobbleResult, IT
 import TraktScrobble, { TraktScrobbleState, PlaybackState } from "./TraktScrobble";
 import ConnectButton from "./ui/ConnectButton";
 import StatusButton from "./ui/StatusButton";
-import { SimpleEventDispatcher } from "ste-simple-events";
+import TraktHistory from "./TraktHistory";
 
 import { render, h } from 'preact';
-import TraktHistory from "./TraktHistory";
+import { SimpleEventDispatcher } from "ste-simple-events";
 
 interface ITraktRollerOptions extends ITraktApiOptions {
   //

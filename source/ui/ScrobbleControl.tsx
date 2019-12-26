@@ -4,7 +4,6 @@ import Button from "./Button";
 
 import { Component, h } from "preact";
 import { css } from "emotion";
-import styled from "preact-emotion";
 
 interface ScrobbleControlProps {
   roller: TraktRoller;
@@ -39,7 +38,7 @@ const className = css`
   }
 `;
 
-const ScrobbleNowButton = styled(Button)`
+const scrobbleNowStyles = css`
   color: #8e44ad;
   border: 1px solid #8e44ad;
   background: none;
@@ -50,7 +49,7 @@ const ScrobbleNowButton = styled(Button)`
   }
 `;
 
-const EnableScrobbleButton = styled(Button)`
+const enableScrobbleStyles = css`
   color: #16a085;
   border: 1px solid #16a085;
   background: none;
@@ -114,8 +113,8 @@ export default class ScrobbleControl extends Component<ScrobbleControlProps, Scr
     return (
       <div className={ className }>
         <div class="state" title={ title }>{ state }</div>
-        <ScrobbleNowButton text="Scrobble Now" onClick={ this._handleScrobbleNowClick } disabled={ disabled } />
-        <EnableScrobbleButton text={ label } onClick={ this._handleEnableScrobbleClick } />
+        <Button className={ scrobbleNowStyles } text="Scrobble Now" onClick={ this._handleScrobbleNowClick } disabled={ disabled } />
+        <Button className={ enableScrobbleStyles } text={ label } onClick={ this._handleEnableScrobbleClick } />
       </div>
     );
   }

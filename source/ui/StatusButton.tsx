@@ -6,7 +6,6 @@ import Popup from "./Popup";
 
 import { Component, h } from "preact";
 import { css } from "emotion";
-import styled from "preact-emotion";
 
 interface StatusButtonProps {
   roller: TraktRoller;
@@ -94,7 +93,7 @@ const buttonClassName = css`
   }
 `;
 
-const Icon = styled(TraktIcon)`
+const iconStyles = css`
   height: 100%;
 `;
 
@@ -137,7 +136,7 @@ export default class StatusButton extends Component<StatusButtonProps, StatusBut
     return (
       <div className={ `${className} right` }>
         <button className={ `${buttonClassName} ${stateClass}` } title={ title } onClick={ this._handleClick }>
-          <Icon />
+          <TraktIcon className={ iconStyles } />
         </button>
         <div className={ popupClassName }>
           <Popup roller={ this.props.roller } scrobble={ this.props.scrobble } history={ this.props.history } />

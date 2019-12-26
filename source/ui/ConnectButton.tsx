@@ -3,7 +3,6 @@ import TraktIcon from "./TraktIcon";
 
 import { Component, h } from "preact";
 import { css } from "emotion";
-import styled from "preact-emotion";
 
 interface ConnectButtonProps {
   api: TraktApi;
@@ -31,7 +30,7 @@ let className = css`
   }
 `;
 
-const Icon = styled(TraktIcon)`
+const iconStyles = css`
   height: 14px;
   width: 14px;
   margin-right: 5px;
@@ -70,7 +69,7 @@ export default class ConnectButton extends Component<ConnectButtonProps, Connect
   render() {
     return (
       <div className={className} onClick={ this._handleClick }>
-        <Icon />
+        <TraktIcon className={ iconStyles } />
         <div class="text">{ this.state.isConnected ? "Disconnect from Trakt" : "Connect with Trakt" }</div>
       </div>
     );
