@@ -54,10 +54,10 @@ export default class TraktScrobble {
   private _client: TraktApi;
   private _data: ITraktScrobbleData;
 
-  private _state: TraktScrobbleState;
-  private _pendingState: TraktScrobbleState;
-  private _playbackState: PlaybackState;
-  private _error: string;
+  private _state: TraktScrobbleState = TraktScrobbleState.Undefined;
+  private _pendingState: TraktScrobbleState = TraktScrobbleState.Undefined;
+  private _playbackState: PlaybackState = PlaybackState.Paused;
+  private _error: string | undefined;
   private _enabled: boolean = false;
 
   private _lastPlaybackTime: number = 0;
@@ -141,7 +141,7 @@ export default class TraktScrobble {
     }
   }
 
-  public get error(): string {
+  public get error(): string | undefined {
     return this._error;
   }
 
@@ -251,11 +251,11 @@ export default class TraktScrobble {
     console.log('trakt scrobbler: looking up media on trakt...', Object.assign({}, this._data));
 
     let type: 'movie' | 'show' = this._data.movie !== undefined ? 'movie' : 'show';
-    let result: LookupResult;
+    let result = LookupResult.Error;
   
     // Special episodes with fractional episode numbers, e.g. 14.5
     // (Often used for recap episodes)
-    let isSpecialEp = this._data.episode && (this._data.episode.number % 1) !== 0;
+    let isSpecialEp = this._data.episode && this._data.episode.number && (this._data.episode.number % 1) !== 0;
 
     if (!isSpecialEp) {
       // Start with trakt's automatic matching
@@ -264,10 +264,10 @@ export default class TraktScrobble {
       if (result !== LookupResult.NotFound) return result;
 
       // Retry automatic matching with absolute episode number
-      if (type === 'show' && this._data.episode.number_abs === undefined && this._data.episode.number !== undefined) {
+      if (type === 'show' && this._data.episode && this._data.episode.number_abs === undefined && this._data.episode.number !== undefined) {
         let data = JSON.parse(JSON.stringify(this._data)) as ITraktScrobbleData;
-        data.episode.number_abs = data.episode.number;
-        delete data.episode.number;
+        data.episode!.number_abs = data.episode!.number;
+        delete data.episode!.number;
         
         result = await this._scrobbleLookup(data);
         if (result !== LookupResult.NotFound) return result;
@@ -372,7 +372,7 @@ export default class TraktScrobble {
     }
 
     // First search in matching season
-    const season = seasonsResponse.find(s => s.number === this._data.episode.season);
+    const season = seasonsResponse.find(s => s.number === this._data.episode!.season);
     if (!season) {
       console.warn(`trakt scrobbler: could not find season ${this._data.episode.season} in seasons response`, seasonsResponse);
     } else {
@@ -391,7 +391,12 @@ export default class TraktScrobble {
     return episodeResult;
   }
 
-  private _matchEpisodeOrTitle(season: ITraktSeason, episode: number, title: string): LookupResult {
+  private _matchEpisodeOrTitle(season: ITraktSeason, episode: number, title?: string): LookupResult {
+    if (!season.episodes) {
+      console.error(`TraktRoller: Missing episodes array in season object`, season);
+      return LookupResult.Error;
+    }
+
     let numberMatch = season.episodes.filter(e => e.number === episode || e.number_abs === episode);
     if (numberMatch.length > 1) {
       console.error(`trakt scrobbler: got multiple episode #${episode} in season`, season);

@@ -126,12 +126,12 @@ export interface ITraktApiOptions {
 }
 
 export interface IStorage {
-  getValue(name: string): Promise<string>;
-  setValue(name: string, value: string): Promise<void>;
+  getValue(name: string): Promise<string | null>;
+  setValue(name: string, value: string | null): Promise<void>;
 }
 
 export class LocalStorageAdapter implements IStorage {
-  getValue(name: string): Promise<string> {
+  getValue(name: string): Promise<string | null> {
     return Promise.resolve(window.localStorage.getItem(name));
   }
   
@@ -234,7 +234,7 @@ export default class TraktApi {
 
     await this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens));
 
-    window.history.replaceState(null, undefined, window.location.pathname);
+    window.history.replaceState(null, "", window.location.pathname);
 
     this.onAuthenticationChanged.dispatch(true);
   }
@@ -363,7 +363,7 @@ export default class TraktApi {
     });
   }
 
-  private async _revoke_token(): Promise<{} | ITraktError> {
+  private async _revoke_token(): Promise<any> {
     if (!this._tokens.access_token) return;
 
     return this._request('POST', '/oauth/revoke', { 

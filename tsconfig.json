@@ -5,7 +5,7 @@
             "es6",
             "dom"
         ],
-        "noImplicitAny": true,
+        "strict": true,
         "moduleResolution": "node",
         "jsx": "react",
         "jsxFactory": "h"

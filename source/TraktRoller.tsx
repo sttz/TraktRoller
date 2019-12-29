@@ -1,4 +1,4 @@
-import TraktApi, { ITraktScrobbleData, ITraktApiOptions, ITraktScobbleResult, ITraktHistoryItem, IStorage, LocalStorageAdapter } from "./TraktApi";
+import TraktApi, { ITraktScrobbleData, ITraktApiOptions, ITraktScobbleResult, ITraktHistoryItem, IStorage, LocalStorageAdapter, ITraktIDs } from "./TraktApi";
 import TraktScrobble, { TraktScrobbleState, PlaybackState } from "./TraktScrobble";
 import ConnectButton from "./ui/ConnectButton";
 import StatusButton from "./ui/StatusButton";
@@ -29,15 +29,15 @@ const ScrobblingEnabledKey: string = 'TraktRoller.enabled';
 export default class TraktRoller {
   public onEnabledChanged = new SimpleEventDispatcher<boolean>();
 
-  private _player: playerjs.Player;
+  private _player?: playerjs.Player;
   private _storage: IStorage;
   private _api: TraktApi;
   private _scrobble?: TraktScrobble;
   private _history: TraktHistory;
-  private _enabled: boolean;
+  private _enabled: boolean = false;
 
-  private _duration: number;
-  private _currentTime: number;
+  private _duration: number = 0;
+  private _currentTime: number = 0;
 
   constructor(options: ITraktRollerOptions) {
     console.log("TraktRoller");
@@ -48,6 +48,8 @@ export default class TraktRoller {
     this._api = new TraktApi(options);
     this._api.onAuthenticationChanged.sub(this._onAuthenticationChange.bind(this));
     this._api.loadTokens();
+
+    this._history = new TraktHistory(this._api);
 
     this._createFooterButton();
     this._waitForPlayer();
@@ -104,8 +106,6 @@ export default class TraktRoller {
     this._player.on(playerjs.EVENTS.ENDED, () => this._onPlaybackStateChange(PlaybackState.Ended));
     this._player.on(playerjs.EVENTS.ERROR, () => this._onPlaybackStateChange(PlaybackState.Ended));
 
-    this._history = new TraktHistory(this._api);
-
     this._scrobble = new TraktScrobble(this._api, data);
     this._scrobble.enabled = this.enabled;
     this._scrobble.onStateChanged.sub(this._onScrobbleStatusChanged.bind(this));
@@ -146,15 +146,15 @@ export default class TraktRoller {
     };
 
     const titleElement = document.querySelector('#showmedia_about_episode_num');
-    if (!titleElement || titleElement.textContent.length == 0) {
+    if (!titleElement || !titleElement.textContent || titleElement.textContent.length == 0) {
       console.error("TraktRoller: Could not find video title");
       return null;
     }
     let showTitle = titleElement.textContent.trim();
 
-    let episodeTitle: string = undefined;
+    let episodeTitle: string | undefined = undefined;
     const episodeTitleElement = document.querySelector('#showmedia_about_name');
-    if (episodeTitleElement) {
+    if (episodeTitleElement && episodeTitleElement.textContent) {
       episodeTitle = episodeTitleElement.textContent.trim();
       if (episodeTitle) {
         if (episodeTitle.startsWith("“")) {
@@ -169,7 +169,7 @@ export default class TraktRoller {
     let seasonNumber = 1;
     let episodeNumber = 0;
     const episodeElement = document.querySelector('#showmedia_about_media h4:nth-child(2)');
-    if (episodeElement && episodeElement.textContent.length > 0) {
+    if (episodeElement && episodeElement.textContent && episodeElement.textContent.length > 0) {
       const seasonMatch = SeasonRegex.exec(episodeElement.textContent);
       if (seasonMatch) {
         seasonNumber = parseInt(seasonMatch[1]);
@@ -181,7 +181,7 @@ export default class TraktRoller {
       }
     }
 
-    if (episodeTitle && MovieRegexes.some(r => r.test(episodeTitle))) {
+    if (episodeTitle && MovieRegexes.some(r => r.test(episodeTitle!))) {
       data.movie = {
         title: showTitle
       };
@@ -210,7 +210,19 @@ export default class TraktRoller {
   }
 
   private _onScrobbled(result: ITraktScobbleResult) {
-    var item: ITraktHistoryItem = {
+    let ids: ITraktIDs | undefined = undefined;
+    if (result.movie && result.movie.ids) {
+      ids = result.movie.ids;
+    } else if (result.episode && result.episode.ids) {
+      ids = result.episode.ids;
+    }
+
+    if (!ids || !ids.trakt) {
+      console.error(`TraktRoller: Srobble didn't return any trakt ids`, result);
+      return;
+    }
+
+    this._history.add(ids.trakt, {
       id: result.id,
       watched_at: new Date().toISOString(),
       action: "scrobble",
@@ -218,9 +230,7 @@ export default class TraktRoller {
       movie: result.movie,
       show: result.show,
       episode: result.episode
-    };
-    let traktId = result.movie ? result.movie.ids.trakt : result.episode.ids.trakt;
-    this._history.add(traktId, item);
+    });
   }
 
   private _createFooterButton() {
@@ -246,7 +256,7 @@ export default class TraktRoller {
     }
 
     render((
-      <StatusButton roller={ this } scrobble={ this._scrobble } history={ this._history } />
+      <StatusButton roller={ this } scrobble={ this._scrobble! } history={ this._history } />
     ), container);
   }
 }

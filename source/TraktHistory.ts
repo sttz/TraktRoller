@@ -18,7 +18,7 @@ export default class TraktHistory {
   /** Load history for a movie or episode */
   public async load(type: 'movies' | 'episodes', traktId: number, reload: boolean = false): Promise<ITraktHistoryItem[]> {
     if (!reload && this._histories[traktId] && this._histories[traktId].items) {
-      return this._histories[traktId].items;
+      return this._histories[traktId].items!;
     }
 
     let result = await this._api.history(type, traktId);
