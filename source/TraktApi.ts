@@ -64,7 +64,7 @@ export interface ITraktScrobbleData {
 }
 
 export interface ITraktScobbleResult {
-  id: number;
+  id: number; // History ID, only set when item was scrobbled
   action: 'start' | 'pause' | 'scrobble';
   movie?: ITraktMovie;
   show?: ITraktShow;
@@ -88,6 +88,15 @@ export interface ITraktHistoryRemoveResult {
 export interface ITraktError {
   status: number;
   error: string;
+}
+
+export class TraktApiError extends Error {
+  public status: number;
+
+  constructor(error: ITraktError) {
+    super(error.error);
+    this.status = error.status;
+  }
 }
 
 const TraktErrorCodes: { [key: number]: ITraktError } = {
