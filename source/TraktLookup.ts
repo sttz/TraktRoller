@@ -1,14 +1,5 @@
 import TraktApi, { ITraktScrobbleData, TraktApiError, ITraktSearchResult, ITraktShow, ITraktSeason, ITraktEpisode } from "./TraktApi";
 
-export enum TraktLookupState {
-  Initialized,
-  Started,
-  NotFound,
-  Completed,
-  Aborted,
-  Error
-};
-
 export class TraktLookupError extends Error {
   public associatedObject: any;
 
@@ -18,26 +9,42 @@ export class TraktLookupError extends Error {
   }
 }
 
+/** Token allowing to cancel the async lookup operation */
+export class CancellationToken {
+  private _isCancelled: boolean = false;
+
+  public cancel(): void {
+    this._isCancelled = true;
+  }
+
+  public get isCancelled(): boolean {
+    return this._isCancelled;
+  }
+
+  public static throwIfCancelled(token?: CancellationToken) {
+    if (token && token.isCancelled) {
+      throw new CancellationError();
+    }
+  }
+}
+
+/** Error thrown by async lookup method if it has been cancelled */
+export class CancellationError extends Error {
+  constructor() {
+    super("The operation has been cancelled.");
+  }
+}
+
 /** Look up a show on trakt */
 export default class TraktLookup {
   private _client: TraktApi;
-  private _state = TraktLookupState.Initialized;
 
   constructor(client: TraktApi) {
     this._client = client;
   }
 
-  /** The current state of this lookup */
-  public get status(): TraktLookupState {
-    return this._state;
-  }
-
   /** Start the lookup */
-  public async start(scrobbleData: ITraktScrobbleData): Promise<ITraktScrobbleData | null> {
-    if (this._state != TraktLookupState.Initialized) {
-      throw new TraktLookupError(`TraktRoller: Lookup already used (${this._state})`);
-    }
-
+  public async start(scrobbleData: ITraktScrobbleData, cancellation?: CancellationToken): Promise<ITraktScrobbleData | null> {
     let data = Object.assign({}, scrobbleData);
 
     if (data.movie === undefined && (data.show === undefined || data.episode === undefined)) {
@@ -57,6 +64,7 @@ export default class TraktLookup {
       // Start with trakt's automatic matching
       console.log('TraktRoller: trying automatic matching...');
       result = await this._scrobbleLookup(data);
+      CancellationToken.throwIfCancelled(cancellation);
       if (result != null) return result;
 
       // Retry automatic matching with absolute episode number
@@ -66,6 +74,7 @@ export default class TraktLookup {
         delete dataAbs.episode.number;
         
         result = await this._scrobbleLookup(dataAbs);
+        CancellationToken.throwIfCancelled(cancellation);
         if (result != null) return result;
       }
     }
@@ -78,6 +87,7 @@ export default class TraktLookup {
 
     console.log('TraktRoller: trying to search manually...');
     const results = await this._search(type, title);
+    CancellationToken.throwIfCancelled(cancellation);
     if (results.length === 0) {
       console.warn(`TraktRoller: manual search for "${title}" returned no results`);
       return null;
@@ -96,6 +106,7 @@ export default class TraktLookup {
       // Look up episode for shows
       if (type === 'show') {
         let episodeResult = await this._lookupEpisode(data.episode!, found.show!);
+        CancellationToken.throwIfCancelled(cancellation);
         if (episodeResult == null) continue;
         data.episode = episodeResult;
       }
@@ -103,15 +114,11 @@ export default class TraktLookup {
       // Retry start with new data
       console.log('TraktRoller: re-trying matching');
       result = await this._scrobbleLookup(data);
+      CancellationToken.throwIfCancelled(cancellation);
       if (result == null) break;
     }
 
     return result;
-  }
-
-  /** Abort the lookup */
-  public abort(): void {
-    this._state = TraktLookupState.Aborted;
   }
 
   private async _scrobbleLookup(data: ITraktScrobbleData): Promise<ITraktScrobbleData | null> {

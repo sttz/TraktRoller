@@ -170,10 +170,10 @@ export default class TraktScrobble {
   private async _init(): Promise<void> {
     this.setState(TraktScrobbleState.Lookup);
 
-    let lookup = new TraktLookup(this._client, this._data);
+    let lookup = new TraktLookup(this._client);
 
     try {
-      let result = await lookup.start();
+      let result = await lookup.start(this._data);
       if (result == null) {
         this.setState(TraktScrobbleState.NotFound);
         return;
