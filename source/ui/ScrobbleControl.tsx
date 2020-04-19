@@ -1,17 +1,16 @@
-import TraktRoller from "../TraktRoller";
-import TraktScrobble, { TraktScrobbleState, PlaybackState } from "../TraktScrobble";
+import TraktRoller, { TraktRollerCombinedState } from "../TraktRoller";
 import Button from "./Button";
 
 import { Component, h } from "preact";
 import { css } from "emotion";
+import { TraktScrobbleState } from "../TraktScrobble";
 
 interface ScrobbleControlProps {
   roller: TraktRoller;
-  scrobble: TraktScrobble;
 }
 
 interface ScrobbleControlState {
-  scrobbleState: TraktScrobbleState;
+  scrobbleState: TraktRollerCombinedState;
   scrobblingEnabled: boolean;
 }
 
@@ -35,6 +34,7 @@ const className = css`
     margin: 5px;
     padding: 5px 10px 5px 10px;
     width: 20%;
+    text-transform: capitalize;
   }
 `;
 
@@ -60,8 +60,8 @@ const enableScrobbleStyles = css`
   }
 `;
 
-const EnabledStates = [
-  TraktScrobbleState.Found,
+const EnabledStates: TraktRollerCombinedState[] = [
+  TraktScrobbleState.Idle,
   TraktScrobbleState.Started,
   TraktScrobbleState.Paused
 ];
@@ -69,7 +69,7 @@ const EnabledStates = [
 export default class ScrobbleControl extends Component<ScrobbleControlProps, ScrobbleControlState> {
   constructor(props: ScrobbleControlProps) {
     super(props);
-    this.state = { scrobbleState: this.props.scrobble.state, scrobblingEnabled: this.props.roller.enabled };
+    this.state = { scrobbleState: this.props.roller.state, scrobblingEnabled: this.props.roller.enabled };
 
     this._onScrobbleStateChanged = this._onScrobbleStateChanged.bind(this);
     this._onEnabledChanged = this._onEnabledChanged.bind(this);
@@ -78,16 +78,16 @@ export default class ScrobbleControl extends Component<ScrobbleControlProps, Scr
   }
 
   componentWillMount() {
-    this.props.scrobble.onStateChanged.sub(this._onScrobbleStateChanged);
+    this.props.roller.onStateChanged.sub(this._onScrobbleStateChanged);
     this.props.roller.onEnabledChanged.sub(this._onEnabledChanged);
   }
 
   componentWillUnmount() {
-    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStateChanged);
+    this.props.roller.onStateChanged.unsub(this._onScrobbleStateChanged);
     this.props.roller.onEnabledChanged.unsub(this._onEnabledChanged);
   }
 
-  private _onScrobbleStateChanged(state: TraktScrobbleState) {
+  private _onScrobbleStateChanged(state: TraktRollerCombinedState) {
     this.setState({ scrobbleState: state });
   }
 
@@ -96,7 +96,7 @@ export default class ScrobbleControl extends Component<ScrobbleControlProps, Scr
   }
 
   private _handleScrobbleNowClick() {
-    this.props.scrobble.scrobbleNow();
+    this.props.roller.scrobble.scrobbleNow();
   }
 
   private _handleEnableScrobbleClick() {
@@ -104,8 +104,8 @@ export default class ScrobbleControl extends Component<ScrobbleControlProps, Scr
   }
 
   render() {
-    let state = this.props.scrobble.enabled ? "Disabled" : TraktScrobbleState[this.props.scrobble.state];
-    let title = this.props.scrobble.error || "";
+    let state = this.props.roller.enabled ? "Disabled" : this.props.roller.state;
+    let title = this.props.roller.error || "";
 
     let disabled = !(EnabledStates.indexOf(this.state.scrobbleState) >= 0);
     let label = this.props.roller.enabled ? "Enable Scrobbling" : "Disable Scrobbling";

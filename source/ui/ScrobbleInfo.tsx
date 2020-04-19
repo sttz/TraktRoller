@@ -1,16 +1,16 @@
-import TraktScrobble, { TraktScrobbleState } from "../TraktScrobble";
 import { ITraktScrobbleData } from "../TraktApi";
 
 import { Component, h } from "preact";
 import { css } from "emotion";
+import TraktRoller, { TraktRollerCombinedState, TraktRollerState } from "../TraktRoller";
 
 interface ScrobbleInfoProps {
-  scrobble: TraktScrobble;
+  roller: TraktRoller;
 }
 
 interface ScrobbleInfoState {
   scrobbleData: ITraktScrobbleData;
-  scrobbleState: TraktScrobbleState;
+  scrobbleState: TraktRollerCombinedState;
   error: string;
 }
 
@@ -30,22 +30,22 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
 
   componentWillMount() {
     this.setState({ 
-      scrobbleData: this.props.scrobble.data,
-      scrobbleState: this.props.scrobble.state,
-      error: this.props.scrobble.error
+      scrobbleData: this.props.roller.scrobble.data,
+      scrobbleState: this.props.roller.state,
+      error: this.props.roller.error
     });
-    this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
+    this.props.roller.onStateChanged.sub(this._onScrobbleStatusChanged);
   }
 
   componentWillUnmount() {
-    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
+    this.props.roller.onStateChanged.unsub(this._onScrobbleStatusChanged);
   }
 
-  private _onScrobbleStatusChanged(state: TraktScrobbleState) {
+  private _onScrobbleStatusChanged(state: TraktRollerCombinedState) {
     this.setState({ 
-      scrobbleData: this.props.scrobble.data,
-      scrobbleState: this.props.scrobble.state,
-      error: this.props.scrobble.error
+      scrobbleData: this.props.roller.scrobble.data,
+      scrobbleState: this.props.roller.state,
+      error: this.props.roller.error
     });
   }
 
@@ -54,13 +54,13 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
     let info;
 
     // Still looking up
-    if (this.state.scrobbleState == TraktScrobbleState.Lookup) {
+    if (this.state.scrobbleState == TraktRollerState.Undefined || this.state.scrobbleState == TraktRollerState.Lookup) {
       info = (
         <div class="lookup">Loading…</div>
       );
     
     // Not found
-    } else if (this.state.scrobbleState == TraktScrobbleState.NotFound) {
+    } else if (this.state.scrobbleState == TraktRollerState.NotFound) {
       info = (
         <div class="error">
           <h2>Failed to scrobble:</h2>
@@ -69,7 +69,7 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
       );
 
     // Error
-    } else if (this.state.scrobbleState == TraktScrobbleState.Error) {
+    } else if (this.state.scrobbleState == TraktRollerState.Error) {
       info = (
         <div class="error">
           <h2>Failed to scrobble:</h2>

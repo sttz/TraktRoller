@@ -12,7 +12,7 @@ interface ScrobbleHistoryProps {
 }
 
 interface ScrobbleHistoryState {
-  historyItems: ITraktHistoryItem[];
+  historyItems: ITraktHistoryItem[] | null;
 }
 
 const className = css`
@@ -52,7 +52,7 @@ const ActionMap = {
 };
 
 export default class ScrobbleHistory extends Component<ScrobbleHistoryProps, ScrobbleHistoryState> {
-  private _traktId: number;
+  private _traktId: number = 0;
   private _formatter: Intl.DateTimeFormat;
 
   constructor(props: ScrobbleHistoryProps) {
@@ -92,7 +92,7 @@ export default class ScrobbleHistory extends Component<ScrobbleHistoryProps, Scr
     el.classList.add("disabled");
     el.innerText = "Removing...";
 
-    await this.props.history.remove(item.id);
+    await this.props.history.remove(item.id!);
 
     el.classList.remove("disabled");
     el.innerText = "Remove";

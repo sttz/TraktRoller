@@ -4,12 +4,25 @@ import ConnectButton from "./ui/ConnectButton";
 import StatusButton from "./ui/StatusButton";
 import TraktHistory from "./TraktHistory";
 
-import { render, h } from 'preact';
+import { render, h, createContext } from 'preact';
 import { SimpleEventDispatcher } from "ste-simple-events";
+import TraktLookup from "./TraktLookup";
 
-interface ITraktRollerOptions extends ITraktApiOptions {
+export const RollerContext = createContext<TraktRoller | undefined>(undefined);
+
+export interface ITraktRollerOptions extends ITraktApiOptions {
   //
 }
+
+export enum TraktRollerState {
+  Undefined = 'undefined',
+  Lookup = 'lookup',
+  NotFound = 'notfound',
+  Scrobbling = 'scrobbling',
+  Error = 'error',
+};
+
+export type TraktRollerCombinedState = TraktRollerState | TraktScrobbleState;
 
 const EpisodeRegex = /Episode ([\d\.]+)/;
 const SeasonRegex = /Season (\d+)/;
@@ -27,12 +40,17 @@ const MovieRegexes = [
 const ScrobblingEnabledKey: string = 'TraktRoller.enabled';
 
 export default class TraktRoller {
+  public onStateChanged = new SimpleEventDispatcher<TraktRollerCombinedState>();
   public onEnabledChanged = new SimpleEventDispatcher<boolean>();
+
+  private _state: TraktRollerState;
+  private _error: string | undefined;
 
   private _player?: playerjs.Player;
   private _storage: IStorage;
   private _api: TraktApi;
-  private _scrobble?: TraktScrobble;
+  private _looker: TraktLookup;
+  private _scrobble: TraktScrobble;
   private _history: TraktHistory;
   private _enabled: boolean = false;
 
@@ -41,6 +59,8 @@ export default class TraktRoller {
 
   constructor(options: ITraktRollerOptions) {
     console.log("TraktRoller");
+
+    this._state = TraktRollerState.Undefined;
 
     this._storage = options.storage || new LocalStorageAdapter();
     this._loadPrefs();
@@ -51,8 +71,45 @@ export default class TraktRoller {
 
     this._history = new TraktHistory(this._api);
 
+    this._looker = new TraktLookup(this._api);
+
+    this._scrobble = new TraktScrobble(this._api);
+    this._scrobble.enabled = this.enabled;
+    this._scrobble.onStateChanged.sub(this._onScrobbleStatusChanged.bind(this));
+    this._scrobble.onScrobbled.sub(this._onScrobbled.bind(this));
+
     this._createFooterButton();
     this._waitForPlayer();
+  }
+
+  public get scrobble(): TraktScrobble {
+    return this._scrobble;
+  }
+
+  public get history(): TraktHistory {
+    return this._history;
+  }
+
+  public get state(): TraktRollerCombinedState {
+    if (this._state != TraktRollerState.Scrobbling) {
+      return this._state;
+    } else {
+      return this._scrobble.state;
+    }
+  }
+
+  private _setState(value: TraktRollerState) {
+    if (this._state == value) return;
+    this._state = value;
+    this.onStateChanged.dispatch(this.state);
+  }
+
+  public get error(): string | undefined {
+    if (this._state != TraktRollerState.Scrobbling) {
+      return this._error;
+    } else {
+      return this._scrobble.error;
+    }
   }
 
   public get enabled(): boolean {
@@ -64,7 +121,7 @@ export default class TraktRoller {
     this._enabled = value;
 
     this._storage.setValue(ScrobblingEnabledKey, value ? "true" : "false");
-    if (this._scrobble) this._scrobble.enabled = value;
+    this._scrobble.enabled = value;
 
     this.onEnabledChanged.dispatch(value);
   }
@@ -106,22 +163,38 @@ export default class TraktRoller {
     this._player.on(playerjs.EVENTS.ENDED, () => this._onPlaybackStateChange(PlaybackState.Ended));
     this._player.on(playerjs.EVENTS.ERROR, () => this._onPlaybackStateChange(PlaybackState.Ended));
 
-    this._scrobble = new TraktScrobble(this._api, data);
-    this._scrobble.enabled = this.enabled;
-    this._scrobble.onStateChanged.sub(this._onScrobbleStatusChanged.bind(this));
-    this._scrobble.onScrobbled.sub(this._onScrobbled.bind(this));
-
     this._createStatusButton();
+
+    this._lookup(data);
+  }
+
+  private async _lookup(data: ITraktScrobbleData) {
+    try {
+      this._setState(TraktRollerState.Lookup);
+      let result = await this._looker.start(data);
+      if (result == null) {
+        this._setState(TraktRollerState.NotFound);
+      } else {
+        this._scrobble.scrobble(result);
+        this._setState(TraktRollerState.Scrobbling);
+      }
+    } catch (error) {
+      if (error.associatedObject) {
+        console.error(error.message, error.associatedObject);
+      } else {
+        console.error(error.message);
+      }
+      this._setState(TraktRollerState.Error);
+    }
   }
 
   private _onTimeChanged(info: { seconds: number, duration: number }) {
     this._currentTime = info.seconds;
     this._duration = info.duration;
-    if (this._scrobble) this._scrobble.setPlaybackTime(info.seconds, info.duration);
+    this._scrobble.setPlaybackTime(info.seconds, info.duration);
   }
 
   private _onPlaybackStateChange(state: PlaybackState) {
-    if (!this._scrobble) return;
     this._scrobble.setPlaybackState(state, this._getProgress());
   }
 
@@ -206,7 +279,9 @@ export default class TraktRoller {
   }
 
   private _onScrobbleStatusChanged(state: TraktScrobbleState) {
-    //
+    if (this._state == TraktRollerState.Scrobbling) {
+      this.onStateChanged.dispatch(this.state);
+    }
   }
 
   private _onScrobbled(result: ITraktScobbleResult) {
@@ -256,7 +331,9 @@ export default class TraktRoller {
     }
 
     render((
-      <StatusButton roller={ this } scrobble={ this._scrobble! } history={ this._history } />
+      <RollerContext.Provider value={ this }>
+        <StatusButton roller={ this } />
+      </RollerContext.Provider>
     ), container);
   }
 }

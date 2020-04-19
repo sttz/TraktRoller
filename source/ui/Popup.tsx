@@ -1,18 +1,15 @@
-import TraktScrobble, { TraktScrobbleState } from "../TraktScrobble";
+import TraktScrobble from "../TraktScrobble";
 import ScrobbleInfo from "./ScrobbleInfo";
 import ScrobbleHistory from "./ScrobbleHistory";
 import { ITraktScrobbleData } from "../TraktApi";
-import TraktHistory from "../TraktHistory";
 import ScrobbleControl from "./ScrobbleControl";
-import TraktRoller from "../TraktRoller";
+import TraktRoller, { TraktRollerCombinedState } from "../TraktRoller";
 
 import { Component, h } from "preact";
 import { css } from "emotion";
 
 interface PopupProps {
   roller: TraktRoller;
-  scrobble: TraktScrobble;
-  history: TraktHistory;
 }
 
 interface PopupState {
@@ -55,30 +52,28 @@ export default class Popup extends Component<PopupProps, PopupState> {
   }
 
   componentWillMount() {
-    this.setState({ scrobbleData: this.props.scrobble.data });
-    this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
+    this.setState({ scrobbleData: this.props.roller.scrobble.data });
+    this.props.roller.onStateChanged.sub(this._onScrobbleStatusChanged);
   }
 
   componentWillUnmount() {
-    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
+    this.props.roller.onStateChanged.unsub(this._onScrobbleStatusChanged);
   }
 
-  private _onScrobbleStatusChanged(state: TraktScrobbleState) {
-    this.setState({ scrobbleData: this.props.scrobble.data });
+  private _onScrobbleStatusChanged(state: TraktRollerCombinedState) {
+    this.setState({ scrobbleData: this.props.roller.scrobble.data });
   }
 
   render() {
-    let scrobble = this.props.scrobble;
-
     return (
       <div className={ className }>
-        <ScrobbleInfo scrobble={ this.props.scrobble } />
+        <ScrobbleInfo roller={ this.props.roller } />
         <ScrobbleHistory 
           scrobbleData={ this.state.scrobbleData } 
-          history={ this.props.history } 
+          history={ this.props.roller.history } 
           key={ TraktScrobble.traktIdFromData(this.state.scrobbleData) }
         />
-        <ScrobbleControl scrobble={ this.props.scrobble } roller={ this.props.roller } />
+        <ScrobbleControl roller={ this.props.roller } />
       </div>
     );
   }
