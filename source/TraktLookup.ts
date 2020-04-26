@@ -115,10 +115,10 @@ export default class TraktLookup {
       console.log('TraktRoller: re-trying matching');
       result = await this._scrobbleLookup(data);
       CancellationToken.throwIfCancelled(cancellation);
-      if (result == null) break;
+      if (result != null) return result;
     }
 
-    return result;
+    return null;
   }
 
   private async _scrobbleLookup(data: ITraktScrobbleData): Promise<ITraktScrobbleData | null> {
