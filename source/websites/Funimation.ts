@@ -68,18 +68,17 @@ export default class Funimation implements ITraktRollerWebsite {
     if (!titleData || !kaneData) {
       return null;
     }
-    
+
+    let year = undefined;
+    if (kaneData.dateAdded) {
+      let parts = kaneData.dateAdded.split('/');
+      if (parts.length == 3) {
+        year = parseInt(parts[2]);
+      }
+    }
+
     if (kaneData.videoType == 'Movie') {
       if (!titleData.title) return null;
-
-      let year = undefined;
-      if (kaneData.dateAdded) {
-        let parts = kaneData.dateAdded.split('/');
-        if (parts.length == 3) {
-          year = parseInt(parts[2]);
-        }
-      }
-
       data.movie = {
         title: kaneData.showName,
         year: year,
@@ -88,7 +87,8 @@ export default class Funimation implements ITraktRollerWebsite {
     } else if (kaneData.videoType == 'Episode') {
       if (!kaneData.showName || !titleData.seasonNum || !titleData.episodeNum) return null;
       data.show = {
-        title: kaneData.showName
+        title: kaneData.showName,
+        year: year,
       };
       data.episode = {
         season: titleData.seasonNum,

@@ -86,11 +86,20 @@ export default class TraktLookup {
     }
 
     console.log('TraktRoller: trying to search manually...');
-    const results = await this._search(type, title);
+    let results = await this._search(type, title);
     CancellationToken.throwIfCancelled(cancellation);
     if (results.length === 0) {
       console.warn(`TraktRoller: manual search for "${title}" returned no results`);
       return null;
+    }
+
+    // Use year to narrow results when available
+    const year = type === 'movie' ? data.movie?.year : data.show?.year;
+    if (year) {
+      let yearMatches = results.filter(r => r.show?.year == year || r.movie?.year == year);
+      if (yearMatches.length > 0) {
+        results = yearMatches;
+      }
     }
 
     // Try search results in order
