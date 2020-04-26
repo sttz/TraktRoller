@@ -12,7 +12,14 @@ import * as playerjs from "player.js";
 export const RollerContext = createContext<TraktRoller | undefined>(undefined);
 
 export interface ITraktRollerOptions extends ITraktApiOptions {
-  //
+  website?: ITraktRollerWebsite;
+}
+
+export interface ITraktRollerWebsite {
+  loadPlayer(): Promise<playerjs.Player>;
+  loadScrobbleData(): Partial<ITraktScrobbleData> | null;
+  getConnectButtonParent(): Element | null;
+  getStatusButtonParent(): Element | null;
 }
 
 export enum TraktRollerState {
@@ -25,19 +32,6 @@ export enum TraktRollerState {
 
 export type TraktRollerCombinedState = TraktRollerState | TraktScrobbleState;
 
-const EpisodeRegex = /Episode ([\d\.]+)/;
-const SeasonRegex = /Season (\d+)/;
-
-const MovieRegexes = [
-  /Movie$/i,
-  /Movie (Dub)$/i,
-  /Movie (Sub)$/i,
-  /Movie (Dubbed)$/i,
-  /Movie (Subtitled)$/i,
-  /^Movie - /i,
-  /The Movie/i,
-];
-
 const TraktUrlRegex = /^https:\/\/trakt\.tv\/(movies|shows)\/([\w-]+)(?:\/seasons\/(\d+)\/episodes\/(\d+))?$/;
 
 const ScrobblingEnabledKey: string = 'TraktRoller.enabled';
@@ -49,6 +43,7 @@ export default class TraktRoller {
   private _state: TraktRollerState;
   private _error: string | undefined;
 
+  private _website: ITraktRollerWebsite;
   private _player?: playerjs.Player;
   private _storage: IStorage;
   private _api: TraktApi;
@@ -61,9 +56,13 @@ export default class TraktRoller {
   private _currentTime: number = 0;
 
   constructor(options: ITraktRollerOptions) {
+    if (!options.website) return;
+
     console.log("TraktRoller");
 
     this._state = TraktRollerState.Undefined;
+
+    this._website = options.website;
 
     this._storage = options.storage || new LocalStorageAdapter();
     this._loadPrefs();
@@ -172,8 +171,8 @@ export default class TraktRoller {
     this._enabled = await this._storage.getValue(ScrobblingEnabledKey) === "true";
   }
 
-  private _waitForPlayer() {
-    this._player = new playerjs.Player('vilos-player');
+  private async _waitForPlayer() {
+    this._player = await this._website.loadPlayer();
     this._player.on(playerjs.EVENTS.READY, () => this._playerReady());
   }
 
@@ -250,58 +249,13 @@ export default class TraktRoller {
   private _getScrobbleData(): ITraktScrobbleData | null {
     const data = this._baseScrobbleData();
 
-    const titleElement = document.querySelector('#showmedia_about_episode_num');
-    if (!titleElement || !titleElement.textContent || titleElement.textContent.length == 0) {
-      console.error("TraktRoller: Could not find video title");
+    const result = this._website.loadScrobbleData();
+    if (!result) {
+      console.error("TraktRoller: Could not extract scrobble data");
       return null;
     }
-    let showTitle = titleElement.textContent.trim();
 
-    let episodeTitle: string | undefined = undefined;
-    const episodeTitleElement = document.querySelector('#showmedia_about_name');
-    if (episodeTitleElement && episodeTitleElement.textContent) {
-      episodeTitle = episodeTitleElement.textContent.trim();
-      if (episodeTitle) {
-        if (episodeTitle.startsWith("“")) {
-          episodeTitle = episodeTitle.substring(1);
-        }
-        if (episodeTitle.endsWith("”")) {
-          episodeTitle = episodeTitle.substring(0, episodeTitle.length - 1);
-        }
-      }
-    }
-
-    let seasonNumber = 1;
-    let episodeNumber = 0;
-    const episodeElement = document.querySelector('#showmedia_about_media h4:nth-child(2)');
-    if (episodeElement && episodeElement.textContent && episodeElement.textContent.length > 0) {
-      const seasonMatch = SeasonRegex.exec(episodeElement.textContent);
-      if (seasonMatch) {
-        seasonNumber = parseInt(seasonMatch[1]);
-      }
-      
-      const episodeMatch = EpisodeRegex.exec(episodeElement.textContent);
-      if (episodeMatch) {
-        episodeNumber = parseFloat(episodeMatch[1]);
-      }
-    }
-
-    if (episodeTitle && MovieRegexes.some(r => r.test(episodeTitle!))) {
-      data.movie = {
-        title: showTitle
-      };
-    } else {
-      data.show = {
-        title: showTitle
-      };
-      data.episode = {
-        season: seasonNumber,
-        number: episodeNumber,
-        title: episodeTitle
-      };
-    }
-
-    return data;
+    return Object.assign(data, result);
   }
 
   private _onAuthenticationChange(isAuthenticated: boolean) {
@@ -341,22 +295,20 @@ export default class TraktRoller {
   }
 
   private _createFooterButton() {
-    let footer = document.querySelector('#social_media');
+    let footer = this._website.getConnectButtonParent();
     if (!footer) {
       console.error("TraktRoller: Could not find footer to add trakt connect button");
       return;
     }
 
     render(
-      <div class="footer-column">
-        <ConnectButton api={ this._api } />
-      </div>,
+      <ConnectButton api={ this._api } />,
       footer
     );
   }
 
   private _createStatusButton() {
-    let container = document.querySelector('.showmedia-submenu');
+    let container = this._website.getStatusButtonParent();
     if (!container) {
       console.error("TraktRoller: Could not find share row to add trakt status button");
       return;

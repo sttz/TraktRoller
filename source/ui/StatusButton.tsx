@@ -130,7 +130,7 @@ export default class StatusButton extends Component<StatusButtonProps, StatusBut
     let stateClass = "state-" + state;
     let title = this.props.roller.error || this.state.scrobbleState;
     return (
-      <div className={ `${className} right` }>
+      <div className={ `${className}` }>
         <button className={ `${buttonClassName} ${stateClass}` } title={ title } onClick={ this._handleClick }>
           <TraktIcon className={ iconStyles } />
         </button>

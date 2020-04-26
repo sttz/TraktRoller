@@ -130,6 +130,7 @@ interface ITraktTokens {
 export interface ITraktApiOptions {
   client_id: string;
   client_secret: string;
+  redirect_url: string;
   api_url?: string;
   storage?: IStorage;
 }
@@ -184,7 +185,7 @@ export default class TraktApi {
   constructor(options: ITraktApiOptions) {
     this._client_id = options.client_id;
     this._client_secret = options.client_secret;
-    this._redirect_uri = 'https://www.crunchyroll.com';
+    this._redirect_uri = options.redirect_url;
     this._endpoint = options.api_url || 'https://api.trakt.tv';
     this._storage = options.storage || new LocalStorageAdapter();
   }
