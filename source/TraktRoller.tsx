@@ -56,7 +56,7 @@ export default class TraktRoller {
   private _currentTime: number = 0;
 
   constructor(options: ITraktRollerOptions) {
-    if (!options.website) return;
+    if (!options.website) throw new Error("'website' option cannot be undefined");
 
     console.log("TraktRoller");
 
