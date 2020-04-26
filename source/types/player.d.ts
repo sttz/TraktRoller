@@ -1,8 +1,4 @@
-interface Window {
-  readonly VILOS_PLAYERJS: playerjs.Player;
-}
-
-declare module playerjs {
+declare module 'player.js' {
   enum EVENTS {
     /** fired when the media is ready to receive commands */
     READY = 'ready',
@@ -20,7 +16,9 @@ declare module playerjs {
     ERROR = 'error'
   }
   
-  interface Player {
+  class Player {
+    /** Create a new player with an iframe id */
+    constructor(id: string);
     /** Play the media */
     play(): void;
     /** Pause the media */

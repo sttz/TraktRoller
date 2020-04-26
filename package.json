@@ -23,6 +23,7 @@
     "emotion": "^10.0.27",
     "preact": "10.1.1",
     "strongly-typed-events": "^1.6.3"
+    "player.js": "^0.1.0",
   },
   "alias": {
     "react": "preact/compat",

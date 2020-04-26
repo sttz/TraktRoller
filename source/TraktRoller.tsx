@@ -3,10 +3,11 @@ import TraktScrobble, { TraktScrobbleState, PlaybackState } from "./TraktScrobbl
 import ConnectButton from "./ui/ConnectButton";
 import StatusButton from "./ui/StatusButton";
 import TraktHistory from "./TraktHistory";
+import TraktLookup from "./TraktLookup";
 
 import { render, h, createContext } from 'preact';
 import { SimpleEventDispatcher } from "ste-simple-events";
-import TraktLookup from "./TraktLookup";
+import * as playerjs from "player.js";
 
 export const RollerContext = createContext<TraktRoller | undefined>(undefined);
 
@@ -172,32 +173,17 @@ export default class TraktRoller {
   }
 
   private _waitForPlayer() {
-    if (unsafeWindow.VILOS_PLAYERJS) {
-      this._loadPlayer(unsafeWindow.VILOS_PLAYERJS);
-    } else {
-      // Use a setter to wait for the player to be set
-      let value: any;
-      Object.defineProperty(unsafeWindow, "VILOS_PLAYERJS", {
-        get: ()=> value,
-        set: (v)=> {
-          value = v;
-          this._loadPlayer(v);
-        }
-      });
-    }
+    this._player = new playerjs.Player('vilos-player');
+    this._player.on(playerjs.EVENTS.READY, () => this._playerReady());
   }
 
-  private _loadPlayer(player: playerjs.Player) {
-    player.on(playerjs.EVENTS.READY, () => this._playerReady(player));
-  }
-
-  private _playerReady(player: playerjs.Player) {
+  private _playerReady() {
     if (!this._api.isAuthenticated()) return;
+    if (!this._player) return;
 
     let data = this._getScrobbleData();
     if (!data) return;
 
-    this._player = player;
     this._player.on(playerjs.EVENTS.TIMEUPDATE,  (info: { seconds: number, duration: number }) => this._onTimeChanged(info));
     this._player.on(playerjs.EVENTS.PLAY,  () => this._onPlaybackStateChange(PlaybackState.Playing));
     this._player.on(playerjs.EVENTS.PAUSE, () => this._onPlaybackStateChange(PlaybackState.Paused));
