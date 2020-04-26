@@ -48,4 +48,9 @@ declare module 'player.js' {
     /** Determines if the player supports a given event or method */
     supports(type: 'method' | 'event', name: string): boolean;
   }
+
+  class VideoJSAdapter {
+    constructor(videojs: any);
+    ready(): void;
+  }
 }

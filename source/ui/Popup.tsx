@@ -18,6 +18,7 @@ interface PopupState {
 
 const className = css`
   color: #eee;
+  z-index: 10000;
 
   & > div {
     padding: 15px;

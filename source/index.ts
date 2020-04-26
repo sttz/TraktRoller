@@ -2,6 +2,7 @@ import TraktRoller, { ITraktRollerOptions } from "./TraktRoller";
 import { GreaseMonkeyStorageAdapter } from "./TraktApi";
 
 import Crunchyroll from "./websites/Crunchyroll";
+import Funimation from "./websites/Funimation";
 
 const options: ITraktRollerOptions = {
   client_id: "5ac1bf2ba188fc93f941eb0788ef5cb6e0e4bf96b882e914e6d0c17dacc8e7f2",
@@ -15,6 +16,14 @@ const origin = window.location.origin;
 if (origin == "https://www.crunchyroll.com") {
   options.redirect_url = "https://www.crunchyroll.com";
   options.website = new Crunchyroll();
+
+} else if (origin == "https://www.funimation.com") {
+  if (window.videojs) {
+    Funimation.createPlayerAdapter(window.videojs);
+  } else {
+    options.redirect_url = "https://www.funimation.com";
+    options.website = new Funimation();
+  }
 }
 
 if (options.website) {

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          TraktRoller
 // @namespace     http://github.com/sttz/TraktRoller
-// @description   Trakt scrobbler for Crunchyroll
+// @description   Trakt scrobbler for Crunchyroll and Funimation
 // @author        sttz
 // @license       MIT
 // @copyright     2018, Adrian Stutz (https://sttz.ch/)
@@ -10,6 +10,7 @@
 // @updateURL     https://openuserjs.org/meta/sttz/TraktRoller.meta.js
 // @version       1.0.6
 // @include       https://www.crunchyroll.com/*
+// @include       https://www.funimation.com/*
 // @connect       api.trakt.tv
 // @grant         GM_setValue
 // @grant         GM_getValue

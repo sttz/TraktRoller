@@ -19,7 +19,7 @@ const popupClassName = css`
   border: 1px solid #fff;
   position: absolute;
   width: 450px;
-  z-index: 100;
+  z-index: 10000;
   left: -209px;
   border-radius: 4px;
   transition: all 0.2s ease-in;
@@ -27,6 +27,17 @@ const popupClassName = css`
   visibility: hidden;
   opacity: 0;
   bottom: 55px;
+
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  line-height: normal;
+  font-weight: 400;
+
+  & h2 {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 17px !important;
+    font-weight: 700;
+  }
 
   &:after, &:before {
     top: 100%;
