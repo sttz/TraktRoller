@@ -12,6 +12,8 @@ interface ScrobbleInfoState {
   scrobbleData: ITraktScrobbleData;
   scrobbleState: TraktRollerCombinedState;
   error: string;
+  isEditing: boolean;
+  lookupUrl: string;
 }
 
 const className = css`
@@ -19,9 +21,40 @@ const className = css`
   font-size: 17px;
   padding-bottom: 4px;
 }
+& .editbutton {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+& .edit {
+  display: flex;
+  flex-wrap: wrap;
+}
+& .edit div {
+  flex: 0 0 100%;
+  margin: 0 5px;
+}
+& .edit input {
+  padding: 5px;
+  margin: 5px;
+}
+& .edit button {
+  padding: 5px 10px;
+  margin: 5px;
+}
+& .edit input {
+  flex-grow: 1;
+}
 `;
 
 export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleInfoState> {
+  _focusUrlInput = false;
+
   constructor(props: ScrobbleInfoProps) {
     super(props);
 
@@ -49,12 +82,43 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
     });
   }
 
+  private async _lookUpUrl() {
+    let lookupUrl = this.state.lookupUrl;
+    this.setState({
+      lookupUrl: "",
+      isEditing: false
+    });
+
+    try {
+      await this.props.roller.lookupTraktUrl(lookupUrl);
+    } catch (e) {
+      this.setState({
+        error: e.message
+      });
+    }
+  }
+
   render() {
     let data = this.state.scrobbleData;
     let info;
 
+    // Editing
+    if (this.state.isEditing) {
+      info = (
+        <div class="edit">
+          <div>Enter the Trakt URL of the correct movie, show or episode:</div>
+          <input 
+            type="text" 
+            value={ this.state.lookupUrl } 
+            ref={ ref => { if (this._focusUrlInput && ref) { ref.focus(); this._focusUrlInput = false; } } } 
+            onChange={ e => this.setState({ lookupUrl: e.currentTarget.value }) }
+          />
+          <button title="Update" onClick={ () => this._lookUpUrl() }>Update</button>
+        </div>
+      );
+
     // Still looking up
-    if (this.state.scrobbleState == TraktRollerState.Undefined || this.state.scrobbleState == TraktRollerState.Lookup) {
+    } else if (this.state.scrobbleState == TraktRollerState.Undefined || this.state.scrobbleState == TraktRollerState.Lookup) {
       info = (
         <div class="lookup">Loading…</div>
       );
@@ -111,6 +175,12 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
 
     return (
       <div className={ className }>
+        <button 
+            className="editbutton" 
+            title={ this.state.isEditing ? "Cancel" : "Edit" } 
+            onClick={ () => { this.setState({ isEditing: !this.state.isEditing }); this._focusUrlInput = true; } }>
+          { this.state.isEditing ? "✕" : "✍︎" }
+        </button>
         { info }
       </div>
     );

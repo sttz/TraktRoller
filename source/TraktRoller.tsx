@@ -37,6 +37,8 @@ const MovieRegexes = [
   /The Movie/i,
 ];
 
+const TraktUrlRegex = /^https:\/\/trakt\.tv\/(movies|shows)\/([\w-]+)(?:\/seasons\/(\d+)\/episodes\/(\d+))?$/;
+
 const ScrobblingEnabledKey: string = 'TraktRoller.enabled';
 
 export default class TraktRoller {
@@ -126,6 +128,45 @@ export default class TraktRoller {
     this.onEnabledChanged.dispatch(value);
   }
 
+  public async lookupTraktUrl(url: string) {
+    let match = TraktUrlRegex.exec(url);
+    if (!match) {
+      this._error = "Unrecognized Trakt URL.";
+      this._setState(TraktRollerState.Error);
+      return;
+    }
+    
+    let data = this._baseScrobbleData();
+    if (match[1] == 'movies') {
+      data.movie = {
+        ids: {
+          slug: match[2]
+        }
+      };
+    } else {
+      data.show = {
+        ids: {
+          slug: match[2]
+        }
+      };
+      if (match[3] && match[4]) {
+        data.episode = {
+          season: parseInt(match[3]),
+          number: parseInt(match[4])
+        };
+      } else {
+        if (this._scrobble.data && this._scrobble.data.episode) {
+          data.episode = this._scrobble.data.episode;
+        } else {
+          let pageData = this._getScrobbleData();
+          data.episode = pageData?.episode;
+        }
+      }
+    }
+
+    await this._lookup(data);
+  }
+
   private async _loadPrefs() {
     this._enabled = await this._storage.getValue(ScrobblingEnabledKey) === "true";
   }
@@ -184,6 +225,7 @@ export default class TraktRoller {
       } else {
         console.error(error.message);
       }
+      this._error = error.message;
       this._setState(TraktRollerState.Error);
     }
   }
@@ -210,13 +252,17 @@ export default class TraktRoller {
     return this._currentTime / this._duration * 100;
   }
 
-  private _getScrobbleData(): ITraktScrobbleData | null {
+  private _baseScrobbleData(): ITraktScrobbleData {
     let buildDate = new Date(process.env.BUILD_DATE);
-    const data: ITraktScrobbleData = {
+    return {
       progress: this._getProgress(),
       app_version: process.env.VERSION,
       app_date: `${buildDate.getFullYear()}-${buildDate.getMonth() + 1}-${buildDate.getDate()}`
     };
+  }
+
+  private _getScrobbleData(): ITraktScrobbleData | null {
+    const data = this._baseScrobbleData();
 
     const titleElement = document.querySelector('#showmedia_about_episode_num');
     if (!titleElement || !titleElement.textContent || titleElement.textContent.length == 0) {
