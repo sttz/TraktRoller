@@ -1,17 +1,17 @@
+import TraktRoller, { TraktRollerCombinedState, TraktRollerState } from "../TraktRoller";
 import { ITraktScrobbleData } from "../TraktApi";
 
-import { Component, h } from "preact";
-import { css } from "emotion";
-import TraktRoller, { TraktRollerCombinedState, TraktRollerState } from "../TraktRoller";
+import { Component } from "react";
+import { jsx, css } from "@emotion/core";
 
 interface ScrobbleInfoProps {
   roller: TraktRoller;
 }
 
 interface ScrobbleInfoState {
-  scrobbleData: ITraktScrobbleData;
+  scrobbleData?: ITraktScrobbleData;
   scrobbleState: TraktRollerCombinedState;
-  error: string;
+  error?: string;
   isEditing: boolean;
   lookupUrl: string;
 }
@@ -20,6 +20,12 @@ const className = css`
 & .info h2 {
   font-size: 17px;
   padding-bottom: 4px;
+}
+& .info a {
+  text-decoration: none;
+}
+& .info p {
+  margin: 0;
 }
 & .editbutton {
   position: absolute;
@@ -59,14 +65,17 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
     super(props);
 
     this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
-  }
 
-  componentWillMount() {
-    this.setState({ 
+    this.state = {
       scrobbleData: this.props.roller.scrobble.data,
       scrobbleState: this.props.roller.state,
-      error: this.props.roller.error
-    });
+      error: this.props.roller.error,
+      isEditing: false,
+      lookupUrl: '',
+    };
+  }
+
+  componentDidMount() {
     this.props.roller.onStateChanged.sub(this._onScrobbleStatusChanged);
   }
 
@@ -105,7 +114,7 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
     // Editing
     if (this.state.isEditing) {
       info = (
-        <div class="edit">
+        <div className="edit">
           <div>Enter the Trakt URL of the correct movie, show or episode:</div>
           <input 
             type="text" 
@@ -120,13 +129,13 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
     // Still looking up
     } else if (this.state.scrobbleState == TraktRollerState.Undefined || this.state.scrobbleState == TraktRollerState.Lookup) {
       info = (
-        <div class="lookup">Loading…</div>
+        <div className="lookup">Loading…</div>
       );
     
     // Not found
     } else if (this.state.scrobbleState == TraktRollerState.NotFound) {
       info = (
-        <div class="error">
+        <div className="error">
           <h2>Failed to scrobble:</h2>
           <p>Could not find matching episode on Trakt</p>
         </div>
@@ -135,19 +144,19 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
     // Error
     } else if (this.state.scrobbleState == TraktRollerState.Error) {
       info = (
-        <div class="error">
+        <div className="error">
           <h2>Failed to scrobble:</h2>
           <p>{ this.state.error }</p>
         </div>
       );
 
     // Lookup succeeded
-    } else {
+    } else if (data) {
       
       if (data.movie && data.movie.ids) {
         let movieUrl = `https://trakt.tv/movies/${data.movie.ids.slug}`;
         info = (
-          <div class="info">
+          <div className="info">
             <h2><a href={ movieUrl } target="_blank">{ data.movie.title } ({ data.movie.year })</a></h2>
           </div>
         );
@@ -156,7 +165,7 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
         let episodeUrl = `${showUrl}/seasons/${data.episode.season}/episodes/${data.episode.number}`;
         let episodeTitle = data.episode.title ? `: ${data.episode.title}` : null;
         info = (
-          <div class="info">
+          <div className="info">
             <h2><a href={ showUrl } target="_blank">{ data.show.title } ({ data.show.year })</a></h2>
             <p><a href={ episodeUrl } target="_blank">
               Season { data.episode.season } Episode { data.episode.number }{ episodeTitle }
@@ -165,7 +174,7 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
         );
       } else {
         info = (
-          <div class="error">
+          <div className="error">
             <h2>Internal error:</h2>
             <p>Missing data</p>
           </div>
@@ -174,7 +183,7 @@ export default class ScrobbleInfo extends Component<ScrobbleInfoProps, ScrobbleI
     }
 
     return (
-      <div className={ className }>
+      <div css={ className }>
         <button 
             className="editbutton" 
             title={ this.state.isEditing ? "Cancel" : "Edit" } 

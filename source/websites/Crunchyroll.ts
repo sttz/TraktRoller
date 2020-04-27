@@ -21,7 +21,7 @@ export default class Crunchyroll implements ITraktRollerWebsite {
     return new playerjs.Player('vilos-player');
   }
   
-  getConnectButtonParent(): Element | null {
+  getConnectButtonParent(): HTMLElement | null {
     const footer = document.querySelector('#social_media');
     if (!footer) return null;
     
@@ -29,18 +29,26 @@ export default class Crunchyroll implements ITraktRollerWebsite {
     container.className = "footer-column";
     footer.appendChild(container);
     
-    return container;
+    const shadow = container.attachShadow({ mode: 'closed' });
+    const shadowContainer = document.createElement('div');
+    shadow.appendChild(shadowContainer);
+
+    return shadowContainer;
   }
   
-  getStatusButtonParent(): Element | null {
+  getStatusButtonParent(): HTMLElement | null {
     const submenu = document.querySelector('.showmedia-submenu');
     if (!submenu) return null;
     
     const container = document.createElement('div');
     container.className = "right";
     submenu.appendChild(container);
-    
-    return container;
+
+    const shadow = container.attachShadow({ mode: 'closed' });
+    const shadowContainer = document.createElement('div');
+    shadow.appendChild(shadowContainer);
+
+    return shadowContainer;
   }
   
   loadScrobbleData(): Partial<ITraktScrobbleData> | null {

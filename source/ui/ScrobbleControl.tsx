@@ -1,8 +1,8 @@
 import TraktRoller, { TraktRollerCombinedState } from "../TraktRoller";
 import Button from "./Button";
 
-import { Component, h } from "preact";
-import { css } from "emotion";
+import { Component } from "react";
+import { jsx, css } from "@emotion/core";
 import { TraktScrobbleState } from "../TraktScrobble";
 
 interface ScrobbleControlProps {
@@ -77,7 +77,7 @@ export default class ScrobbleControl extends Component<ScrobbleControlProps, Scr
     this._handleEnableScrobbleClick = this._handleEnableScrobbleClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.roller.onStateChanged.sub(this._onScrobbleStateChanged);
     this.props.roller.onEnabledChanged.sub(this._onEnabledChanged);
   }
@@ -111,8 +111,8 @@ export default class ScrobbleControl extends Component<ScrobbleControlProps, Scr
     let label = this.props.roller.enabled ? "Enable Scrobbling" : "Disable Scrobbling";
 
     return (
-      <div className={ className }>
-        <div class="state" title={ title }>{ state }</div>
+      <div css={ className }>
+        <div className="state" title={ title }>{ state }</div>
         <Button className={ scrobbleNowStyles } text="Scrobble Now" onClick={ this._handleScrobbleNowClick } disabled={ disabled } />
         <Button className={ enableScrobbleStyles } text={ label } onClick={ this._handleEnableScrobbleClick } />
       </div>

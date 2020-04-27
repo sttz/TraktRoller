@@ -1,10 +1,10 @@
-import { Component, h } from "preact";
-import { css } from "emotion";
+import { Component, MouseEventHandler } from "react";
+import { jsx, css, SerializedStyles } from "@emotion/core";
 
 interface ButtonProps {
   text: string;
-  onClick: h.JSX.MouseEventHandler<HTMLButtonElement>;
-  className?: string;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  className?: SerializedStyles;
   disabled?: boolean;
 }
 
@@ -29,7 +29,7 @@ const className = css`
 export default class Button extends Component<ButtonProps> {
   render() {
     return (
-      <button className={ `${className} ${this.props.className} ${this.props.disabled ? 'disabled' : ''}` } onClick={ this.props.onClick } >
+      <button css={ [className, this.props.className] } className={ this.props.disabled ? 'disabled' : '' } onClick={ this.props.onClick } >
         { this.props.text }
       </button>
     );

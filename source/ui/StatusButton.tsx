@@ -2,8 +2,8 @@ import TraktRoller, { TraktRollerCombinedState } from "../TraktRoller";
 import TraktIcon from "./TraktIcon";
 import Popup from "./Popup";
 
-import { Component, h } from "preact";
-import { css } from "emotion";
+import { Component } from "react";
+import { jsx, css } from "@emotion/core";
 
 interface StatusButtonProps {
   roller: TraktRoller;
@@ -28,16 +28,10 @@ const popupClassName = css`
   opacity: 0;
   bottom: 55px;
 
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
+  font-weight: normal;
   line-height: normal;
-  font-weight: 400;
-
-  & h2 {
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 17px !important;
-    font-weight: 700;
-  }
 
   &:after, &:before {
     top: 100%;
@@ -114,7 +108,7 @@ export default class StatusButton extends Component<StatusButtonProps, StatusBut
     this._handleClick = this._handleClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.roller.onStateChanged.sub(this._onScrobbleStatusChanged);
     this.props.roller.onEnabledChanged.sub(this._onEnabledChanged);
   }
@@ -144,13 +138,13 @@ export default class StatusButton extends Component<StatusButtonProps, StatusBut
     let stateClass = "state-" + state;
     let title = this.props.roller.error || this.state.scrobbleState;
     return (
-      <div className={ `${className}` }>
-        <button className={ `${buttonClassName} ${stateClass}` } title={ title } onClick={ this._handleClick }>
+      <div css={ className }>
+        <button css={ buttonClassName } className={ stateClass } title={ title } onClick={ this._handleClick }>
           <TraktIcon className={ iconStyles } />
         </button>
-        <div className={ `${popupClassName} popup` }>
+        <div css={ popupClassName } className="popup">
           <Popup roller={ this.props.roller } />
-          <div class="hover-blocker"></div>
+          <div className="hover-blocker"></div>
         </div>
       </div>
     );

@@ -26,7 +26,7 @@ export default class TraktScrobble {
   }
 
   /** Extract trakt id from scrobble data, returns 0 if id is not set */
-  public static traktIdFromData(data: ITraktScrobbleData): number {
+  public static traktIdFromData(data?: ITraktScrobbleData): number {
     if (!data) return 0;
     let movieId = data.movie && data.movie.ids && data.movie.ids.trakt || null;
     if (movieId) return movieId;

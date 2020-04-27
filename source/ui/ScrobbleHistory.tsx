@@ -3,8 +3,8 @@ import TraktApi, { ITraktHistoryItem, ITraktScrobbleData } from "../TraktApi";
 import TraktHistory from "../TraktHistory";
 import Button from "./Button";
 
-import { Component, h } from "preact";
-import { css } from "emotion";
+import { Component, MouseEvent } from "react";
+import { jsx, css } from "@emotion/core";
 
 interface ScrobbleHistoryProps {
   scrobbleData: ITraktScrobbleData;
@@ -69,7 +69,7 @@ export default class ScrobbleHistory extends Component<ScrobbleHistoryProps, Scr
     this._handleHistoryChanged = this._handleHistoryChanged.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let data = this.props.scrobbleData;
     this._traktId = TraktScrobble.traktIdFromData(data);
     if (this._traktId !== 0) {
@@ -87,7 +87,7 @@ export default class ScrobbleHistory extends Component<ScrobbleHistoryProps, Scr
     this.setState({ historyItems: items });
   }
 
-  private async _handleRemove(e: MouseEvent, item: ITraktHistoryItem) {
+  private async _handleRemove(e: MouseEvent<any, any>, item: ITraktHistoryItem) {
     let el = e.target as HTMLElement;
     el.classList.add("disabled");
     el.innerText = "Removing...";
@@ -110,7 +110,7 @@ export default class ScrobbleHistory extends Component<ScrobbleHistoryProps, Scr
         );
       }
       return (
-        <div className={ className }>
+        <div css={ className }>
           <h2>Watch History</h2>
           { rows }
         </div>

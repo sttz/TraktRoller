@@ -18,7 +18,7 @@ declare module 'player.js' {
   
   class Player {
     /** Create a new player with an iframe id */
-    constructor(id: string);
+    constructor(id: string | HTMLElement);
     /** Play the media */
     play(): void;
     /** Pause the media */

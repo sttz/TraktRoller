@@ -5,15 +5,15 @@ import { ITraktScrobbleData } from "../TraktApi";
 import ScrobbleControl from "./ScrobbleControl";
 import TraktRoller, { TraktRollerCombinedState } from "../TraktRoller";
 
-import { Component, h } from "preact";
-import { css } from "emotion";
+import { Component } from "react";
+import { jsx, css } from "@emotion/core";
 
 interface PopupProps {
   roller: TraktRoller;
 }
 
 interface PopupState {
-  scrobbleData: ITraktScrobbleData;
+  scrobbleData?: ITraktScrobbleData;
 }
 
 const className = css`
@@ -50,10 +50,13 @@ export default class Popup extends Component<PopupProps, PopupState> {
     super(props);
 
     this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
+
+    this.state = {
+      scrobbleData: this.props.roller.scrobble.data 
+    };
   }
 
-  componentWillMount() {
-    this.setState({ scrobbleData: this.props.roller.scrobble.data });
+  componentDidMount() {
     this.props.roller.onStateChanged.sub(this._onScrobbleStatusChanged);
   }
 
@@ -66,14 +69,19 @@ export default class Popup extends Component<PopupProps, PopupState> {
   }
 
   render() {
+    let history = null;
+    if (this.state.scrobbleData) {
+      history = <ScrobbleHistory 
+        scrobbleData={ this.state.scrobbleData } 
+        history={ this.props.roller.history } 
+        key={ TraktScrobble.traktIdFromData(this.state.scrobbleData) }
+      />;
+    }
+
     return (
-      <div className={ className }>
+      <div css={ className }>
         <ScrobbleInfo roller={ this.props.roller } />
-        <ScrobbleHistory 
-          scrobbleData={ this.state.scrobbleData } 
-          history={ this.props.roller.history } 
-          key={ TraktScrobble.traktIdFromData(this.state.scrobbleData) }
-        />
+        { history }
         <ScrobbleControl roller={ this.props.roller } />
       </div>
     );

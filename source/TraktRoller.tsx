@@ -1,11 +1,14 @@
-import TraktApi, { ITraktScrobbleData, ITraktApiOptions, ITraktScobbleResult, ITraktHistoryItem, IStorage, LocalStorageAdapter, ITraktIDs } from "./TraktApi";
+import TraktApi, { ITraktScrobbleData, ITraktApiOptions, ITraktScobbleResult, IStorage, LocalStorageAdapter, ITraktIDs } from "./TraktApi";
 import TraktScrobble, { TraktScrobbleState, PlaybackState } from "./TraktScrobble";
 import ConnectButton from "./ui/ConnectButton";
 import StatusButton from "./ui/StatusButton";
 import TraktHistory from "./TraktHistory";
 import TraktLookup from "./TraktLookup";
 
-import { render, h, createContext } from 'preact';
+import { createContext } from 'react';
+import { render } from "react-dom";
+import { jsx, CacheProvider } from "@emotion/core";
+import createCache from "@emotion/cache";
 import { SimpleEventDispatcher } from "ste-simple-events";
 import * as playerjs from "player.js";
 
@@ -18,8 +21,8 @@ export interface ITraktRollerOptions extends ITraktApiOptions {
 export interface ITraktRollerWebsite {
   loadPlayer(): Promise<playerjs.Player>;
   loadScrobbleData(): Partial<ITraktScrobbleData> | null;
-  getConnectButtonParent(): Element | null;
-  getStatusButtonParent(): Element | null;
+  getConnectButtonParent(): HTMLElement | null;
+  getStatusButtonParent(): HTMLElement | null;
 }
 
 export enum TraktRollerState {
@@ -301,23 +304,36 @@ export default class TraktRoller {
       return;
     }
 
+    const cache = createCache({
+      container: footer
+    });
+
     render(
-      <ConnectButton api={ this._api } />,
+      <CacheProvider value={ cache }>
+        <ConnectButton api={ this._api } />
+      </CacheProvider>,
       footer
     );
   }
 
   private _createStatusButton() {
+    console.log(`TraktRoller: _createStatusButton`);
     let container = this._website.getStatusButtonParent();
     if (!container) {
       console.error("TraktRoller: Could not find share row to add trakt status button");
       return;
     }
 
+    const cache = createCache({
+      container: container
+    });
+
     render((
-      <RollerContext.Provider value={ this }>
-        <StatusButton roller={ this } />
-      </RollerContext.Provider>
+      <CacheProvider value={ cache }>
+        <RollerContext.Provider value={ this }>
+          <StatusButton roller={ this } />
+        </RollerContext.Provider>
+      </CacheProvider>
     ), container);
   }
 }

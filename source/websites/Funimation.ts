@@ -1,18 +1,7 @@
 import { ITraktRollerWebsite } from "../TraktRoller";
 import { ITraktScrobbleData } from "../TraktApi";
 
-import { css } from "emotion";
 import * as playerjs from "player.js";
-
-const connectButtonClassName = css`
-  float: right;
-  clear: both;
-`;
-
-const statusButtonClassName = css`
-  float: right;
-  margin: 12px 0;
-`;
 
 interface TitleData {
   title?: string;
@@ -46,26 +35,36 @@ export default class Funimation implements ITraktRollerWebsite {
     return new playerjs.Player('player');
   }
   
-  getConnectButtonParent(): Element | null {
+  getConnectButtonParent(): HTMLElement | null {
     const footer = document.querySelector('footer > .container > .row > .col-md-10 > .row:nth-child(2) > .col-sm-4');
     if (!footer) return null;
     
     const container = document.createElement('div');
-    container.className = connectButtonClassName;
+    container.style.float = "right";
+    container.style.clear = "both";
     footer.appendChild(container);
+
+    const shadow = container.attachShadow({ mode: 'closed' });
+    const shadowContainer = document.createElement('div');
+    shadow.appendChild(shadowContainer);
     
-    return container;
+    return shadowContainer;
   }
   
-  getStatusButtonParent(): Element | null {
+  getStatusButtonParent(): HTMLElement | null {
     const submenu = document.querySelector('#video-details > .row > .col-md-10 > .row > .col-sm-6:nth-child(2)');
     if (!submenu) return null;
 
     const container = document.createElement('div');
-    container.className = statusButtonClassName;
+    container.style.float = "right";
+    container.style.margin = "12px 0";
     submenu.appendChild(container);
 
-    return container;
+    const shadow = container.attachShadow({ mode: 'closed' });
+    const shadowContainer = document.createElement('div');
+    shadow.appendChild(shadowContainer);
+
+    return shadowContainer;
   }
   
   loadScrobbleData(): Partial<ITraktScrobbleData> | null {

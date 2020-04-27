@@ -8,7 +8,7 @@
         "strict": true,
         "moduleResolution": "node",
         "jsx": "react",
-        "jsxFactory": "h"
+        "jsxFactory": "jsx"
     },
     "include": [
         "source/**/*"

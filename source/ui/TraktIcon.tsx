@@ -1,8 +1,8 @@
-import { Component, h } from "preact";
-import { css } from "emotion";
+import { Component } from "react";
+import { jsx, css, SerializedStyles } from "@emotion/core";
 
 interface TraktIconProps {
-  className?: string;
+  className?: SerializedStyles;
 }
 
 let className = css`
@@ -14,7 +14,7 @@ let className = css`
 export default class TraktIcon extends Component<TraktIconProps> {
   render() {
     return (
-      <div className={ `${className} ${this.props.className}` } />
+      <div css={ [className, this.props.className] } />
     );
   }
 }

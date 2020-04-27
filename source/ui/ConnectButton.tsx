@@ -1,8 +1,8 @@
 import TraktApi from "../TraktApi";
 import TraktIcon from "./TraktIcon";
 
-import { Component, h } from "preact";
-import { css } from "emotion";
+import { Component } from "react";
+import { jsx, css } from "@emotion/core";
 
 interface ConnectButtonProps {
   api: TraktApi;
@@ -18,7 +18,10 @@ let className = css`
   border-radius: 5px;
   padding: 2px 7px;
   color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 11px;
+  font-weight: normal;
+  line-height: normal;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -45,7 +48,7 @@ export default class ConnectButton extends Component<ConnectButtonProps, Connect
     this._handleClick = this._handleClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.api.onAuthenticationChanged.sub(this._handleAuthenticationChanged);
   }
 
@@ -68,9 +71,9 @@ export default class ConnectButton extends Component<ConnectButtonProps, Connect
 
   render() {
     return (
-      <div className={className} onClick={ this._handleClick }>
+      <div css={ className } onClick={ this._handleClick }>
         <TraktIcon className={ iconStyles } />
-        <div class="text">{ this.state.isConnected ? "Disconnect from Trakt" : "Connect with Trakt" }</div>
+        <div css="text">{ this.state.isConnected ? "Disconnect from Trakt" : "Connect with Trakt" }</div>
       </div>
     );
   }
