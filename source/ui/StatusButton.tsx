@@ -133,7 +133,10 @@ export default class StatusButton extends Component<StatusButtonProps, StatusBut
   }
 
   private _handleClick() {
-    window.open(this.props.roller.scrobble.scrobbleUrl(), '_blank');
+    const url = this.props.roller.scrobble.scrobbleUrl();
+    if (url != '') {
+      window.open(this.props.roller.scrobble.scrobbleUrl(), '_blank');
+    }
   }
 
   render() {
