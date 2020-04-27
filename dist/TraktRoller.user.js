@@ -1,15 +1,16 @@
 // ==UserScript==
 // @name          TraktRoller
 // @namespace     http://github.com/sttz/TraktRoller
-// @description   Trakt scrobbler for Crunchyroll
+// @description   Trakt scrobbler for Crunchyroll and Funimation
 // @author        sttz
 // @license       MIT
 // @copyright     2018, Adrian Stutz (https://sttz.ch/)
 // @homepageURL   http://github.com/sttz/TraktRoller
 // @supportURL    http://github.com/sttz/TraktRoller/issues
 // @updateURL     https://openuserjs.org/meta/sttz/TraktRoller.meta.js
-// @version       1.0.6
+// @version       1.1.0
 // @include       https://www.crunchyroll.com/*
+// @include       https://www.funimation.com/*
 // @connect       api.trakt.tv
 // @grant         GM_setValue
 // @grant         GM_getValue
@@ -137,7 +138,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"ZHt3":[function(require,module,exports) {
+})({"../node_modules/ste-core/dist/management.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -166,7 +167,7 @@ function () {
 }();
 
 exports.EventManagement = EventManagement;
-},{}],"BhDi":[function(require,module,exports) {
+},{}],"../node_modules/ste-core/dist/subscription.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -224,7 +225,7 @@ function () {
 }();
 
 exports.Subscription = Subscription;
-},{}],"OuRK":[function(require,module,exports) {
+},{}],"../node_modules/ste-core/dist/dispatching.js":[function(require,module,exports) {
 "use strict";
 
 var __spreadArrays = this && this.__spreadArrays || function () {
@@ -590,7 +591,7 @@ function () {
 }();
 
 exports.DispatcherWrapper = DispatcherWrapper;
-},{"./management":"ZHt3","./subscription":"BhDi"}],"CAoX":[function(require,module,exports) {
+},{"./management":"../node_modules/ste-core/dist/management.js","./subscription":"../node_modules/ste-core/dist/subscription.js"}],"../node_modules/ste-core/dist/index.js":[function(require,module,exports) {
 "use strict";
 /*!
  * Strongly Typed Events for TypeScript - Core
@@ -614,7 +615,7 @@ exports.EventListBase = dispatching_1.EventListBase;
 var subscription_1 = require("./subscription");
 
 exports.Subscription = subscription_1.Subscription;
-},{"./dispatching":"OuRK","./subscription":"BhDi"}],"Xwg8":[function(require,module,exports) {
+},{"./dispatching":"../node_modules/ste-core/dist/dispatching.js","./subscription":"../node_modules/ste-core/dist/subscription.js"}],"../node_modules/ste-events/dist/events.js":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -861,7 +862,7 @@ function () {
 }();
 
 exports.EventHandlingBase = EventHandlingBase;
-},{"ste-core":"CAoX"}],"MjR0":[function(require,module,exports) {
+},{"ste-core":"../node_modules/ste-core/dist/index.js"}],"../node_modules/ste-events/dist/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -874,7 +875,7 @@ exports.EventDispatcher = events_1.EventDispatcher;
 exports.EventHandlingBase = events_1.EventHandlingBase;
 exports.EventList = events_1.EventList;
 exports.NonUniformEventList = events_1.NonUniformEventList;
-},{"./events":"Xwg8"}],"y7sL":[function(require,module,exports) {
+},{"./events":"../node_modules/ste-events/dist/events.js"}],"../node_modules/ste-simple-events/dist/simple-events.js":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -1116,7 +1117,7 @@ function () {
 }();
 
 exports.SimpleEventHandlingBase = SimpleEventHandlingBase;
-},{"ste-core":"CAoX"}],"WWWf":[function(require,module,exports) {
+},{"ste-core":"../node_modules/ste-core/dist/index.js"}],"../node_modules/ste-simple-events/dist/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1129,7 +1130,7 @@ exports.SimpleEventDispatcher = simple_events_1.SimpleEventDispatcher;
 exports.SimpleEventHandlingBase = simple_events_1.SimpleEventHandlingBase;
 exports.SimpleEventList = simple_events_1.SimpleEventList;
 exports.NonUniformSimpleEventList = simple_events_1.NonUniformSimpleEventList;
-},{"./simple-events":"y7sL"}],"Bt9s":[function(require,module,exports) {
+},{"./simple-events":"../node_modules/ste-simple-events/dist/simple-events.js"}],"../node_modules/ste-signals/dist/signals.js":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -1321,7 +1322,7 @@ function () {
 }();
 
 exports.SignalHandlingBase = SignalHandlingBase;
-},{"ste-core":"CAoX"}],"mVqA":[function(require,module,exports) {
+},{"ste-core":"../node_modules/ste-core/dist/index.js"}],"../node_modules/ste-signals/dist/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1333,7 +1334,7 @@ var signals_1 = require("./signals");
 exports.SignalDispatcher = signals_1.SignalDispatcher;
 exports.SignalHandlingBase = signals_1.SignalHandlingBase;
 exports.SignalList = signals_1.SignalList;
-},{"./signals":"Bt9s"}],"nYY3":[function(require,module,exports) {
+},{"./signals":"../node_modules/ste-signals/dist/signals.js"}],"../node_modules/strongly-typed-events/dist/index.js":[function(require,module,exports) {
 "use strict";
 /*!
  * Strongly Typed Events for TypeScript
@@ -1374,7 +1375,7 @@ var ste_signals_1 = require("ste-signals");
 exports.SignalDispatcher = ste_signals_1.SignalDispatcher;
 exports.SignalHandlingBase = ste_signals_1.SignalHandlingBase;
 exports.SignalList = ste_signals_1.SignalList;
-},{"ste-core":"CAoX","ste-events":"MjR0","ste-simple-events":"WWWf","ste-signals":"mVqA"}],"bK1h":[function(require,module,exports) {
+},{"ste-core":"../node_modules/ste-core/dist/index.js","ste-events":"../node_modules/ste-events/dist/index.js","ste-simple-events":"../node_modules/ste-simple-events/dist/index.js","ste-signals":"../node_modules/ste-signals/dist/index.js"}],"TraktApi.ts":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -1416,6 +1417,16 @@ Object.defineProperty(exports, "__esModule", {
 const strongly_typed_events_1 = require("strongly-typed-events");
 
 const TraktTokensKey = 'trakt_tokens';
+
+class TraktApiError extends Error {
+  constructor(error) {
+    super(error.error);
+    this.status = error.status;
+  }
+
+}
+
+exports.TraktApiError = TraktApiError;
 const TraktErrorCodes = {
   200: {
     "status": 200,
@@ -1535,7 +1546,7 @@ class TraktApi {
     this._tokens = {};
     this._client_id = options.client_id;
     this._client_secret = options.client_secret;
-    this._redirect_uri = 'https://www.crunchyroll.com';
+    this._redirect_uri = options.redirect_url;
     this._endpoint = options.api_url || 'https://api.trakt.tv';
     this._storage = options.storage || new LocalStorageAdapter();
   }
@@ -1596,7 +1607,7 @@ class TraktApi {
 
       console.log('Trakt authentication successful!');
       yield this._storage.setValue(TraktTokensKey, JSON.stringify(this._tokens));
-      window.history.replaceState(null, undefined, window.location.pathname);
+      window.history.replaceState(null, "", window.location.pathname);
       this.onAuthenticationChanged.dispatch(true);
     });
   }
@@ -1803,7 +1814,7 @@ class TraktApi {
 }
 
 exports.default = TraktApi;
-},{"strongly-typed-events":"nYY3"}],"SXC6":[function(require,module,exports) {
+},{"strongly-typed-events":"../node_modules/strongly-typed-events/dist/index.js"}],"TraktScrobble.ts":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -1863,26 +1874,16 @@ var PlaybackState;
 var TraktScrobbleState;
 
 (function (TraktScrobbleState) {
-  TraktScrobbleState[TraktScrobbleState["Undefined"] = 0] = "Undefined";
-  TraktScrobbleState[TraktScrobbleState["Lookup"] = 1] = "Lookup";
-  TraktScrobbleState[TraktScrobbleState["Found"] = 2] = "Found";
-  TraktScrobbleState[TraktScrobbleState["Started"] = 3] = "Started";
-  TraktScrobbleState[TraktScrobbleState["Paused"] = 4] = "Paused";
-  TraktScrobbleState[TraktScrobbleState["Scrobbled"] = 5] = "Scrobbled";
-  TraktScrobbleState[TraktScrobbleState["NotFound"] = 6] = "NotFound";
-  TraktScrobbleState[TraktScrobbleState["Error"] = 7] = "Error";
+  TraktScrobbleState["Undefined"] = "undefined";
+  TraktScrobbleState["Idle"] = "idle";
+  TraktScrobbleState["Started"] = "started";
+  TraktScrobbleState["Paused"] = "paused";
+  TraktScrobbleState["Scrobbled"] = "scrobbled";
+  TraktScrobbleState["Error"] = "error";
 })(TraktScrobbleState = exports.TraktScrobbleState || (exports.TraktScrobbleState = {}));
 
-var LookupResult;
-
-(function (LookupResult) {
-  LookupResult[LookupResult["NotFound"] = 0] = "NotFound";
-  LookupResult[LookupResult["Found"] = 1] = "Found";
-  LookupResult[LookupResult["Error"] = 2] = "Error";
-})(LookupResult || (LookupResult = {}));
-
 class TraktScrobble {
-  constructor(client, data) {
+  constructor(client) {
     /** Scrobble once this percentage has been reached */
     this.scrobbleAbovePecentage = 80;
     /** Minimum time of the video that has to have been played before scrobbling (percent of duration) */
@@ -1890,13 +1891,14 @@ class TraktScrobble {
     this.scrobbleMimimumPlaybackPercentage = 0.1;
     this.onStateChanged = new ste_simple_events_1.SimpleEventDispatcher();
     this.onScrobbled = new ste_simple_events_1.SimpleEventDispatcher();
+    this._state = TraktScrobbleState.Undefined;
+    this._pendingState = TraktScrobbleState.Undefined;
+    this._playbackState = PlaybackState.Paused;
+    this._playbackProgress = 0;
     this._enabled = false;
     this._lastPlaybackTime = 0;
     this._playbackTime = 0;
     this._client = client;
-    this._data = data;
-
-    this._init();
   }
   /** Extract item type from scrobble data */
 
@@ -1919,10 +1921,6 @@ class TraktScrobble {
     return 0;
   }
 
-  get api() {
-    return this._client;
-  }
-
   get enabled() {
     return this._enabled;
   }
@@ -1936,6 +1934,23 @@ class TraktScrobble {
     } else {
       this._applyState(this._playbackState);
     }
+  }
+
+  scrobble(data) {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (this._state === TraktScrobbleState.Started) {
+        this._applyState(PlaybackState.Paused);
+      }
+
+      this._data = data;
+      this.setState(TraktScrobbleState.Idle);
+
+      if (this._playbackState === PlaybackState.Playing) {
+        this._updateScrobble('start');
+      } else if (this._playbackState === PlaybackState.Ended) {
+        this._updateScrobble('stop');
+      }
+    });
   }
 
   setPlaybackTime(time, duration) {
@@ -1957,7 +1972,7 @@ class TraktScrobble {
 
   setPlaybackState(state, progress) {
     this._playbackState = state;
-    this._data.progress = progress;
+    this._playbackProgress = progress;
 
     if (!this.enabled) {
       this._applyState(state);
@@ -1966,25 +1981,27 @@ class TraktScrobble {
 
   scrobbleNow() {
     this._playbackState = PlaybackState.Ended;
-    this._data.progress = 100;
+    this._playbackProgress = 100;
 
     this._applyState(this._playbackState);
   }
 
   _applyState(state) {
-    if (state === PlaybackState.Playing) {
-      if (this._pendingState === TraktScrobbleState.Found || this._pendingState === TraktScrobbleState.Paused) {
-        this._updateScrobble('start');
+    return __awaiter(this, void 0, void 0, function* () {
+      if (state === PlaybackState.Playing) {
+        if (this._pendingState === TraktScrobbleState.Idle || this._pendingState === TraktScrobbleState.Paused) {
+          yield this._updateScrobble('start');
+        }
+      } else if (state === PlaybackState.Paused) {
+        if (this._pendingState === TraktScrobbleState.Started) {
+          yield this._updateScrobble('pause');
+        }
+      } else if (state === PlaybackState.Ended) {
+        if (this._pendingState === TraktScrobbleState.Idle || this._pendingState === TraktScrobbleState.Started || this._pendingState === TraktScrobbleState.Paused) {
+          yield this._updateScrobble('stop');
+        }
       }
-    } else if (state === PlaybackState.Paused) {
-      if (this._pendingState === TraktScrobbleState.Started) {
-        this._updateScrobble('pause');
-      }
-    } else if (state === PlaybackState.Ended) {
-      if (this._pendingState === TraktScrobbleState.Found || this._pendingState === TraktScrobbleState.Started || this._pendingState === TraktScrobbleState.Paused) {
-        this._updateScrobble('stop');
-      }
-    }
+    });
   }
 
   get error() {
@@ -1992,6 +2009,7 @@ class TraktScrobble {
   }
 
   scrobbleUrl() {
+    if (!this._data) return '';
     let url = 'https://trakt.tv/';
 
     if (this._data.movie !== undefined) {
@@ -2020,39 +2038,12 @@ class TraktScrobble {
     return this._data;
   }
 
-  _handleError(response) {
-    if (!TraktApi_1.default.isError(response)) return false;
-    console.error(`trakt scrobbler: ${response.error}`);
-    this._error = response.error;
-    this.setState(TraktScrobbleState.Error);
-    return true;
-  }
-
-  _init() {
-    return __awaiter(this, void 0, void 0, function* () {
-      this.setState(TraktScrobbleState.Lookup);
-      let result = yield this._lookup();
-
-      if (result === LookupResult.NotFound) {
-        this.setState(TraktScrobbleState.NotFound);
-        return;
-      } else if (result === LookupResult.Error) {
-        this.setState(TraktScrobbleState.Error);
-        return;
-      }
-
-      this.setState(TraktScrobbleState.Found);
-
-      if (this._playbackState === PlaybackState.Playing) {
-        this._updateScrobble('start');
-      } else if (this._playbackState === PlaybackState.Ended) {
-        this._updateScrobble('stop');
-      }
-    });
-  }
-
   _updateScrobble(type) {
     return __awaiter(this, void 0, void 0, function* () {
+      if (!this._data) {
+        throw new Error('TraktRoller: Scrobble data not set');
+      }
+
       switch (type) {
         case 'start':
           this._pendingState = TraktScrobbleState.Started;
@@ -2067,14 +2058,18 @@ class TraktScrobble {
           break;
       }
 
+      this._data.progress = this._playbackProgress;
       let scrobbleResponse = yield this._client.scrobble(type, this._data);
 
-      if (this._handleError(scrobbleResponse)) {
+      if (TraktApi_1.default.isError(scrobbleResponse)) {
+        console.error(`trakt scrobbler: ${scrobbleResponse.error}`);
+        this._error = scrobbleResponse.error;
+        this.setState(TraktScrobbleState.Error);
         return false;
       }
 
       switch (this._state) {
-        case TraktScrobbleState.Found:
+        case TraktScrobbleState.Idle:
         case TraktScrobbleState.Started:
         case TraktScrobbleState.Paused:
           switch (scrobbleResponse.action) {
@@ -2099,242 +2094,47 @@ class TraktScrobble {
     });
   }
 
-  _lookup() {
-    return __awaiter(this, void 0, void 0, function* () {
-      if (this._data.movie === undefined && (this._data.show === undefined || this._data.episode === undefined)) {
-        console.error('trakt scrobbler: either movie or show/episode needs to be set on scrobble data');
-        return LookupResult.Error;
-      }
-
-      console.log('trakt scrobbler: looking up media on trakt...', Object.assign({}, this._data));
-      let type = this._data.movie !== undefined ? 'movie' : 'show';
-      let result; // Special episodes with fractional episode numbers, e.g. 14.5
-      // (Often used for recap episodes)
-
-      let isSpecialEp = this._data.episode && this._data.episode.number % 1 !== 0;
-
-      if (!isSpecialEp) {
-        // Start with trakt's automatic matching
-        console.log('trakt scrobbler: trying automatic matching...');
-        result = yield this._scrobbleLookup();
-        if (result !== LookupResult.NotFound) return result; // Retry automatic matching with absolute episode number
-
-        if (type === 'show' && this._data.episode.number_abs === undefined && this._data.episode.number !== undefined) {
-          let data = JSON.parse(JSON.stringify(this._data));
-          data.episode.number_abs = data.episode.number;
-          delete data.episode.number;
-          result = yield this._scrobbleLookup(data);
-          if (result !== LookupResult.NotFound) return result;
-        }
-      } // Search for item manually
-
-
-      let title = this._data.movie !== undefined ? this._data.movie.title : this._data.show.title;
-
-      if (!title) {
-        console.error('trakt scrobbler: No title set');
-        return LookupResult.Error;
-      }
-
-      console.log('trakt scrobbler: trying to search manually...');
-      const results = yield this._search(type, title);
-      if (results === null) return LookupResult.Error;
-
-      if (results.length === 0) {
-        console.warn(`trakt scrobbler: manual search for "${title}" returned no results`);
-        return LookupResult.NotFound;
-      } // Try search results in order
-
-
-      for (const found of results) {
-        if (type === 'movie') {
-          console.log(`trakt scrobbler: trying result ${found.movie.title}`, found);
-          this._data.movie = found.movie;
-        } else {
-          console.log(`trakt scrobbler: trying result ${found.show.title}`, found);
-          this._data.show = found.show;
-        } // Look up episode for shows
-
-
-        if (type === 'show') {
-          result = yield this._lookupEpisode(found.show);
-          if (result === LookupResult.Error) return result;
-          if (result === LookupResult.NotFound) continue;
-        } // Retry start with new data
-
-
-        console.log('trakt scrobbler: re-trying matching');
-        result = yield this._scrobbleLookup();
-        if (result === LookupResult.Error) return result;
-        if (result === LookupResult.Found) break;
-      }
-
-      return result;
-    });
-  }
-
-  _scrobbleLookup(data) {
-    return __awaiter(this, void 0, void 0, function* () {
-      let scrobbleResponse = yield this._client.scrobble('pause', data || this._data);
-
-      if (TraktApi_1.default.isError(scrobbleResponse, 404)) {
-        return LookupResult.NotFound;
-      } else if (this._handleError(scrobbleResponse)) {
-        return LookupResult.Error;
-      }
-
-      if (scrobbleResponse.movie !== undefined) this._data.movie = scrobbleResponse.movie;
-      if (scrobbleResponse.show !== undefined) this._data.show = scrobbleResponse.show;
-      if (scrobbleResponse.episode !== undefined) this._data.episode = scrobbleResponse.episode;
-      console.log('trakt scrobbler: scrobble lookup succeeded', scrobbleResponse);
-      return LookupResult.Found;
-    });
-  }
-
-  _search(type, title) {
-    return __awaiter(this, void 0, void 0, function* () {
-      // Quote and escape title to avoid special search characters interfereing with the query
-      // See https://github.com/trakt/api-help/issues/76
-      title = `"${title.replace(/[\\"']/g, '\\$&')}"`;
-      const searchResponse = yield this._client.search(type, title);
-
-      if (this._handleError(searchResponse)) {
-        return null;
-      }
-
-      const goodMatches = searchResponse.filter(r => r.score > 10);
-
-      if (searchResponse.length > goodMatches.length) {
-        if (goodMatches.length === 0) {
-          console.log(`trakt scrobbler: search returned only garbage results.`);
-        } else {
-          console.log(`trakt scrobbler: some search results with low scores ignored`);
-        }
-      }
-
-      return goodMatches;
-    });
-  }
-
-  _lookupEpisode(show) {
-    return __awaiter(this, void 0, void 0, function* () {
-      if (this._data.episode === undefined || this._data.episode.number === undefined || this._data.episode.season === undefined) {
-        console.error('trakt scrobbler: data has show but episode is not set or incomplete', this._data.episode);
-        return LookupResult.Error;
-      }
-
-      if (show.ids === undefined || show.ids.trakt === undefined) {
-        console.error('trakt scrobbler: show data is missing trakt id', this._data.show);
-        return LookupResult.Error;
-      }
-
-      let episodeResult = LookupResult.NotFound;
-      const seasonsResponse = yield this._client.seasons(show.ids.trakt, ['episodes', 'full']);
-
-      if (TraktApi_1.default.isError(seasonsResponse, 404)) {
-        console.error('trakt scrobbler: manual lookup could not find seasons');
-        return LookupResult.NotFound;
-      } else if (this._handleError(seasonsResponse)) {
-        return LookupResult.Error;
-      } // First search in matching season
-
-
-      const season = seasonsResponse.find(s => s.number === this._data.episode.season);
-
-      if (!season) {
-        console.warn(`trakt scrobbler: could not find season ${this._data.episode.season} in seasons response`, seasonsResponse);
-      } else {
-        episodeResult = this._matchEpisodeOrTitle(season, this._data.episode.number, this._data.episode.title);
-      } // Look through all other seasons
-
-
-      if (episodeResult === LookupResult.NotFound) {
-        for (let s of seasonsResponse) {
-          if (s === season) continue;
-          episodeResult = this._matchEpisodeOrTitle(s, this._data.episode.number, this._data.episode.title);
-          if (episodeResult == LookupResult.Found) break;
-        }
-      }
-
-      return episodeResult;
-    });
-  }
-
-  _matchEpisodeOrTitle(season, episode, title) {
-    let numberMatch = season.episodes.filter(e => e.number === episode || e.number_abs === episode);
-
-    if (numberMatch.length > 1) {
-      console.error(`trakt scrobbler: got multiple episode #${episode} in season`, season);
-      return LookupResult.NotFound;
-    } else if (numberMatch.length == 1) {
-      console.log(`trakt scrobbler: found episode using episode number`, numberMatch[0]);
-      this._data.episode = numberMatch[0];
-      return LookupResult.Found;
-    }
-
-    if (title) {
-      const filteredTitle = this._filterEpisodeTitle(title);
-
-      let titleMatch = season.episodes.filter(e => e.title && this._filterEpisodeTitle(e.title) === filteredTitle);
-
-      if (titleMatch.length > 1) {
-        console.error(`trakt scrobbler: got multiple episodes titled "${title}" in show`, season);
-        return LookupResult.NotFound;
-      } else if (titleMatch.length == 1) {
-        console.log(`trakt scrobbler: found episode using episode title`, titleMatch[0]);
-        this._data.episode = titleMatch[0];
-        return LookupResult.Found;
-      }
-    }
-
-    return LookupResult.NotFound;
-  }
-
-  _filterEpisodeTitle(title) {
-    if (!title) debugger;
-    return title.replace(/[^\w\s]/gi, '').toLowerCase();
-  }
-
 }
 
 exports.default = TraktScrobble;
-},{"./TraktApi":"bK1h","ste-simple-events":"WWWf"}],"aSor":[function(require,module,exports) {
+},{"./TraktApi":"TraktApi.ts","ste-simple-events":"../node_modules/ste-simple-events/dist/index.js"}],"../node_modules/preact/dist/preact.module.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.render = E;
-exports.hydrate = H;
+exports.render = H;
+exports.hydrate = I;
 exports.h = exports.createElement = h;
-exports.Fragment = y;
-exports.createRef = p;
-exports.Component = d;
-exports.cloneElement = I;
-exports.createContext = L;
-exports.toChildArray = b;
-exports._unmount = A;
+exports.Fragment = d;
+exports.createRef = y;
+exports.Component = m;
+exports.cloneElement = L;
+exports.createContext = M;
+exports.toChildArray = x;
+exports._unmount = D;
 exports.options = exports.isValidElement = void 0;
 var n,
     l,
     u,
     i,
     t,
+    r,
     o,
     f,
-    r = {},
-    e = [],
-    c = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
+    e = {},
+    c = [],
+    s = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
 exports.isValidElement = l;
 exports.options = n;
 
-function s(n, l) {
+function a(n, l) {
   for (var u in l) n[u] = l[u];
 
   return n;
 }
 
-function a(n) {
+function v(n) {
   var l = n.parentNode;
   l && l.removeChild(n);
 }
@@ -2342,16 +2142,16 @@ function a(n) {
 function h(n, l, u) {
   var i,
       t = arguments,
-      o = {};
+      r = {};
 
-  for (i in l) "key" !== i && "ref" !== i && (o[i] = l[i]);
+  for (i in l) "key" !== i && "ref" !== i && (r[i] = l[i]);
 
   if (arguments.length > 3) for (u = [u], i = 3; i < arguments.length; i++) u.push(t[i]);
-  if (null != u && (o.children = u), "function" == typeof n && null != n.defaultProps) for (i in n.defaultProps) void 0 === o[i] && (o[i] = n.defaultProps[i]);
-  return v(n, o, l && l.key, l && l.ref);
+  if (null != u && (r.children = u), "function" == typeof n && null != n.defaultProps) for (i in n.defaultProps) void 0 === r[i] && (r[i] = n.defaultProps[i]);
+  return p(n, r, l && l.key, l && l.ref, null);
 }
 
-function v(l, u, i, t) {
+function p(l, u, i, t, r) {
   var o = {
     type: l,
     props: u,
@@ -2361,34 +2161,35 @@ function v(l, u, i, t) {
     __: null,
     __b: 0,
     __e: null,
-    __d: null,
+    __d: void 0,
     __c: null,
-    constructor: void 0
+    constructor: void 0,
+    __v: r
   };
-  return n.vnode && n.vnode(o), o;
+  return null == r && (o.__v = o), n.vnode && n.vnode(o), o;
 }
 
-function p() {
+function y() {
   return {};
 }
 
-function y(n) {
+function d(n) {
   return n.children;
 }
 
-function d(n, l) {
+function m(n, l) {
   this.props = n, this.context = l;
 }
 
-function m(n, l) {
-  if (null == l) return n.__ ? m(n.__, n.__.__k.indexOf(n) + 1) : null;
+function w(n, l) {
+  if (null == l) return n.__ ? w(n.__, n.__.__k.indexOf(n) + 1) : null;
 
   for (var u; l < n.__k.length; l++) if (null != (u = n.__k[l]) && null != u.__e) return u.__e;
 
-  return "function" == typeof n.type ? m(n) : null;
+  return "function" == typeof n.type ? w(n) : null;
 }
 
-function w(n) {
+function k(n) {
   var l, u;
 
   if (null != (n = n.__) && null != n.__c) {
@@ -2397,136 +2198,139 @@ function w(n) {
       break;
     }
 
-    return w(n);
+    return k(n);
   }
 }
 
 function g(l) {
-  (!l.__d && (l.__d = !0) && 1 === u.push(l) || t !== n.debounceRendering) && ((t = n.debounceRendering) || i)(k);
+  (!l.__d && (l.__d = !0) && u.push(l) && !i++ || r !== n.debounceRendering) && ((r = n.debounceRendering) || t)(_);
 }
 
-function k() {
-  var n, l, i, t, o, f, r;
-
-  for (u.sort(function (n, l) {
-    return l.__v.__b - n.__v.__b;
-  }); n = u.pop();) n.__d && (i = void 0, t = void 0, f = (o = (l = n).__v).__e, (r = l.__P) && (i = [], t = T(r, o, s({}, o), l.__n, void 0 !== r.ownerSVGElement, null, i, null == f ? m(o) : f), $(i, o), t != f && w(o)));
+function _() {
+  for (var n; i = u.length;) n = u.sort(function (n, l) {
+    return n.__v.__b - l.__v.__b;
+  }), u = [], n.some(function (n) {
+    var l, u, i, t, r, o, f;
+    n.__d && (o = (r = (l = n).__v).__e, (f = l.__P) && (u = [], (i = a({}, r)).__v = i, t = A(f, r, i, l.__n, void 0 !== f.ownerSVGElement, null, u, null == o ? w(r) : o), T(u, r), t != o && k(r)));
+  });
 }
 
-function _(n, l, u, i, t, o, f, c, s) {
-  var h,
-      v,
+function b(n, l, u, i, t, r, o, f, s) {
+  var a,
+      h,
       p,
       y,
       d,
-      w,
-      g,
-      k = u && u.__k || e,
-      _ = k.length;
-  if (c == r && (c = null != o ? o[0] : _ ? m(u, 0) : null), h = 0, l.__k = b(l.__k, function (u) {
+      m,
+      k,
+      g = u && u.__k || c,
+      _ = g.length;
+  if (f == e && (f = null != r ? r[0] : _ ? w(u, 0) : null), a = 0, l.__k = x(l.__k, function (u) {
     if (null != u) {
-      if (u.__ = l, u.__b = l.__b + 1, null === (p = k[h]) || p && u.key == p.key && u.type === p.type) k[h] = void 0;else for (v = 0; v < _; v++) {
-        if ((p = k[v]) && u.key == p.key && u.type === p.type) {
-          k[v] = void 0;
+      if (u.__ = l, u.__b = l.__b + 1, null === (p = g[a]) || p && u.key == p.key && u.type === p.type) g[a] = void 0;else for (h = 0; h < _; h++) {
+        if ((p = g[h]) && u.key == p.key && u.type === p.type) {
+          g[h] = void 0;
           break;
         }
 
         p = null;
       }
 
-      if (y = T(n, u, p = p || r, i, t, o, f, c, s), (v = u.ref) && p.ref != v && (g || (g = []), p.ref && g.push(p.ref, null, u), g.push(v, u.__c || y, u)), null != y) {
-        if (null == w && (w = y), null != u.__d) y = u.__d, u.__d = null;else if (o == p || y != c || null == y.parentNode) {
-          n: if (null == c || c.parentNode !== n) n.appendChild(y);else {
-            for (d = c, v = 0; (d = d.nextSibling) && v < _; v += 2) if (d == y) break n;
+      if (y = A(n, u, p = p || e, i, t, r, o, f, s), (h = u.ref) && p.ref != h && (k || (k = []), p.ref && k.push(p.ref, null, u), k.push(h, u.__c || y, u)), null != y) {
+        var c;
+        if (null == m && (m = y), void 0 !== u.__d) c = u.__d, u.__d = void 0;else if (r == p || y != f || null == y.parentNode) {
+          n: if (null == f || f.parentNode !== n) n.appendChild(y), c = null;else {
+            for (d = f, h = 0; (d = d.nextSibling) && h < _; h += 2) if (d == y) break n;
 
-            n.insertBefore(y, c);
+            n.insertBefore(y, f), c = f;
           }
 
           "option" == l.type && (n.value = "");
         }
-        c = y.nextSibling, "function" == typeof l.type && (l.__d = y);
-      }
+        f = void 0 !== c ? c : y.nextSibling, "function" == typeof l.type && (l.__d = f);
+      } else f && p.__e == f && f.parentNode != n && (f = w(p));
     }
 
-    return h++, u;
-  }), l.__e = w, null != o && "function" != typeof l.type) for (h = o.length; h--;) null != o[h] && a(o[h]);
+    return a++, u;
+  }), l.__e = m, null != r && "function" != typeof l.type) for (a = r.length; a--;) null != r[a] && v(r[a]);
 
-  for (h = _; h--;) null != k[h] && A(k[h], k[h]);
+  for (a = _; a--;) null != g[a] && D(g[a], g[a]);
 
-  if (g) for (h = 0; h < g.length; h++) z(g[h], g[++h], g[++h]);
+  if (k) for (a = 0; a < k.length; a++) j(k[a], k[++a], k[++a]);
 }
 
-function b(n, l, u) {
-  if (null == u && (u = []), null == n || "boolean" == typeof n) l && u.push(l(null));else if (Array.isArray(n)) for (var i = 0; i < n.length; i++) b(n[i], l, u);else u.push(l ? l("string" == typeof n || "number" == typeof n ? v(null, n, null, null) : null != n.__e || null != n.__c ? v(n.type, n.props, n.key, null) : n) : n);
+function x(n, l, u) {
+  if (null == u && (u = []), null == n || "boolean" == typeof n) l && u.push(l(null));else if (Array.isArray(n)) for (var i = 0; i < n.length; i++) x(n[i], l, u);else u.push(l ? l("string" == typeof n || "number" == typeof n ? p(null, n, null, null, n) : null != n.__e || null != n.__c ? p(n.type, n.props, n.key, null, n.__v) : n) : n);
   return u;
 }
 
-function x(n, l, u, i, t) {
-  var o;
+function P(n, l, u, i, t) {
+  var r;
 
-  for (o in u) o in l || P(n, o, null, u[o], i);
+  for (r in u) "children" === r || "key" === r || r in l || N(n, r, null, u[r], i);
 
-  for (o in l) t && "function" != typeof l[o] || "value" === o || "checked" === o || u[o] === l[o] || P(n, o, l[o], u[o], i);
+  for (r in l) t && "function" != typeof l[r] || "children" === r || "key" === r || "value" === r || "checked" === r || u[r] === l[r] || N(n, r, l[r], u[r], i);
 }
 
 function C(n, l, u) {
-  "-" === l[0] ? n.setProperty(l, u) : n[l] = "number" == typeof u && !1 === c.test(l) ? u + "px" : null == u ? "" : u;
+  "-" === l[0] ? n.setProperty(l, u) : n[l] = "number" == typeof u && !1 === s.test(l) ? u + "px" : null == u ? "" : u;
 }
 
-function P(n, l, u, i, t) {
-  var o, f, r, e, c;
-  if (t ? "className" === l && (l = "class") : "class" === l && (l = "className"), "key" === l || "children" === l) ;else if ("style" === l) {
-    if (o = n.style, "string" == typeof u) o.cssText = u;else {
-      if ("string" == typeof i && (o.cssText = "", i = null), i) for (f in i) u && f in u || C(o, f, "");
-      if (u) for (r in u) i && u[r] === i[r] || C(o, r, u[r]);
+function N(n, l, u, i, t) {
+  var r, o, f, e, c;
+  if (t ? "className" === l && (l = "class") : "class" === l && (l = "className"), "style" === l) {
+    if (r = n.style, "string" == typeof u) r.cssText = u;else {
+      if ("string" == typeof i && (r.cssText = "", i = null), i) for (e in i) u && e in u || C(r, e, "");
+      if (u) for (c in u) i && u[c] === i[c] || C(r, c, u[c]);
     }
-  } else "o" === l[0] && "n" === l[1] ? (e = l !== (l = l.replace(/Capture$/, "")), c = l.toLowerCase(), l = (c in n ? c : l).slice(2), u ? (i || n.addEventListener(l, N, e), (n.l || (n.l = {}))[l] = u) : n.removeEventListener(l, N, e)) : "list" !== l && "tagName" !== l && "form" !== l && "type" !== l && !t && l in n ? n[l] = null == u ? "" : u : "function" != typeof u && "dangerouslySetInnerHTML" !== l && (l !== (l = l.replace(/^xlink:?/, "")) ? null == u || !1 === u ? n.removeAttributeNS("http://www.w3.org/1999/xlink", l.toLowerCase()) : n.setAttributeNS("http://www.w3.org/1999/xlink", l.toLowerCase(), u) : null == u || !1 === u ? n.removeAttribute(l) : n.setAttribute(l, u));
+  } else "o" === l[0] && "n" === l[1] ? (o = l !== (l = l.replace(/Capture$/, "")), f = l.toLowerCase(), l = (f in n ? f : l).slice(2), u ? (i || n.addEventListener(l, z, o), (n.l || (n.l = {}))[l] = u) : n.removeEventListener(l, z, o)) : "list" !== l && "tagName" !== l && "form" !== l && "type" !== l && "size" !== l && !t && l in n ? n[l] = null == u ? "" : u : "function" != typeof u && "dangerouslySetInnerHTML" !== l && (l !== (l = l.replace(/^xlink:?/, "")) ? null == u || !1 === u ? n.removeAttributeNS("http://www.w3.org/1999/xlink", l.toLowerCase()) : n.setAttributeNS("http://www.w3.org/1999/xlink", l.toLowerCase(), u) : null == u || !1 === u && !/^ar/.test(l) ? n.removeAttribute(l) : n.setAttribute(l, u));
 }
 
-function N(l) {
+function z(l) {
   this.l[l.type](n.event ? n.event(l) : l);
 }
 
-function T(l, u, i, t, o, f, r, e, c) {
-  var a,
-      h,
+function A(l, u, i, t, r, o, f, e, c) {
+  var s,
       v,
+      h,
       p,
-      m,
+      y,
       w,
-      g,
       k,
+      g,
+      _,
       x,
-      C,
       P = u.type;
+
   if (void 0 !== u.constructor) return null;
-  (a = n.__b) && a(u);
+  (s = n.__b) && s(u);
 
   try {
     n: if ("function" == typeof P) {
-      if (k = u.props, x = (a = P.contextType) && t[a.__c], C = a ? x ? x.props.value : a.__ : t, i.__c ? g = (h = u.__c = i.__c).__ = h.__E : ("prototype" in P && P.prototype.render ? u.__c = h = new P(k, C) : (u.__c = h = new d(k, C), h.constructor = P, h.render = D), x && x.sub(h), h.props = k, h.state || (h.state = {}), h.context = C, h.__n = t, v = h.__d = !0, h.__h = []), null == h.__s && (h.__s = h.state), null != P.getDerivedStateFromProps && (h.__s == h.state && (h.__s = s({}, h.__s)), s(h.__s, P.getDerivedStateFromProps(k, h.__s))), p = h.props, m = h.state, v) null == P.getDerivedStateFromProps && null != h.componentWillMount && h.componentWillMount(), null != h.componentDidMount && h.__h.push(h.componentDidMount);else {
-        if (null == P.getDerivedStateFromProps && k !== p && null != h.componentWillReceiveProps && h.componentWillReceiveProps(k, C), !h.__e && null != h.shouldComponentUpdate && !1 === h.shouldComponentUpdate(k, h.__s, C)) {
-          for (h.props = k, h.state = h.__s, h.__d = !1, h.__v = u, u.__e = i.__e, u.__k = i.__k, h.__h.length && r.push(h), a = 0; a < u.__k.length; a++) u.__k[a] && (u.__k[a].__ = u);
+      if (g = u.props, _ = (s = P.contextType) && t[s.__c], x = s ? _ ? _.props.value : s.__ : t, i.__c ? k = (v = u.__c = i.__c).__ = v.__E : ("prototype" in P && P.prototype.render ? u.__c = v = new P(g, x) : (u.__c = v = new m(g, x), v.constructor = P, v.render = E), _ && _.sub(v), v.props = g, v.state || (v.state = {}), v.context = x, v.__n = t, h = v.__d = !0, v.__h = []), null == v.__s && (v.__s = v.state), null != P.getDerivedStateFromProps && (v.__s == v.state && (v.__s = a({}, v.__s)), a(v.__s, P.getDerivedStateFromProps(g, v.__s))), p = v.props, y = v.state, h) null == P.getDerivedStateFromProps && null != v.componentWillMount && v.componentWillMount(), null != v.componentDidMount && v.__h.push(v.componentDidMount);else {
+        if (null == P.getDerivedStateFromProps && g !== p && null != v.componentWillReceiveProps && v.componentWillReceiveProps(g, x), !v.__e && null != v.shouldComponentUpdate && !1 === v.shouldComponentUpdate(g, v.__s, x) || u.__v === i.__v && !v.__) {
+          for (v.props = g, v.state = v.__s, u.__v !== i.__v && (v.__d = !1), v.__v = u, u.__e = i.__e, u.__k = i.__k, v.__h.length && f.push(v), s = 0; s < u.__k.length; s++) u.__k[s] && (u.__k[s].__ = u);
 
           break n;
         }
 
-        null != h.componentWillUpdate && h.componentWillUpdate(k, h.__s, C), null != h.componentDidUpdate && h.__h.push(function () {
-          h.componentDidUpdate(p, m, w);
+        null != v.componentWillUpdate && v.componentWillUpdate(g, v.__s, x), null != v.componentDidUpdate && v.__h.push(function () {
+          v.componentDidUpdate(p, y, w);
         });
       }
-      h.context = C, h.props = k, h.state = h.__s, (a = n.__r) && a(u), h.__d = !1, h.__v = u, h.__P = l, a = h.render(h.props, h.state, h.context), u.__k = b(null != a && a.type == y && null == a.key ? a.props.children : a), null != h.getChildContext && (t = s(s({}, t), h.getChildContext())), v || null == h.getSnapshotBeforeUpdate || (w = h.getSnapshotBeforeUpdate(p, m)), _(l, u, i, t, o, f, r, e, c), h.base = u.__e, h.__h.length && r.push(h), g && (h.__E = h.__ = null), h.__e = null;
-    } else u.__e = j(i.__e, u, i, t, o, f, r, c);
+      v.context = x, v.props = g, v.state = v.__s, (s = n.__r) && s(u), v.__d = !1, v.__v = u, v.__P = l, s = v.render(v.props, v.state, v.context), u.__k = null != s && s.type == d && null == s.key ? s.props.children : Array.isArray(s) ? s : [s], null != v.getChildContext && (t = a(a({}, t), v.getChildContext())), h || null == v.getSnapshotBeforeUpdate || (w = v.getSnapshotBeforeUpdate(p, y)), b(l, u, i, t, r, o, f, e, c), v.base = u.__e, v.__h.length && f.push(v), k && (v.__E = v.__ = null), v.__e = !1;
+    } else null == o && u.__v === i.__v ? (u.__k = i.__k, u.__e = i.__e) : u.__e = $(i.__e, u, i, t, r, o, f, c);
 
-    (a = n.diffed) && a(u);
+    (s = n.diffed) && s(u);
   } catch (l) {
-    n.__e(l, u, i);
+    u.__v = null, n.__e(l, u, i);
   }
 
   return u.__e;
 }
 
-function $(l, u) {
+function T(l, u) {
   n.__c && n.__c(u, l), l.some(function (u) {
     try {
       l = u.__h, u.__h = [], l.some(function (n) {
@@ -2538,36 +2342,38 @@ function $(l, u) {
   });
 }
 
-function j(n, l, u, i, t, o, f, c) {
+function $(n, l, u, i, t, r, o, f) {
   var s,
       a,
-      h,
       v,
+      h,
       p,
       y = u.props,
       d = l.props;
-  if (t = "svg" === l.type || t, null == n && null != o) for (s = 0; s < o.length; s++) if (null != (a = o[s]) && (null === l.type ? 3 === a.nodeType : a.localName === l.type)) {
-    n = a, o[s] = null;
+  if (t = "svg" === l.type || t, null != r) for (s = 0; s < r.length; s++) if (null != (a = r[s]) && ((null === l.type ? 3 === a.nodeType : a.localName === l.type) || n == a)) {
+    n = a, r[s] = null;
     break;
   }
 
   if (null == n) {
     if (null === l.type) return document.createTextNode(d);
-    n = t ? document.createElementNS("http://www.w3.org/2000/svg", l.type) : document.createElement(l.type), o = null;
+    n = t ? document.createElementNS("http://www.w3.org/2000/svg", l.type) : document.createElement(l.type, d.is && {
+      is: d.is
+    }), r = null, f = !1;
   }
 
-  if (null === l.type) null != o && (o[o.indexOf(n)] = null), y !== d && (n.data = d);else if (l !== u) {
-    if (null != o && (o = e.slice.call(n.childNodes)), h = (y = u.props || r).dangerouslySetInnerHTML, v = d.dangerouslySetInnerHTML, !c) {
-      if (y === r) for (y = {}, p = 0; p < n.attributes.length; p++) y[n.attributes[p].name] = n.attributes[p].value;
-      (v || h) && (v && h && v.__html == h.__html || (n.innerHTML = v && v.__html || ""));
+  if (null === l.type) y !== d && n.data != d && (n.data = d);else {
+    if (null != r && (r = c.slice.call(n.childNodes)), v = (y = u.props || e).dangerouslySetInnerHTML, h = d.dangerouslySetInnerHTML, !f) {
+      if (y === e) for (y = {}, p = 0; p < n.attributes.length; p++) y[n.attributes[p].name] = n.attributes[p].value;
+      (h || v) && (h && v && h.__html == v.__html || (n.innerHTML = h && h.__html || ""));
     }
 
-    x(n, d, y, t, c), l.__k = l.props.children, v || _(n, l, u, i, "foreignObject" !== l.type && t, o, f, r, c), c || ("value" in d && void 0 !== d.value && d.value !== n.value && (n.value = null == d.value ? "" : d.value), "checked" in d && void 0 !== d.checked && d.checked !== n.checked && (n.checked = d.checked));
+    P(n, d, y, t, f), h ? l.__k = [] : (l.__k = l.props.children, b(n, l, u, i, "foreignObject" !== l.type && t, r, o, e, f)), f || ("value" in d && void 0 !== (s = d.value) && s !== n.value && N(n, "value", s, y.value, !1), "checked" in d && void 0 !== (s = d.checked) && s !== n.checked && N(n, "checked", s, y.checked, !1));
   }
   return n;
 }
 
-function z(l, u, i) {
+function j(l, u, i) {
   try {
     "function" == typeof l ? l(u) : l.current = u;
   } catch (l) {
@@ -2575,10 +2381,10 @@ function z(l, u, i) {
   }
 }
 
-function A(l, u, i) {
-  var t, o, f;
+function D(l, u, i) {
+  var t, r, o;
 
-  if (n.unmount && n.unmount(l), (t = l.ref) && z(t, null, u), i || "function" == typeof l.type || (i = null != (o = l.__e)), l.__e = l.__d = null, null != (t = l.__c)) {
+  if (n.unmount && n.unmount(l), (t = l.ref) && (t.current && t.current !== l.__e || j(t, null, u)), i || "function" == typeof l.type || (i = null != (r = l.__e)), l.__e = l.__d = void 0, null != (t = l.__c)) {
     if (t.componentWillUnmount) try {
       t.componentWillUnmount();
     } catch (l) {
@@ -2587,28 +2393,32 @@ function A(l, u, i) {
     t.base = t.__P = null;
   }
 
-  if (t = l.__k) for (f = 0; f < t.length; f++) t[f] && A(t[f], u, i);
-  null != o && a(o);
+  if (t = l.__k) for (o = 0; o < t.length; o++) t[o] && D(t[o], u, i);
+  null != r && v(r);
 }
 
-function D(n, l, u) {
+function E(n, l, u) {
   return this.constructor(n, u);
 }
 
-function E(l, u, i) {
-  var t, f, c;
-  n.__ && n.__(l, u), f = (t = i === o) ? null : i && i.__k || u.__k, l = h(y, null, [l]), c = [], T(u, (t ? u : i || u).__k = l, f || r, r, void 0 !== u.ownerSVGElement, i && !t ? [i] : f ? null : e.slice.call(u.childNodes), c, i || r, t), $(c, l);
-}
-
-function H(n, l) {
-  E(n, l, o);
+function H(l, u, i) {
+  var t, r, f;
+  n.__ && n.__(l, u), r = (t = i === o) ? null : i && i.__k || u.__k, l = h(d, null, [l]), f = [], A(u, (t ? u : i || u).__k = l, r || e, e, void 0 !== u.ownerSVGElement, i && !t ? [i] : r ? null : c.slice.call(u.childNodes), f, i || e, t), T(f, l);
 }
 
 function I(n, l) {
-  return l = s(s({}, n.props), l), arguments.length > 2 && (l.children = e.slice.call(arguments, 2)), v(n.type, l, l.key || n.key, l.ref || n.ref);
+  H(n, l, o);
 }
 
-function L(n) {
+function L(n, l) {
+  var u, i;
+
+  for (i in l = a(a({}, n.props), l), arguments.length > 2 && (l.children = c.slice.call(arguments, 2)), u = {}, l) "key" !== i && "ref" !== i && (u[i] = l[i]);
+
+  return p(n.type, u, l.key || n.key, l.ref || n.ref, null);
+}
+
+function M(n) {
   var l = {},
       u = {
     __c: "__cC" + f++,
@@ -2621,9 +2431,9 @@ function L(n) {
           t = this;
       return this.getChildContext || (i = [], this.getChildContext = function () {
         return l[u.__c] = t, l;
-      }, this.shouldComponentUpdate = function (l) {
-        n.value !== l.value && i.some(function (n) {
-          n.context = l.value, g(n);
+      }, this.shouldComponentUpdate = function (n) {
+        t.props.value !== n.value && i.some(function (l) {
+          l.context = n.value, g(l);
         });
       }, this.sub = function (n) {
         i.push(n);
@@ -2635,17 +2445,13 @@ function L(n) {
       }), n.children;
     }
   };
-  return u.Consumer.contextType = u, u;
+  return u.Consumer.contextType = u, u.Provider.__ = u, u;
 }
 
 exports.options = n = {
   __e: function (n, l) {
-    for (var u; l = l.__;) if ((u = l.__c) && !u.__) try {
-      if (u.constructor && null != u.constructor.getDerivedStateFromError) u.setState(u.constructor.getDerivedStateFromError(n));else {
-        if (null == u.componentDidCatch) continue;
-        u.componentDidCatch(n);
-      }
-      return g(u.__E = u);
+    for (var u, i; l = l.__;) if ((u = l.__c) && !u.__) try {
+      if (u.constructor && null != u.constructor.getDerivedStateFromError && (i = !0, u.setState(u.constructor.getDerivedStateFromError(n))), null != u.componentDidCatch && (i = !0, u.componentDidCatch(n)), i) return g(u.__E = u);
     } catch (l) {
       n = l;
     }
@@ -2654,12 +2460,652 @@ exports.options = n = {
   }
 }, exports.isValidElement = l = function (n) {
   return null != n && void 0 === n.constructor;
-}, d.prototype.setState = function (n, l) {
+}, m.prototype.setState = function (n, l) {
   var u;
-  u = this.__s !== this.state ? this.__s : this.__s = s({}, this.state), "function" == typeof n && (n = n(u, this.props)), n && s(u, n), null != n && this.__v && (this.__e = !1, l && this.__h.push(l), g(this));
-}, d.prototype.forceUpdate = function (n) {
+  u = this.__s !== this.state ? this.__s : this.__s = a({}, this.state), "function" == typeof n && (n = n(u, this.props)), n && a(u, n), null != n && this.__v && (l && this.__h.push(l), g(this));
+}, m.prototype.forceUpdate = function (n) {
   this.__v && (this.__e = !0, n && this.__h.push(n), g(this));
-}, d.prototype.render = y, u = [], i = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, o = r, f = 0;
+}, m.prototype.render = d, u = [], i = 0, t = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, o = e, f = 0;
+},{}],"../node_modules/preact/hooks/dist/hooks.module.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useState = m;
+exports.useReducer = p;
+exports.useEffect = l;
+exports.useLayoutEffect = y;
+exports.useRef = d;
+exports.useImperativeHandle = s;
+exports.useMemo = h;
+exports.useCallback = T;
+exports.useContext = w;
+exports.useDebugValue = A;
+exports.useErrorBoundary = F;
+
+var _preact = require("preact");
+
+var t,
+    u,
+    r,
+    i = 0,
+    o = [],
+    c = _preact.options.__r,
+    f = _preact.options.diffed,
+    e = _preact.options.__c,
+    a = _preact.options.unmount;
+
+function v(t, r) {
+  _preact.options.__h && _preact.options.__h(u, t, i || r), i = 0;
+  var o = u.__H || (u.__H = {
+    __: [],
+    __h: []
+  });
+  return t >= o.__.length && o.__.push({}), o.__[t];
+}
+
+function m(n) {
+  return i = 1, p(E, n);
+}
+
+function p(n, r, i) {
+  var o = v(t++, 2);
+  return o.__c || (o.__c = u, o.__ = [i ? i(r) : E(void 0, r), function (t) {
+    var u = n(o.__[0], t);
+    o.__[0] !== u && (o.__[0] = u, o.__c.setState({}));
+  }]), o.__;
+}
+
+function l(r, i) {
+  var o = v(t++, 3);
+  !_preact.options.__s && x(o.__H, i) && (o.__ = r, o.__H = i, u.__H.__h.push(o));
+}
+
+function y(r, i) {
+  var o = v(t++, 4);
+  !_preact.options.__s && x(o.__H, i) && (o.__ = r, o.__H = i, u.__h.push(o));
+}
+
+function d(n) {
+  return i = 5, h(function () {
+    return {
+      current: n
+    };
+  }, []);
+}
+
+function s(n, t, u) {
+  i = 6, y(function () {
+    "function" == typeof n ? n(t()) : n && (n.current = t());
+  }, null == u ? u : u.concat(n));
+}
+
+function h(n, u) {
+  var r = v(t++, 7);
+  return x(r.__H, u) ? (r.__H = u, r.__h = n, r.__ = n()) : r.__;
+}
+
+function T(n, t) {
+  return i = 8, h(function () {
+    return n;
+  }, t);
+}
+
+function w(n) {
+  var r = u.context[n.__c],
+      i = v(t++, 9);
+  return i.__c = n, r ? (null == i.__ && (i.__ = !0, r.sub(u)), r.props.value) : n.__;
+}
+
+function A(t, u) {
+  _preact.options.useDebugValue && _preact.options.useDebugValue(u ? u(t) : t);
+}
+
+function F(n) {
+  var r = v(t++, 10),
+      i = m();
+  return r.__ = n, u.componentDidCatch || (u.componentDidCatch = function (n) {
+    r.__ && r.__(n), i[1](n);
+  }), [i[0], function () {
+    i[1](void 0);
+  }];
+}
+
+function _() {
+  o.some(function (t) {
+    if (t.__P) try {
+      t.__H.__h.forEach(g), t.__H.__h.forEach(q), t.__H.__h = [];
+    } catch (u) {
+      return t.__H.__h = [], _preact.options.__e(u, t.__v), !0;
+    }
+  }), o = [];
+}
+
+function g(n) {
+  n.t && n.t();
+}
+
+function q(n) {
+  var t = n.__();
+
+  "function" == typeof t && (n.t = t);
+}
+
+function x(n, t) {
+  return !n || t.some(function (t, u) {
+    return t !== n[u];
+  });
+}
+
+function E(n, t) {
+  return "function" == typeof t ? t(n) : t;
+}
+
+_preact.options.__r = function (n) {
+  c && c(n), t = 0, (u = n.__c).__H && (u.__H.__h.forEach(g), u.__H.__h.forEach(q), u.__H.__h = []);
+}, _preact.options.diffed = function (t) {
+  f && f(t);
+  var u = t.__c;
+
+  if (u) {
+    var i = u.__H;
+    i && i.__h.length && (1 !== o.push(u) && r === _preact.options.requestAnimationFrame || ((r = _preact.options.requestAnimationFrame) || function (n) {
+      var t,
+          u = function () {
+        clearTimeout(r), cancelAnimationFrame(t), setTimeout(n);
+      },
+          r = setTimeout(u, 100);
+
+      "undefined" != typeof window && (t = requestAnimationFrame(u));
+    })(_));
+  }
+}, _preact.options.__c = function (t, u) {
+  u.some(function (t) {
+    try {
+      t.__h.forEach(g), t.__h = t.__h.filter(function (n) {
+        return !n.__ || q(n);
+      });
+    } catch (r) {
+      u.some(function (n) {
+        n.__h && (n.__h = []);
+      }), u = [], _preact.options.__e(r, t.__v);
+    }
+  }), e && e(t, u);
+}, _preact.options.unmount = function (t) {
+  a && a(t);
+  var u = t.__c;
+
+  if (u) {
+    var r = u.__H;
+    if (r) try {
+      r.__.forEach(function (n) {
+        return n.t && n.t();
+      });
+    } catch (t) {
+      _preact.options.__e(t, u.__v);
+    }
+  }
+};
+},{"preact":"../node_modules/preact/dist/preact.module.js"}],"../node_modules/preact/compat/dist/compat.module.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _exportNames = {
+  version: true,
+  Children: true,
+  render: true,
+  hydrate: true,
+  unmountComponentAtNode: true,
+  createPortal: true,
+  createFactory: true,
+  cloneElement: true,
+  isValidElement: true,
+  findDOMNode: true,
+  PureComponent: true,
+  memo: true,
+  forwardRef: true,
+  unstable_batchedUpdates: true,
+  Suspense: true,
+  SuspenseList: true,
+  lazy: true,
+  createElement: true,
+  createContext: true,
+  createRef: true,
+  Fragment: true,
+  Component: true
+};
+exports.render = T;
+exports.hydrate = V;
+exports.unmountComponentAtNode = Q;
+exports.createPortal = z;
+exports.createFactory = G;
+exports.cloneElement = K;
+exports.isValidElement = J;
+exports.findDOMNode = X;
+exports.memo = _;
+exports.forwardRef = S;
+exports.Suspense = U;
+exports.SuspenseList = O;
+exports.lazy = L;
+Object.defineProperty(exports, "createElement", {
+  enumerable: true,
+  get: function () {
+    return _preact.createElement;
+  }
+});
+Object.defineProperty(exports, "createContext", {
+  enumerable: true,
+  get: function () {
+    return _preact.createContext;
+  }
+});
+Object.defineProperty(exports, "createRef", {
+  enumerable: true,
+  get: function () {
+    return _preact.createRef;
+  }
+});
+Object.defineProperty(exports, "Fragment", {
+  enumerable: true,
+  get: function () {
+    return _preact.Fragment;
+  }
+});
+Object.defineProperty(exports, "Component", {
+  enumerable: true,
+  get: function () {
+    return _preact.Component;
+  }
+});
+exports.unstable_batchedUpdates = exports.PureComponent = exports.Children = exports.version = exports.default = void 0;
+
+var _hooks = require("preact/hooks");
+
+Object.keys(_hooks).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _hooks[key];
+    }
+  });
+});
+
+var _preact = require("preact");
+
+function E(n, t) {
+  for (var e in t) n[e] = t[e];
+
+  return n;
+}
+
+function w(n, t) {
+  for (var e in n) if ("__source" !== e && !(e in t)) return !0;
+
+  for (var r in t) if ("__source" !== r && n[r] !== t[r]) return !0;
+
+  return !1;
+}
+
+var C = function (n) {
+  var t, e;
+
+  function r(t) {
+    var e;
+    return (e = n.call(this, t) || this).isPureReactComponent = !0, e;
+  }
+
+  return e = n, (t = r).prototype = Object.create(e.prototype), t.prototype.constructor = t, t.__proto__ = e, r.prototype.shouldComponentUpdate = function (n, t) {
+    return w(this.props, n) || w(this.state, t);
+  }, r;
+}(_preact.Component);
+
+exports.PureComponent = C;
+
+function _(n, t) {
+  function e(n) {
+    var e = this.props.ref,
+        r = e == n.ref;
+    return !r && e && (e.call ? e(null) : e.current = null), t ? !t(this.props, n) || !r : w(this.props, n);
+  }
+
+  function r(t) {
+    return this.shouldComponentUpdate = e, (0, _preact.createElement)(n, E({}, t));
+  }
+
+  return r.prototype.isReactComponent = !0, r.displayName = "Memo(" + (n.displayName || n.name) + ")", r.t = !0, r;
+}
+
+var A = _preact.options.__b;
+
+function S(n) {
+  function t(t) {
+    var e = E({}, t);
+    return delete e.ref, n(e, t.ref);
+  }
+
+  return t.prototype.isReactComponent = t.t = !0, t.displayName = "ForwardRef(" + (n.displayName || n.name) + ")", t;
+}
+
+_preact.options.__b = function (n) {
+  n.type && n.type.t && n.ref && (n.props.ref = n.ref, n.ref = null), A && A(n);
+};
+
+var k = function (n, t) {
+  return n ? (0, _preact.toChildArray)(n).reduce(function (n, e, r) {
+    return n.concat(t(e, r));
+  }, []) : null;
+},
+    R = {
+  map: k,
+  forEach: k,
+  count: function (n) {
+    return n ? (0, _preact.toChildArray)(n).length : 0;
+  },
+  only: function (n) {
+    if (1 !== (n = (0, _preact.toChildArray)(n)).length) throw new Error("Children.only() expects only one child.");
+    return n[0];
+  },
+  toArray: _preact.toChildArray
+},
+    F = _preact.options.__e;
+
+exports.Children = R;
+
+function N(n) {
+  return n && ((n = E({}, n)).__c = null, n.__k = n.__k && n.__k.map(N)), n;
+}
+
+function U() {
+  this.__u = 0, this.o = null, this.__b = null;
+}
+
+function M(n) {
+  var t = n.__.__c;
+  return t && t.u && t.u(n);
+}
+
+function L(n) {
+  var t, e, r;
+
+  function o(o) {
+    if (t || (t = n()).then(function (n) {
+      e = n.default || n;
+    }, function (n) {
+      r = n;
+    }), r) throw r;
+    if (!e) throw t;
+    return (0, _preact.createElement)(e, o);
+  }
+
+  return o.displayName = "Lazy", o.t = !0, o;
+}
+
+function O() {
+  this.i = null, this.l = null;
+}
+
+_preact.options.__e = function (n, t, e) {
+  if (n.then) for (var r, o = t; o = o.__;) if ((r = o.__c) && r.__c) return r.__c(n, t.__c);
+  F(n, t, e);
+}, (U.prototype = new _preact.Component()).__c = function (n, t) {
+  var e = this;
+  null == e.o && (e.o = []), e.o.push(t);
+
+  var r = M(e.__v),
+      o = !1,
+      u = function () {
+    o || (o = !0, r ? r(i) : i());
+  };
+
+  t.__c = t.componentWillUnmount, t.componentWillUnmount = function () {
+    u(), t.__c && t.__c();
+  };
+
+  var i = function () {
+    var n;
+    if (! --e.__u) for (e.__v.__k[0] = e.state.u, e.setState({
+      u: e.__b = null
+    }); n = e.o.pop();) n.forceUpdate();
+  };
+
+  e.__u++ || e.setState({
+    u: e.__b = e.__v.__k[0]
+  }), n.then(u, u);
+}, U.prototype.render = function (n, t) {
+  return this.__b && (this.__v.__k[0] = N(this.__b), this.__b = null), [(0, _preact.createElement)(_preact.Component, null, t.u ? null : n.children), t.u && n.fallback];
+};
+
+var P = function (n, t, e) {
+  if (++e[1] === e[0] && n.l.delete(t), n.props.revealOrder && ("t" !== n.props.revealOrder[0] || !n.l.size)) for (e = n.i; e;) {
+    for (; e.length > 3;) e.pop()();
+
+    if (e[1] < e[0]) break;
+    n.i = e = e[2];
+  }
+};
+
+(O.prototype = new _preact.Component()).u = function (n) {
+  var t = this,
+      e = M(t.__v),
+      r = t.l.get(n);
+  return r[0]++, function (o) {
+    var u = function () {
+      t.props.revealOrder ? (r.push(o), P(t, n, r)) : o();
+    };
+
+    e ? e(u) : u();
+  };
+}, O.prototype.render = function (n) {
+  this.i = null, this.l = new Map();
+  var t = (0, _preact.toChildArray)(n.children);
+  n.revealOrder && "b" === n.revealOrder[0] && t.reverse();
+
+  for (var e = t.length; e--;) this.l.set(t[e], this.i = [1, 0, this.i]);
+
+  return n.children;
+}, O.prototype.componentDidUpdate = O.prototype.componentDidMount = function () {
+  var n = this;
+  n.l.forEach(function (t, e) {
+    P(n, e, t);
+  });
+};
+
+var W = function () {
+  function n() {}
+
+  var t = n.prototype;
+  return t.getChildContext = function () {
+    return this.props.context;
+  }, t.render = function (n) {
+    return n.children;
+  }, n;
+}();
+
+function j(n) {
+  var t = this,
+      e = n.container,
+      r = (0, _preact.createElement)(W, {
+    context: t.context
+  }, n.vnode);
+  return t.s && t.s !== e && (t.v.parentNode && t.s.removeChild(t.v), (0, _preact._unmount)(t.h), t.p = !1), n.vnode ? t.p ? (e.__k = t.__k, (0, _preact.render)(r, e), t.__k = e.__k) : (t.v = document.createTextNode(""), (0, _preact.hydrate)("", e), e.appendChild(t.v), t.p = !0, t.s = e, (0, _preact.render)(r, e, t.v), t.__k = t.v.__k) : t.p && (t.v.parentNode && t.s.removeChild(t.v), (0, _preact._unmount)(t.h)), t.h = r, t.componentWillUnmount = function () {
+    t.v.parentNode && t.s.removeChild(t.v), (0, _preact._unmount)(t.h);
+  }, null;
+}
+
+function z(n, t) {
+  return (0, _preact.createElement)(j, {
+    vnode: n,
+    container: t
+  });
+}
+
+var D = /^(?:accent|alignment|arabic|baseline|cap|clip(?!PathU)|color|fill|flood|font|glyph(?!R)|horiz|marker(?!H|W|U)|overline|paint|stop|strikethrough|stroke|text(?!L)|underline|unicode|units|v|vector|vert|word|writing|x(?!C))[A-Z]/;
+_preact.Component.prototype.isReactComponent = {};
+var H = "undefined" != typeof Symbol && Symbol.for && Symbol.for("react.element") || 60103;
+
+function T(n, t, e) {
+  if (null == t.__k) for (; t.firstChild;) t.removeChild(t.firstChild);
+  return (0, _preact.render)(n, t), "function" == typeof e && e(), n ? n.__c : null;
+}
+
+function V(n, t, e) {
+  return (0, _preact.hydrate)(n, t), "function" == typeof e && e(), n ? n.__c : null;
+}
+
+var Z = _preact.options.event;
+
+function I(n, t) {
+  n["UNSAFE_" + t] && !n[t] && Object.defineProperty(n, t, {
+    configurable: !1,
+    get: function () {
+      return this["UNSAFE_" + t];
+    },
+    set: function (n) {
+      this["UNSAFE_" + t] = n;
+    }
+  });
+}
+
+_preact.options.event = function (n) {
+  Z && (n = Z(n)), n.persist = function () {};
+  var t = !1,
+      e = !1,
+      r = n.stopPropagation;
+
+  n.stopPropagation = function () {
+    r.call(n), t = !0;
+  };
+
+  var o = n.preventDefault;
+  return n.preventDefault = function () {
+    o.call(n), e = !0;
+  }, n.isPropagationStopped = function () {
+    return t;
+  }, n.isDefaultPrevented = function () {
+    return e;
+  }, n.nativeEvent = n;
+};
+
+var $ = {
+  configurable: !0,
+  get: function () {
+    return this.class;
+  }
+},
+    q = _preact.options.vnode;
+
+_preact.options.vnode = function (n) {
+  n.$$typeof = H;
+  var t = n.type,
+      e = n.props;
+
+  if (t) {
+    if (e.class != e.className && ($.enumerable = "className" in e, null != e.className && (e.class = e.className), Object.defineProperty(e, "className", $)), "function" != typeof t) {
+      var r, o, u;
+
+      for (u in e.defaultValue && void 0 !== e.value && (e.value || 0 === e.value || (e.value = e.defaultValue), delete e.defaultValue), Array.isArray(e.value) && e.multiple && "select" === t && ((0, _preact.toChildArray)(e.children).forEach(function (n) {
+        -1 != e.value.indexOf(n.props.value) && (n.props.selected = !0);
+      }), delete e.value), e) if (r = D.test(u)) break;
+
+      if (r) for (u in o = n.props = {}, e) o[D.test(u) ? u.replace(/[A-Z0-9]/, "-$&").toLowerCase() : u] = e[u];
+    }
+
+    !function (t) {
+      var e = n.type,
+          r = n.props;
+
+      if (r && "string" == typeof e) {
+        var o = {};
+
+        for (var u in r) /^on(Ani|Tra|Tou)/.test(u) && (r[u.toLowerCase()] = r[u], delete r[u]), o[u.toLowerCase()] = u;
+
+        if (o.ondoubleclick && (r.ondblclick = r[o.ondoubleclick], delete r[o.ondoubleclick]), o.onbeforeinput && (r.onbeforeinput = r[o.onbeforeinput], delete r[o.onbeforeinput]), o.onchange && ("textarea" === e || "input" === e.toLowerCase() && !/^fil|che|ra/i.test(r.type))) {
+          var i = o.oninput || "oninput";
+          r[i] || (r[i] = r[o.onchange], delete r[o.onchange]);
+        }
+      }
+    }(), "function" == typeof t && !t.m && t.prototype && (I(t.prototype, "componentWillMount"), I(t.prototype, "componentWillReceiveProps"), I(t.prototype, "componentWillUpdate"), t.m = !0);
+  }
+
+  q && q(n);
+};
+
+var B = "16.8.0";
+exports.version = B;
+
+function G(n) {
+  return _preact.createElement.bind(null, n);
+}
+
+function J(n) {
+  return !!n && n.$$typeof === H;
+}
+
+function K(n) {
+  return J(n) ? _preact.cloneElement.apply(null, arguments) : n;
+}
+
+function Q(n) {
+  return !!n.__k && ((0, _preact.render)(null, n), !0);
+}
+
+function X(n) {
+  return n && (n.base || 1 === n.nodeType && n) || null;
+}
+
+var Y = function (n, t) {
+  return n(t);
+};
+
+exports.unstable_batchedUpdates = Y;
+var _default = {
+  useState: _hooks.useState,
+  useReducer: _hooks.useReducer,
+  useEffect: _hooks.useEffect,
+  useLayoutEffect: _hooks.useLayoutEffect,
+  useRef: _hooks.useRef,
+  useImperativeHandle: _hooks.useImperativeHandle,
+  useMemo: _hooks.useMemo,
+  useCallback: _hooks.useCallback,
+  useContext: _hooks.useContext,
+  useDebugValue: _hooks.useDebugValue,
+  version: "16.8.0",
+  Children: R,
+  render: T,
+  hydrate: T,
+  unmountComponentAtNode: Q,
+  createPortal: z,
+  createElement: _preact.createElement,
+  createContext: _preact.createContext,
+  createFactory: G,
+  cloneElement: K,
+  createRef: _preact.createRef,
+  Fragment: _preact.Fragment,
+  isValidElement: J,
+  findDOMNode: X,
+  Component: _preact.Component,
+  PureComponent: C,
+  memo: _,
+  forwardRef: S,
+  unstable_batchedUpdates: Y,
+  Suspense: U,
+  SuspenseList: O,
+  lazy: L
+};
+exports.default = _default;
+},{"preact/hooks":"../node_modules/preact/hooks/dist/hooks.module.js","preact":"../node_modules/preact/dist/preact.module.js"}],"../node_modules/@babel/runtime/helpers/inheritsLoose.js":[function(require,module,exports) {
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+module.exports = _inheritsLoose;
 },{}],"kwH3":[function(require,module,exports) {
 "use strict";
 
@@ -2720,9 +3166,7 @@ function createStyleElement(options) {
   return tag;
 }
 
-var StyleSheet =
-/*#__PURE__*/
-function () {
+var StyleSheet = /*#__PURE__*/function () {
   function StyleSheet(options) {
     this.isSpeedy = options.speedy === undefined ? "production" === 'production' : options.speedy;
     this.tags = [];
@@ -2803,7 +3247,7 @@ function () {
 }();
 
 exports.StyleSheet = StyleSheet;
-},{}],"gTWe":[function(require,module,exports) {
+},{}],"../node_modules/@emotion/stylis/dist/stylis.browser.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3426,7 +3870,7 @@ function stylis_min(W) {
 
 var _default = stylis_min;
 exports.default = _default;
-},{}],"oT3e":[function(require,module,exports) {
+},{}],"../node_modules/@emotion/weak-memoize/dist/weak-memoize.browser.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3674,7 +4118,56 @@ var createCache = function createCache(options) {
 
 var _default = createCache;
 exports.default = _default;
-},{"@emotion/sheet":"kwH3","@emotion/stylis":"gTWe","@emotion/weak-memoize":"oT3e"}],"Wn2h":[function(require,module,exports) {
+},{"@emotion/sheet":"kwH3","@emotion/stylis":"../node_modules/@emotion/stylis/dist/stylis.browser.esm.js","@emotion/weak-memoize":"../node_modules/@emotion/weak-memoize/dist/weak-memoize.browser.esm.js"}],"../node_modules/@emotion/utils/dist/utils.browser.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getRegisteredStyles = getRegisteredStyles;
+exports.insertStyles = void 0;
+var isBrowser = "object" !== 'undefined';
+
+function getRegisteredStyles(registered, registeredStyles, classNames) {
+  var rawClassName = '';
+  classNames.split(' ').forEach(function (className) {
+    if (registered[className] !== undefined) {
+      registeredStyles.push(registered[className]);
+    } else {
+      rawClassName += className + " ";
+    }
+  });
+  return rawClassName;
+}
+
+var insertStyles = function insertStyles(cache, serialized, isStringTag) {
+  var className = cache.key + "-" + serialized.name;
+
+  if ( // we only need to add the styles to the registered cache if the
+  // class name could be used further down
+  // the tree but if it's a string tag, we know it won't
+  // so we don't have to add it to registered cache.
+  // this improves memory usage since we can avoid storing the whole style string
+  (isStringTag === false || // we need to always store it if we're in compat mode and
+  // in node since emotion-server relies on whether a style is in
+  // the registered cache to know whether a style is global or not
+  // also, note that this check will be dead code eliminated in the browser
+  isBrowser === false && cache.compat !== undefined) && cache.registered[className] === undefined) {
+    cache.registered[className] = serialized.styles;
+  }
+
+  if (cache.inserted[serialized.name] === undefined) {
+    var current = serialized;
+
+    do {
+      var maybeStyles = cache.insert("." + className, current, cache.sheet, true);
+      current = current.next;
+    } while (current !== undefined);
+  }
+};
+
+exports.insertStyles = insertStyles;
+},{}],"../node_modules/@emotion/hash/dist/hash.browser.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3683,24 +4176,37 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 /* eslint-disable */
-// murmurhash2 via https://github.com/garycourt/murmurhash-js/blob/master/murmurhash2_gc.js
-function murmurhash2_32_gc(str) {
-  var l = str.length,
-      h = l ^ l,
+// Inspired by https://github.com/garycourt/murmurhash-js
+// Ported from https://github.com/aappleby/smhasher/blob/61a0530f28277f2e850bfc39600ce61d02b518de/src/MurmurHash2.cpp#L37-L86
+function murmur2(str) {
+  // 'm' and 'r' are mixing constants generated offline.
+  // They're not really 'magic', they just happen to work well.
+  // const m = 0x5bd1e995;
+  // const r = 24;
+  // Initialize the hash
+  var h = 0; // Mix 4 bytes at a time into the hash
+
+  var k,
       i = 0,
-      k;
+      len = str.length;
 
-  while (l >= 4) {
+  for (; len >= 4; ++i, len -= 4) {
     k = str.charCodeAt(i) & 0xff | (str.charCodeAt(++i) & 0xff) << 8 | (str.charCodeAt(++i) & 0xff) << 16 | (str.charCodeAt(++i) & 0xff) << 24;
-    k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-    k ^= k >>> 24;
-    k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-    h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16) ^ k;
-    l -= 4;
-    ++i;
-  }
+    k =
+    /* Math.imul(k, m): */
+    (k & 0xffff) * 0x5bd1e995 + ((k >>> 16) * 0xe995 << 16);
+    k ^=
+    /* k >>> r: */
+    k >>> 24;
+    h =
+    /* Math.imul(k, m): */
+    (k & 0xffff) * 0x5bd1e995 + ((k >>> 16) * 0xe995 << 16) ^
+    /* Math.imul(h, m): */
+    (h & 0xffff) * 0x5bd1e995 + ((h >>> 16) * 0xe995 << 16);
+  } // Handle the last few bytes of the input array
 
-  switch (l) {
+
+  switch (len) {
     case 3:
       h ^= (str.charCodeAt(i + 2) & 0xff) << 16;
 
@@ -3709,18 +4215,23 @@ function murmurhash2_32_gc(str) {
 
     case 1:
       h ^= str.charCodeAt(i) & 0xff;
-      h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-  }
+      h =
+      /* Math.imul(h, m): */
+      (h & 0xffff) * 0x5bd1e995 + ((h >>> 16) * 0xe995 << 16);
+  } // Do a few final mixes of the hash to ensure the last few
+  // bytes are well-incorporated.
+
 
   h ^= h >>> 13;
-  h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-  h ^= h >>> 15;
-  return (h >>> 0).toString(36);
+  h =
+  /* Math.imul(h, m): */
+  (h & 0xffff) * 0x5bd1e995 + ((h >>> 16) * 0xe995 << 16);
+  return ((h ^ h >>> 15) >>> 0).toString(36);
 }
 
-var _default = murmurhash2_32_gc;
+var _default = murmur2;
 exports.default = _default;
-},{}],"RtcD":[function(require,module,exports) {
+},{}],"../node_modules/@emotion/unitless/dist/unitless.browser.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3777,7 +4288,7 @@ var unitlessKeys = {
 };
 var _default = unitlessKeys;
 exports.default = _default;
-},{}],"subt":[function(require,module,exports) {
+},{}],"../node_modules/@emotion/memoize/dist/memoize.browser.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4130,56 +4641,7 @@ var serializeStyles = function serializeStyles(args, registered, mergedProps) {
 };
 
 exports.serializeStyles = serializeStyles;
-},{"@emotion/hash":"Wn2h","@emotion/unitless":"RtcD","@emotion/memoize":"subt"}],"V9FQ":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getRegisteredStyles = getRegisteredStyles;
-exports.insertStyles = void 0;
-var isBrowser = "object" !== 'undefined';
-
-function getRegisteredStyles(registered, registeredStyles, classNames) {
-  var rawClassName = '';
-  classNames.split(' ').forEach(function (className) {
-    if (registered[className] !== undefined) {
-      registeredStyles.push(registered[className]);
-    } else {
-      rawClassName += className + " ";
-    }
-  });
-  return rawClassName;
-}
-
-var insertStyles = function insertStyles(cache, serialized, isStringTag) {
-  var className = cache.key + "-" + serialized.name;
-
-  if ( // we only need to add the styles to the registered cache if the
-  // class name could be used further down
-  // the tree but if it's a string tag, we know it won't
-  // so we don't have to add it to registered cache.
-  // this improves memory usage since we can avoid storing the whole style string
-  (isStringTag === false || // we need to always store it if we're in compat mode and
-  // in node since emotion-server relies on whether a style is in
-  // the registered cache to know whether a style is global or not
-  // also, note that this check will be dead code eliminated in the browser
-  isBrowser === false && cache.compat !== undefined) && cache.registered[className] === undefined) {
-    cache.registered[className] = serialized.styles;
-  }
-
-  if (cache.inserted[serialized.name] === undefined) {
-    var current = serialized;
-
-    do {
-      var maybeStyles = cache.insert("." + className, current, cache.sheet, true);
-      current = current.next;
-    } while (current !== undefined);
-  }
-};
-
-exports.insertStyles = insertStyles;
-},{}],"Q2eU":[function(require,module,exports) {
+},{"@emotion/hash":"../node_modules/@emotion/hash/dist/hash.browser.esm.js","@emotion/unitless":"../node_modules/@emotion/unitless/dist/unitless.browser.esm.js","@emotion/memoize":"../node_modules/@emotion/memoize/dist/memoize.browser.esm.js"}],"../node_modules/@emotion/css/dist/css.browser.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4187,112 +4649,317 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _cache = _interopRequireDefault(require("@emotion/cache"));
-
 var _serialize = require("@emotion/serialize");
+
+function css() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return (0, _serialize.serializeStyles)(args);
+}
+
+var _default = css;
+exports.default = _default;
+},{"@emotion/serialize":"WPNE"}],"haMh":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "css", {
+  enumerable: true,
+  get: function () {
+    return _css.default;
+  }
+});
+exports.withEmotionCache = exports.keyframes = exports.jsx = exports.ThemeContext = exports.Global = exports.ClassNames = exports.CacheProvider = void 0;
+
+var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+
+var _react = require("react");
+
+var _cache = _interopRequireDefault(require("@emotion/cache"));
 
 var _utils = require("@emotion/utils");
 
+var _serialize = require("@emotion/serialize");
+
+var _sheet = require("@emotion/sheet");
+
+var _css = _interopRequireDefault(require("@emotion/css"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function insertWithoutScoping(cache, serialized) {
-  if (cache.inserted[serialized.name] === undefined) {
-    return cache.insert('', serialized, cache.sheet, true);
-  }
-}
+var EmotionCacheContext = (0, _react.createContext)( // we're doing this to avoid preconstruct's dead code elimination in this one case
+// because this module is primarily intended for the browser and node
+// but it's also required in react native and similar environments sometimes
+// and we could have a special build just for that
+// but this is much easier and the native packages
+// might use a different theme context in the future anyway
+typeof HTMLElement !== 'undefined' ? (0, _cache.default)() : null);
+var ThemeContext = (0, _react.createContext)({});
+exports.ThemeContext = ThemeContext;
+var CacheProvider = EmotionCacheContext.Provider;
+exports.CacheProvider = CacheProvider;
 
-function merge(registered, css, className) {
-  var registeredStyles = [];
-  var rawClassName = (0, _utils.getRegisteredStyles)(registered, registeredStyles, className);
-
-  if (registeredStyles.length < 2) {
-    return className;
-  }
-
-  return rawClassName + css(registeredStyles);
-}
-
-var createEmotion = function createEmotion(options) {
-  var cache = (0, _cache.default)(options); // $FlowFixMe
-
-  cache.sheet.speedy = function (value) {
-    if ("production" !== 'production' && this.ctr !== 0) {
-      throw new Error('speedy must be changed before any rules are inserted');
-    }
-
-    this.isSpeedy = value;
-  };
-
-  cache.compat = true;
-
-  var css = function css() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    var serialized = (0, _serialize.serializeStyles)(args, cache.registered, undefined);
-    (0, _utils.insertStyles)(cache, serialized, false);
-    return cache.key + "-" + serialized.name;
-  };
-
-  var keyframes = function keyframes() {
-    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
-
-    var serialized = (0, _serialize.serializeStyles)(args, cache.registered);
-    var animation = "animation-" + serialized.name;
-    insertWithoutScoping(cache, {
-      name: serialized.name,
-      styles: "@keyframes " + animation + "{" + serialized.styles + "}"
+var withEmotionCache = function withEmotionCache(func) {
+  var render = function render(props, ref) {
+    return (0, _react.createElement)(EmotionCacheContext.Consumer, null, function (cache) {
+      return func(props, cache, ref);
     });
-    return animation;
-  };
+  }; // $FlowFixMe
 
-  var injectGlobal = function injectGlobal() {
-    for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      args[_key3] = arguments[_key3];
+
+  return (0, _react.forwardRef)(render);
+}; // thus we only need to replace what is a valid character for JS, but not for CSS
+
+
+exports.withEmotionCache = withEmotionCache;
+
+var sanitizeIdentifier = function sanitizeIdentifier(identifier) {
+  return identifier.replace(/\$/g, '-');
+};
+
+var typePropName = '__EMOTION_TYPE_PLEASE_DO_NOT_USE__';
+var labelPropName = '__EMOTION_LABEL_PLEASE_DO_NOT_USE__';
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+var render = function render(cache, props, theme, ref) {
+  var cssProp = theme === null ? props.css : props.css(theme); // so that using `css` from `emotion` and passing the result to the css prop works
+  // not passing the registered cache to serializeStyles because it would
+  // make certain babel optimisations not possible
+
+  if (typeof cssProp === 'string' && cache.registered[cssProp] !== undefined) {
+    cssProp = cache.registered[cssProp];
+  }
+
+  var type = props[typePropName];
+  var registeredStyles = [cssProp];
+  var className = '';
+
+  if (typeof props.className === 'string') {
+    className = (0, _utils.getRegisteredStyles)(cache.registered, registeredStyles, props.className);
+  } else if (props.className != null) {
+    className = props.className + " ";
+  }
+
+  var serialized = (0, _serialize.serializeStyles)(registeredStyles);
+
+  if ("production" !== 'production' && serialized.name.indexOf('-') === -1) {
+    var labelFromStack = props[labelPropName];
+
+    if (labelFromStack) {
+      serialized = (0, _serialize.serializeStyles)([serialized, 'label:' + labelFromStack + ';']);
+    }
+  }
+
+  var rules = (0, _utils.insertStyles)(cache, serialized, typeof type === 'string');
+  className += cache.key + "-" + serialized.name;
+  var newProps = {};
+
+  for (var key in props) {
+    if (hasOwnProperty.call(props, key) && key !== 'css' && key !== typePropName && ("production" === 'production' || key !== labelPropName)) {
+      newProps[key] = props[key];
+    }
+  }
+
+  newProps.ref = ref;
+  newProps.className = className;
+  var ele = (0, _react.createElement)(type, newProps);
+  return ele;
+};
+
+var Emotion = /* #__PURE__ */withEmotionCache(function (props, cache, ref) {
+  // use Context.read for the theme when it's stable
+  if (typeof props.css === 'function') {
+    return (0, _react.createElement)(ThemeContext.Consumer, null, function (theme) {
+      return render(cache, props, theme, ref);
+    });
+  }
+
+  return render(cache, props, null, ref);
+});
+
+if ("production" !== 'production') {
+  Emotion.displayName = 'EmotionCssPropInternal';
+} // $FlowFixMe
+
+
+var jsx = function jsx(type, props) {
+  var args = arguments;
+
+  if (props == null || !hasOwnProperty.call(props, 'css')) {
+    // $FlowFixMe
+    return _react.createElement.apply(undefined, args);
+  }
+
+  if ("production" !== 'production' && typeof props.css === 'string' && // check if there is a css declaration
+  props.css.indexOf(':') !== -1) {
+    throw new Error("Strings are not allowed as css prop values, please wrap it in a css template literal from '@emotion/css' like this: css`" + props.css + "`");
+  }
+
+  var argsLength = args.length;
+  var createElementArgArray = new Array(argsLength);
+  createElementArgArray[0] = Emotion;
+  var newProps = {};
+
+  for (var key in props) {
+    if (hasOwnProperty.call(props, key)) {
+      newProps[key] = props[key];
+    }
+  }
+
+  newProps[typePropName] = type;
+
+  if ("production" !== 'production') {
+    var error = new Error();
+
+    if (error.stack) {
+      // chrome
+      var match = error.stack.match(/at (?:Object\.|)jsx.*\n\s+at ([A-Z][A-Za-z$]+) /);
+
+      if (!match) {
+        // safari and firefox
+        match = error.stack.match(/.*\n([A-Z][A-Za-z$]+)@/);
+      }
+
+      if (match) {
+        newProps[labelPropName] = sanitizeIdentifier(match[1]);
+      }
+    }
+  }
+
+  createElementArgArray[1] = newProps;
+
+  for (var i = 2; i < argsLength; i++) {
+    createElementArgArray[i] = args[i];
+  } // $FlowFixMe
+
+
+  return _react.createElement.apply(null, createElementArgArray);
+};
+
+exports.jsx = jsx;
+var warnedAboutCssPropForGlobal = false;
+var Global = /* #__PURE__ */withEmotionCache(function (props, cache) {
+  if ("production" !== 'production' && !warnedAboutCssPropForGlobal && ( // check for className as well since the user is
+  // probably using the custom createElement which
+  // means it will be turned into a className prop
+  // $FlowFixMe I don't really want to add it to the type since it shouldn't be used
+  props.className || props.css)) {
+    console.error("It looks like you're using the css prop on Global, did you mean to use the styles prop instead?");
+    warnedAboutCssPropForGlobal = true;
+  }
+
+  var styles = props.styles;
+
+  if (typeof styles === 'function') {
+    return (0, _react.createElement)(ThemeContext.Consumer, null, function (theme) {
+      var serialized = (0, _serialize.serializeStyles)([styles(theme)]);
+      return (0, _react.createElement)(InnerGlobal, {
+        serialized: serialized,
+        cache: cache
+      });
+    });
+  }
+
+  var serialized = (0, _serialize.serializeStyles)([styles]);
+  return (0, _react.createElement)(InnerGlobal, {
+    serialized: serialized,
+    cache: cache
+  });
+}); // maintain place over rerenders.
+// initial render from browser, insertBefore context.sheet.tags[0] or if a style hasn't been inserted there yet, appendChild
+// initial client-side render from SSR, use place of hydrating tag
+
+exports.Global = Global;
+
+var InnerGlobal = /*#__PURE__*/function (_React$Component) {
+  (0, _inheritsLoose2.default)(InnerGlobal, _React$Component);
+
+  function InnerGlobal(props, context, updater) {
+    return _React$Component.call(this, props, context, updater) || this;
+  }
+
+  var _proto = InnerGlobal.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.sheet = new _sheet.StyleSheet({
+      key: this.props.cache.key + "-global",
+      nonce: this.props.cache.sheet.nonce,
+      container: this.props.cache.sheet.container
+    }); // $FlowFixMe
+
+    var node = document.querySelector("style[data-emotion-" + this.props.cache.key + "=\"" + this.props.serialized.name + "\"]");
+
+    if (node !== null) {
+      this.sheet.tags.push(node);
     }
 
-    var serialized = (0, _serialize.serializeStyles)(args, cache.registered);
-    insertWithoutScoping(cache, serialized);
-  };
-
-  var cx = function cx() {
-    for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      args[_key4] = arguments[_key4];
+    if (this.props.cache.sheet.tags.length) {
+      this.sheet.before = this.props.cache.sheet.tags[0];
     }
 
-    return merge(cache.registered, css, classnames(args));
+    this.insertStyles();
   };
+
+  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
+    if (prevProps.serialized.name !== this.props.serialized.name) {
+      this.insertStyles();
+    }
+  };
+
+  _proto.insertStyles = function insertStyles$1() {
+    if (this.props.serialized.next !== undefined) {
+      // insert keyframes
+      (0, _utils.insertStyles)(this.props.cache, this.props.serialized.next, true);
+    }
+
+    if (this.sheet.tags.length) {
+      // if this doesn't exist then it will be null so the style element will be appended
+      var element = this.sheet.tags[this.sheet.tags.length - 1].nextElementSibling;
+      this.sheet.before = element;
+      this.sheet.flush();
+    }
+
+    this.props.cache.insert("", this.props.serialized, this.sheet, false);
+  };
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    this.sheet.flush();
+  };
+
+  _proto.render = function render() {
+    return null;
+  };
+
+  return InnerGlobal;
+}(_react.Component);
+
+var keyframes = function keyframes() {
+  var insertable = _css.default.apply(void 0, arguments);
+
+  var name = "animation-" + insertable.name; // $FlowFixMe
 
   return {
-    css: css,
-    cx: cx,
-    injectGlobal: injectGlobal,
-    keyframes: keyframes,
-    hydrate: function hydrate(ids) {
-      ids.forEach(function (key) {
-        cache.inserted[key] = true;
-      });
-    },
-    flush: function flush() {
-      cache.registered = {};
-      cache.inserted = {};
-      cache.sheet.flush();
-    },
-    // $FlowFixMe
-    sheet: cache.sheet,
-    cache: cache,
-    getRegisteredStyles: _utils.getRegisteredStyles.bind(null, cache.registered),
-    merge: merge.bind(null, cache.registered, css)
+    name: name,
+    styles: "@keyframes " + name + "{" + insertable.styles + "}",
+    anim: 1,
+    toString: function toString() {
+      return "_EMO_" + this.name + "_" + this.styles + "_EMO_";
+    }
   };
 };
 
+exports.keyframes = keyframes;
+
 var classnames = function classnames(args) {
+  var len = args.length;
+  var i = 0;
   var cls = '';
 
-  for (var i = 0; i < args.length; i++) {
+  for (; i < len; i++) {
     var arg = args[i];
     if (arg == null) continue;
     var toAdd = void 0;
@@ -4334,70 +5001,88 @@ var classnames = function classnames(args) {
   return cls;
 };
 
-var _default = createEmotion;
-exports.default = _default;
-},{"@emotion/cache":"dqFm","@emotion/serialize":"WPNE","@emotion/utils":"V9FQ"}],"TAuN":[function(require,module,exports) {
+function merge(registered, css, className) {
+  var registeredStyles = [];
+  var rawClassName = (0, _utils.getRegisteredStyles)(registered, registeredStyles, className);
+
+  if (registeredStyles.length < 2) {
+    return className;
+  }
+
+  return rawClassName + css(registeredStyles);
+}
+
+var ClassNames = withEmotionCache(function (props, context) {
+  return (0, _react.createElement)(ThemeContext.Consumer, null, function (theme) {
+    var hasRendered = false;
+
+    var css = function css() {
+      if (hasRendered && "production" !== 'production') {
+        throw new Error('css can only be used during render');
+      }
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      var serialized = (0, _serialize.serializeStyles)(args, context.registered);
+      {
+        (0, _utils.insertStyles)(context, serialized, false);
+      }
+      return context.key + "-" + serialized.name;
+    };
+
+    var cx = function cx() {
+      if (hasRendered && "production" !== 'production') {
+        throw new Error('cx can only be used during render');
+      }
+
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      return merge(context.registered, css, classnames(args));
+    };
+
+    var content = {
+      css: css,
+      cx: cx,
+      theme: theme
+    };
+    var ele = props.children(content);
+    hasRendered = true;
+    return ele;
+  });
+});
+exports.ClassNames = ClassNames;
+},{"@babel/runtime/helpers/inheritsLoose":"../node_modules/@babel/runtime/helpers/inheritsLoose.js","react":"../node_modules/preact/compat/dist/compat.module.js","@emotion/cache":"dqFm","@emotion/utils":"../node_modules/@emotion/utils/dist/utils.browser.esm.js","@emotion/serialize":"WPNE","@emotion/sheet":"kwH3","@emotion/css":"../node_modules/@emotion/css/dist/css.browser.esm.js"}],"ui/TraktIcon.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.sheet = exports.merge = exports.keyframes = exports.injectGlobal = exports.hydrate = exports.getRegisteredStyles = exports.flush = exports.cx = exports.css = exports.cache = void 0;
 
-var _createEmotion2 = _interopRequireDefault(require("create-emotion"));
+const react_1 = require("react");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+const core_1 = require("@emotion/core");
 
-var _createEmotion = (0, _createEmotion2.default)(),
-    flush = _createEmotion.flush,
-    hydrate = _createEmotion.hydrate,
-    cx = _createEmotion.cx,
-    merge = _createEmotion.merge,
-    getRegisteredStyles = _createEmotion.getRegisteredStyles,
-    injectGlobal = _createEmotion.injectGlobal,
-    keyframes = _createEmotion.keyframes,
-    css = _createEmotion.css,
-    sheet = _createEmotion.sheet,
-    cache = _createEmotion.cache;
-
-exports.cache = cache;
-exports.sheet = sheet;
-exports.css = css;
-exports.keyframes = keyframes;
-exports.injectGlobal = injectGlobal;
-exports.getRegisteredStyles = getRegisteredStyles;
-exports.merge = merge;
-exports.cx = cx;
-exports.hydrate = hydrate;
-exports.flush = flush;
-},{"create-emotion":"Q2eU"}],"B913":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-const preact_1 = require("preact");
-
-const emotion_1 = require("emotion");
-
-let className = emotion_1.css`
+let className = core_1.css`
   background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMTQ0LjggMTQ0LjgiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDE0NC44IDE0NC44IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxjaXJjbGUgZmlsbD0iI0ZGRkZGRiIgY3g9IjcyLjQiIGN5PSI3Mi40IiByPSI3Mi40Ii8+DQoJPHBhdGggZmlsbD0iI0VEMjIyNCIgZD0iTTI5LjUsMTExLjhjMTAuNiwxMS42LDI1LjksMTguOCw0Mi45LDE4LjhjOC43LDAsMTYuOS0xLjksMjQuMy01LjNMNTYuMyw4NUwyOS41LDExMS44eiIvPg0KCTxwYXRoIGZpbGw9IiNFRDIyMjQiIGQ9Ik01Ni4xLDYwLjZMMjUuNSw5MS4xTDIxLjQsODdsMzIuMi0zMi4yaDBsMzcuNi0zNy42Yy01LjktMi0xMi4yLTMuMS0xOC44LTMuMWMtMzIuMiwwLTU4LjMsMjYuMS01OC4zLDU4LjMNCgkJYzAsMTMuMSw0LjMsMjUuMiwxMS43LDM1bDMwLjUtMzAuNWwyLjEsMmw0My43LDQzLjdjMC45LTAuNSwxLjctMSwyLjUtMS42TDU2LjMsNzIuN0wyNywxMDJsLTQuMS00LjFsMzMuNC0zMy40bDIuMSwybDUxLDUwLjkNCgkJYzAuOC0wLjYsMS41LTEuMywyLjItMS45bC01NS01NUw1Ni4xLDYwLjZ6Ii8+DQoJPHBhdGggZmlsbD0iI0VEMUMyNCIgZD0iTTExNS43LDExMS40YzkuMy0xMC4zLDE1LTI0LDE1LTM5YzAtMjMuNC0xMy44LTQzLjUtMzMuNi01Mi44TDYwLjQsNTYuMkwxMTUuNywxMTEuNHogTTc0LjUsNjYuOGwtNC4xLTQuMQ0KCQlsMjguOS0yOC45bDQuMSw0LjFMNzQuNSw2Ni44eiBNMTAxLjksMjcuMUw2OC42LDYwLjRsLTQuMS00LjFMOTcuOCwyM0wxMDEuOSwyNy4xeiIvPg0KCTxnPg0KCQk8Zz4NCgkJCTxwYXRoIGZpbGw9IiNFRDIyMjQiIGQ9Ik03Mi40LDE0NC44QzMyLjUsMTQ0LjgsMCwxMTIuMywwLDcyLjRDMCwzMi41LDMyLjUsMCw3Mi40LDBzNzIuNCwzMi41LDcyLjQsNzIuNA0KCQkJCUMxNDQuOCwxMTIuMywxMTIuMywxNDQuOCw3Mi40LDE0NC44eiBNNzIuNCw3LjNDMzYuNSw3LjMsNy4zLDM2LjUsNy4zLDcyLjRzMjkuMiw2NS4xLDY1LjEsNjUuMXM2NS4xLTI5LjIsNjUuMS02NS4xDQoJCQkJUzEwOC4zLDcuMyw3Mi40LDcuM3oiLz4NCgkJPC9nPg0KCTwvZz4NCjwvZz4NCjwvc3ZnPg0K");
   background-repeat: no-repeat;
   background-origin: content-box;
 `;
 
-class TraktIcon extends preact_1.Component {
+class TraktIcon extends react_1.Component {
   render() {
-    return preact_1.h("div", {
-      className: `${className} ${this.props.className}`
+    return core_1.jsx("div", {
+      css: [className, this.props.className]
     });
   }
 
 }
 
 exports.default = TraktIcon;
-},{"preact":"aSor","emotion":"TAuN"}],"VnyP":[function(require,module,exports) {
+},{"react":"../node_modules/preact/compat/dist/compat.module.js","@emotion/core":"haMh"}],"ui/ConnectButton.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -4412,17 +5097,20 @@ Object.defineProperty(exports, "__esModule", {
 
 const TraktIcon_1 = __importDefault(require("./TraktIcon"));
 
-const preact_1 = require("preact");
+const react_1 = require("react");
 
-const emotion_1 = require("emotion");
+const core_1 = require("@emotion/core");
 
-let className = emotion_1.css`
+let className = core_1.css`
   background-color: black;
   border: 1px solid #222;
   border-radius: 5px;
   padding: 2px 7px;
   color: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 11px;
+  font-weight: normal;
+  line-height: normal;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -4433,13 +5121,13 @@ let className = emotion_1.css`
     background-color: #444;
   }
 `;
-const iconStyles = emotion_1.css`
+const iconStyles = core_1.css`
   height: 14px;
   width: 14px;
   margin-right: 5px;
 `;
 
-class ConnectButton extends preact_1.Component {
+class ConnectButton extends react_1.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -4449,7 +5137,7 @@ class ConnectButton extends preact_1.Component {
     this._handleClick = this._handleClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.api.onAuthenticationChanged.sub(this._handleAuthenticationChanged);
   }
 
@@ -4474,88 +5162,195 @@ class ConnectButton extends preact_1.Component {
   }
 
   render() {
-    return preact_1.h("div", {
-      className: className,
+    return core_1.jsx("div", {
+      css: className,
       onClick: this._handleClick
-    }, preact_1.h(TraktIcon_1.default, {
+    }, core_1.jsx(TraktIcon_1.default, {
       className: iconStyles
-    }), preact_1.h("div", {
-      class: "text"
+    }), core_1.jsx("div", {
+      css: "text"
     }, this.state.isConnected ? "Disconnect from Trakt" : "Connect with Trakt"));
   }
 
 }
 
 exports.default = ConnectButton;
-},{"./TraktIcon":"B913","preact":"aSor","emotion":"TAuN"}],"b4v8":[function(require,module,exports) {
+},{"./TraktIcon":"ui/TraktIcon.tsx","react":"../node_modules/preact/compat/dist/compat.module.js","@emotion/core":"haMh"}],"ui/ScrobbleInfo.tsx":[function(require,module,exports) {
 "use strict";
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const TraktScrobble_1 = require("../TraktScrobble");
+const TraktRoller_1 = require("../TraktRoller");
 
-const preact_1 = require("preact");
+const react_1 = require("react");
 
-const emotion_1 = require("emotion");
+const core_1 = require("@emotion/core");
 
-const className = emotion_1.css`
+const className = core_1.css`
 & .info h2 {
   font-size: 17px;
   padding-bottom: 4px;
 }
+& .info a {
+  text-decoration: none;
+}
+& .info p {
+  margin: 0;
+}
+& .editbutton {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+& .edit {
+  display: flex;
+  flex-wrap: wrap;
+}
+& .edit div {
+  flex: 0 0 100%;
+  margin: 0 5px;
+}
+& .edit input {
+  padding: 5px;
+  margin: 5px;
+}
+& .edit button {
+  padding: 5px 10px;
+  margin: 5px;
+}
+& .edit input {
+  flex-grow: 1;
+}
 `;
 
-class ScrobbleInfo extends preact_1.Component {
+class ScrobbleInfo extends react_1.Component {
   constructor(props) {
     super(props);
+    this._focusUrlInput = false;
     this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
+    this.state = {
+      scrobbleData: this.props.roller.scrobble.data,
+      scrobbleState: this.props.roller.state,
+      error: this.props.roller.error,
+      isEditing: false,
+      lookupUrl: ''
+    };
   }
 
-  componentWillMount() {
-    this.setState({
-      scrobbleData: this.props.scrobble.data,
-      scrobbleState: this.props.scrobble.state,
-      error: this.props.scrobble.error
-    });
-    this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
+  componentDidMount() {
+    this.props.roller.onStateChanged.sub(this._onScrobbleStatusChanged);
   }
 
   componentWillUnmount() {
-    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
+    this.props.roller.onStateChanged.unsub(this._onScrobbleStatusChanged);
   }
 
   _onScrobbleStatusChanged(state) {
     this.setState({
-      scrobbleData: this.props.scrobble.data,
-      scrobbleState: this.props.scrobble.state,
-      error: this.props.scrobble.error
+      scrobbleData: this.props.roller.scrobble.data,
+      scrobbleState: this.props.roller.state,
+      error: this.props.roller.error
+    });
+  }
+
+  _lookUpUrl() {
+    return __awaiter(this, void 0, void 0, function* () {
+      let lookupUrl = this.state.lookupUrl;
+      this.setState({
+        lookupUrl: "",
+        isEditing: false
+      });
+
+      try {
+        yield this.props.roller.lookupTraktUrl(lookupUrl);
+      } catch (e) {
+        this.setState({
+          error: e.message
+        });
+      }
     });
   }
 
   render() {
     let data = this.state.scrobbleData;
-    let info; // Still looking up
+    let info; // Editing
 
-    if (this.state.scrobbleState == TraktScrobble_1.TraktScrobbleState.Lookup) {
-      info = preact_1.h("div", {
-        class: "lookup"
+    if (this.state.isEditing) {
+      info = core_1.jsx("div", {
+        className: "edit"
+      }, core_1.jsx("div", null, "Enter the Trakt URL of the correct movie, show or episode:"), core_1.jsx("input", {
+        type: "text",
+        value: this.state.lookupUrl,
+        ref: ref => {
+          if (this._focusUrlInput && ref) {
+            ref.focus();
+            this._focusUrlInput = false;
+          }
+        },
+        onChange: e => this.setState({
+          lookupUrl: e.currentTarget.value
+        })
+      }), core_1.jsx("button", {
+        title: "Update",
+        onClick: () => this._lookUpUrl()
+      }, "Update")); // Still looking up
+    } else if (this.state.scrobbleState == TraktRoller_1.TraktRollerState.Undefined || this.state.scrobbleState == TraktRoller_1.TraktRollerState.Lookup) {
+      info = core_1.jsx("div", {
+        className: "lookup"
       }, "Loading\u2026"); // Not found
-    } else if (this.state.scrobbleState == TraktScrobble_1.TraktScrobbleState.NotFound) {
-      info = preact_1.h("div", {
-        class: "error"
-      }, preact_1.h("h2", null, "Failed to scrobble:"), preact_1.h("p", null, "Could not find matching episode on Trakt")); // Error
-    } else if (this.state.scrobbleState == TraktScrobble_1.TraktScrobbleState.Error) {
-      info = preact_1.h("div", {
-        class: "error"
-      }, preact_1.h("h2", null, "Failed to scrobble:"), preact_1.h("p", null, this.state.error)); // Lookup succeeded
-    } else {
+    } else if (this.state.scrobbleState == TraktRoller_1.TraktRollerState.NotFound) {
+      info = core_1.jsx("div", {
+        className: "error"
+      }, core_1.jsx("h2", null, "Failed to scrobble:"), core_1.jsx("p", null, "Could not find matching episode on Trakt")); // Error
+    } else if (this.state.scrobbleState == TraktRoller_1.TraktRollerState.Error) {
+      info = core_1.jsx("div", {
+        className: "error"
+      }, core_1.jsx("h2", null, "Failed to scrobble:"), core_1.jsx("p", null, this.state.error)); // Lookup succeeded
+    } else if (data) {
       if (data.movie && data.movie.ids) {
         let movieUrl = `https://trakt.tv/movies/${data.movie.ids.slug}`;
-        info = preact_1.h("div", {
-          class: "info"
-        }, preact_1.h("h2", null, preact_1.h("a", {
+        info = core_1.jsx("div", {
+          className: "info"
+        }, core_1.jsx("h2", null, core_1.jsx("a", {
           href: movieUrl,
           target: "_blank"
         }, data.movie.title, " (", data.movie.year, ")")));
@@ -4563,42 +5358,51 @@ class ScrobbleInfo extends preact_1.Component {
         let showUrl = `https://trakt.tv/shows/${data.show.ids.slug}`;
         let episodeUrl = `${showUrl}/seasons/${data.episode.season}/episodes/${data.episode.number}`;
         let episodeTitle = data.episode.title ? `: ${data.episode.title}` : null;
-        info = preact_1.h("div", {
-          class: "info"
-        }, preact_1.h("h2", null, preact_1.h("a", {
+        info = core_1.jsx("div", {
+          className: "info"
+        }, core_1.jsx("h2", null, core_1.jsx("a", {
           href: showUrl,
           target: "_blank"
-        }, data.show.title, " (", data.show.year, ")")), preact_1.h("p", null, preact_1.h("a", {
+        }, data.show.title, " (", data.show.year, ")")), core_1.jsx("p", null, core_1.jsx("a", {
           href: episodeUrl,
           target: "_blank"
         }, "Season ", data.episode.season, " Episode ", data.episode.number, episodeTitle)));
       } else {
-        info = preact_1.h("div", {
-          class: "error"
-        }, preact_1.h("h2", null, "Internal error:"), preact_1.h("p", null, "Missing data"));
+        info = core_1.jsx("div", {
+          className: "error"
+        }, core_1.jsx("h2", null, "Internal error:"), core_1.jsx("p", null, "Missing data"));
       }
     }
 
-    return preact_1.h("div", {
-      className: className
-    }, info);
+    return core_1.jsx("div", {
+      css: className
+    }, core_1.jsx("button", {
+      className: "editbutton",
+      title: this.state.isEditing ? "Cancel" : "Edit",
+      onClick: () => {
+        this.setState({
+          isEditing: !this.state.isEditing
+        });
+        this._focusUrlInput = true;
+      }
+    }, this.state.isEditing ? "✕" : "✍︎"), info);
   }
 
 }
 
 exports.default = ScrobbleInfo;
-},{"../TraktScrobble":"SXC6","preact":"aSor","emotion":"TAuN"}],"YunZ":[function(require,module,exports) {
+},{"../TraktRoller":"n8p7","react":"../node_modules/preact/compat/dist/compat.module.js","@emotion/core":"haMh"}],"ui/Button.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const preact_1 = require("preact");
+const react_1 = require("react");
 
-const emotion_1 = require("emotion");
+const core_1 = require("@emotion/core");
 
-const className = emotion_1.css`
+const className = core_1.css`
   font-size: 12px;
   font-weight: bold;
   color: #eee;
@@ -4616,10 +5420,11 @@ const className = emotion_1.css`
   }
 `;
 
-class Button extends preact_1.Component {
+class Button extends react_1.Component {
   render() {
-    return preact_1.h("button", {
-      className: `${className} ${this.props.className} ${this.props.disabled ? 'disabled' : ''}`,
+    return core_1.jsx("button", {
+      css: [className, this.props.className],
+      className: this.props.disabled ? 'disabled' : '',
       onClick: this.props.onClick
     }, this.props.text);
   }
@@ -4627,7 +5432,7 @@ class Button extends preact_1.Component {
 }
 
 exports.default = Button;
-},{"preact":"aSor","emotion":"TAuN"}],"CZem":[function(require,module,exports) {
+},{"react":"../node_modules/preact/compat/dist/compat.module.js","@emotion/core":"haMh"}],"ui/ScrobbleHistory.tsx":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -4676,11 +5481,11 @@ const TraktScrobble_1 = __importDefault(require("../TraktScrobble"));
 
 const Button_1 = __importDefault(require("./Button"));
 
-const preact_1 = require("preact");
+const react_1 = require("react");
 
-const emotion_1 = require("emotion");
+const core_1 = require("@emotion/core");
 
-const className = emotion_1.css`
+const className = core_1.css`
   & div {
     display: flex;
     justify-content: space-between;
@@ -4715,9 +5520,10 @@ const ActionMap = {
   watch: "Watched"
 };
 
-class ScrobbleHistory extends preact_1.Component {
+class ScrobbleHistory extends react_1.Component {
   constructor(props) {
     super(props);
+    this._traktId = 0;
     this._formatter = new Intl.DateTimeFormat(navigator.language, {
       year: "numeric",
       month: "short",
@@ -4731,7 +5537,7 @@ class ScrobbleHistory extends preact_1.Component {
     this._handleHistoryChanged = this._handleHistoryChanged.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let data = this.props.scrobbleData;
     this._traktId = TraktScrobble_1.default.traktIdFromData(data);
 
@@ -4768,15 +5574,15 @@ class ScrobbleHistory extends preact_1.Component {
       let rows = [];
 
       for (let item of this.state.historyItems) {
-        rows.push(preact_1.h("div", null, preact_1.h("span", null, ActionMap[item.action], " at ", this._formatter.format(new Date(item.watched_at))), preact_1.h(Button_1.default, {
+        rows.push(core_1.jsx("div", null, core_1.jsx("span", null, ActionMap[item.action], " at ", this._formatter.format(new Date(item.watched_at))), core_1.jsx(Button_1.default, {
           text: "Remove",
           onClick: e => this._handleRemove(e, item)
         })));
       }
 
-      return preact_1.h("div", {
-        className: className
-      }, preact_1.h("h2", null, "Watch History"), rows);
+      return core_1.jsx("div", {
+        css: className
+      }, core_1.jsx("h2", null, "Watch History"), rows);
     } else {
       return null;
     }
@@ -4785,7 +5591,7 @@ class ScrobbleHistory extends preact_1.Component {
 }
 
 exports.default = ScrobbleHistory;
-},{"../TraktScrobble":"SXC6","./Button":"YunZ","preact":"aSor","emotion":"TAuN"}],"q6Da":[function(require,module,exports) {
+},{"../TraktScrobble":"TraktScrobble.ts","./Button":"ui/Button.tsx","react":"../node_modules/preact/compat/dist/compat.module.js","@emotion/core":"haMh"}],"ui/ScrobbleControl.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -4798,15 +5604,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const TraktScrobble_1 = require("../TraktScrobble");
-
 const Button_1 = __importDefault(require("./Button"));
 
-const preact_1 = require("preact");
+const react_1 = require("react");
 
-const emotion_1 = require("emotion");
+const core_1 = require("@emotion/core");
 
-const className = emotion_1.css`
+const TraktScrobble_1 = require("../TraktScrobble");
+
+const className = core_1.css`
   display: flex;
   margin: 5px -5px;
   justify-content: space-between;
@@ -4826,9 +5632,10 @@ const className = emotion_1.css`
     margin: 5px;
     padding: 5px 10px 5px 10px;
     width: 20%;
+    text-transform: capitalize;
   }
 `;
-const scrobbleNowStyles = emotion_1.css`
+const scrobbleNowStyles = core_1.css`
   color: #8e44ad;
   border: 1px solid #8e44ad;
   background: none;
@@ -4838,7 +5645,7 @@ const scrobbleNowStyles = emotion_1.css`
     color: #fff;
   }
 `;
-const enableScrobbleStyles = emotion_1.css`
+const enableScrobbleStyles = core_1.css`
   color: #16a085;
   border: 1px solid #16a085;
   background: none;
@@ -4848,13 +5655,13 @@ const enableScrobbleStyles = emotion_1.css`
     color: #fff;
   }
 `;
-const EnabledStates = [TraktScrobble_1.TraktScrobbleState.Found, TraktScrobble_1.TraktScrobbleState.Started, TraktScrobble_1.TraktScrobbleState.Paused];
+const EnabledStates = [TraktScrobble_1.TraktScrobbleState.Idle, TraktScrobble_1.TraktScrobbleState.Started, TraktScrobble_1.TraktScrobbleState.Paused];
 
-class ScrobbleControl extends preact_1.Component {
+class ScrobbleControl extends react_1.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scrobbleState: this.props.scrobble.state,
+      scrobbleState: this.props.roller.state,
       scrobblingEnabled: this.props.roller.enabled
     };
     this._onScrobbleStateChanged = this._onScrobbleStateChanged.bind(this);
@@ -4863,13 +5670,13 @@ class ScrobbleControl extends preact_1.Component {
     this._handleEnableScrobbleClick = this._handleEnableScrobbleClick.bind(this);
   }
 
-  componentWillMount() {
-    this.props.scrobble.onStateChanged.sub(this._onScrobbleStateChanged);
+  componentDidMount() {
+    this.props.roller.onStateChanged.sub(this._onScrobbleStateChanged);
     this.props.roller.onEnabledChanged.sub(this._onEnabledChanged);
   }
 
   componentWillUnmount() {
-    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStateChanged);
+    this.props.roller.onStateChanged.unsub(this._onScrobbleStateChanged);
     this.props.roller.onEnabledChanged.unsub(this._onEnabledChanged);
   }
 
@@ -4886,7 +5693,7 @@ class ScrobbleControl extends preact_1.Component {
   }
 
   _handleScrobbleNowClick() {
-    this.props.scrobble.scrobbleNow();
+    this.props.roller.scrobble.scrobbleNow();
   }
 
   _handleEnableScrobbleClick() {
@@ -4894,21 +5701,21 @@ class ScrobbleControl extends preact_1.Component {
   }
 
   render() {
-    let state = this.props.scrobble.enabled ? "Disabled" : TraktScrobble_1.TraktScrobbleState[this.props.scrobble.state];
-    let title = this.props.scrobble.error || "";
+    let state = this.props.roller.enabled ? "Disabled" : this.props.roller.state;
+    let title = this.props.roller.error || "";
     let disabled = !(EnabledStates.indexOf(this.state.scrobbleState) >= 0);
     let label = this.props.roller.enabled ? "Enable Scrobbling" : "Disable Scrobbling";
-    return preact_1.h("div", {
-      className: className
-    }, preact_1.h("div", {
-      class: "state",
+    return core_1.jsx("div", {
+      css: className
+    }, core_1.jsx("div", {
+      className: "state",
       title: title
-    }, state), preact_1.h(Button_1.default, {
+    }, state), core_1.jsx(Button_1.default, {
       className: scrobbleNowStyles,
       text: "Scrobble Now",
       onClick: this._handleScrobbleNowClick,
       disabled: disabled
-    }), preact_1.h(Button_1.default, {
+    }), core_1.jsx(Button_1.default, {
       className: enableScrobbleStyles,
       text: label,
       onClick: this._handleEnableScrobbleClick
@@ -4918,7 +5725,7 @@ class ScrobbleControl extends preact_1.Component {
 }
 
 exports.default = ScrobbleControl;
-},{"../TraktScrobble":"SXC6","./Button":"YunZ","preact":"aSor","emotion":"TAuN"}],"a5I5":[function(require,module,exports) {
+},{"./Button":"ui/Button.tsx","react":"../node_modules/preact/compat/dist/compat.module.js","@emotion/core":"haMh","../TraktScrobble":"TraktScrobble.ts"}],"ui/Popup.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -4939,12 +5746,13 @@ const ScrobbleHistory_1 = __importDefault(require("./ScrobbleHistory"));
 
 const ScrobbleControl_1 = __importDefault(require("./ScrobbleControl"));
 
-const preact_1 = require("preact");
+const react_1 = require("react");
 
-const emotion_1 = require("emotion");
+const core_1 = require("@emotion/core");
 
-const className = emotion_1.css`
+const className = core_1.css`
   color: #eee;
+  z-index: 10000;
 
   & > div {
     padding: 15px;
@@ -4971,41 +5779,45 @@ const className = emotion_1.css`
   }
 `;
 
-class Popup extends preact_1.Component {
+class Popup extends react_1.Component {
   constructor(props) {
     super(props);
     this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
+    this.state = {
+      scrobbleData: this.props.roller.scrobble.data
+    };
   }
 
-  componentWillMount() {
-    this.setState({
-      scrobbleData: this.props.scrobble.data
-    });
-    this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
+  componentDidMount() {
+    this.props.roller.onStateChanged.sub(this._onScrobbleStatusChanged);
   }
 
   componentWillUnmount() {
-    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
+    this.props.roller.onStateChanged.unsub(this._onScrobbleStatusChanged);
   }
 
   _onScrobbleStatusChanged(state) {
     this.setState({
-      scrobbleData: this.props.scrobble.data
+      scrobbleData: this.props.roller.scrobble.data
     });
   }
 
   render() {
-    let scrobble = this.props.scrobble;
-    return preact_1.h("div", {
-      className: className
-    }, preact_1.h(ScrobbleInfo_1.default, {
-      scrobble: this.props.scrobble
-    }), preact_1.h(ScrobbleHistory_1.default, {
-      scrobbleData: this.state.scrobbleData,
-      history: this.props.history,
-      key: TraktScrobble_1.default.traktIdFromData(this.state.scrobbleData)
-    }), preact_1.h(ScrobbleControl_1.default, {
-      scrobble: this.props.scrobble,
+    let history = null;
+
+    if (this.state.scrobbleData) {
+      history = core_1.jsx(ScrobbleHistory_1.default, {
+        scrobbleData: this.state.scrobbleData,
+        history: this.props.roller.history,
+        key: TraktScrobble_1.default.traktIdFromData(this.state.scrobbleData)
+      });
+    }
+
+    return core_1.jsx("div", {
+      css: className
+    }, core_1.jsx(ScrobbleInfo_1.default, {
+      roller: this.props.roller
+    }), history, core_1.jsx(ScrobbleControl_1.default, {
       roller: this.props.roller
     }));
   }
@@ -5013,7 +5825,7 @@ class Popup extends preact_1.Component {
 }
 
 exports.default = Popup;
-},{"../TraktScrobble":"SXC6","./ScrobbleInfo":"b4v8","./ScrobbleHistory":"CZem","./ScrobbleControl":"q6Da","preact":"aSor","emotion":"TAuN"}],"BUYa":[function(require,module,exports) {
+},{"../TraktScrobble":"TraktScrobble.ts","./ScrobbleInfo":"ui/ScrobbleInfo.tsx","./ScrobbleHistory":"ui/ScrobbleHistory.tsx","./ScrobbleControl":"ui/ScrobbleControl.tsx","react":"../node_modules/preact/compat/dist/compat.module.js","@emotion/core":"haMh"}],"ui/StatusButton.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -5026,22 +5838,20 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-const TraktScrobble_1 = require("../TraktScrobble");
-
 const TraktIcon_1 = __importDefault(require("./TraktIcon"));
 
 const Popup_1 = __importDefault(require("./Popup"));
 
-const preact_1 = require("preact");
+const react_1 = require("react");
 
-const emotion_1 = require("emotion");
+const core_1 = require("@emotion/core");
 
-const popupClassName = emotion_1.css`
+const popupClassName = core_1.css`
   background: #161616;
   border: 1px solid #fff;
   position: absolute;
   width: 450px;
-  z-index: 100;
+  z-index: 10000;
   left: -209px;
   border-radius: 4px;
   transition: all 0.2s ease-in;
@@ -5049,6 +5859,11 @@ const popupClassName = emotion_1.css`
   visibility: hidden;
   opacity: 0;
   bottom: 55px;
+
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: normal;
 
   &:after, &:before {
     top: 100%;
@@ -5080,7 +5895,7 @@ const popupClassName = emotion_1.css`
     height: 75px;
   }
 `;
-const className = emotion_1.css`
+const className = core_1.css`
   position: relative;
 
   &:hover .popup {
@@ -5089,7 +5904,7 @@ const className = emotion_1.css`
     bottom: 44px;
   }
 `;
-const buttonClassName = emotion_1.css`
+const buttonClassName = core_1.css`
   width: 38px;
   height: 24px;
   background: none;
@@ -5108,15 +5923,15 @@ const buttonClassName = emotion_1.css`
     filter: grayscale(1) brightness(2);
   }
 `;
-const iconStyles = emotion_1.css`
+const iconStyles = core_1.css`
   height: 100%;
 `;
 
-class StatusButton extends preact_1.Component {
+class StatusButton extends react_1.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scrobbleState: this.props.scrobble.state,
+      scrobbleState: this.props.roller.state,
       enabled: this.props.roller.enabled
     };
     this._onScrobbleStatusChanged = this._onScrobbleStatusChanged.bind(this);
@@ -5124,13 +5939,13 @@ class StatusButton extends preact_1.Component {
     this._handleClick = this._handleClick.bind(this);
   }
 
-  componentWillMount() {
-    this.props.scrobble.onStateChanged.sub(this._onScrobbleStatusChanged);
+  componentDidMount() {
+    this.props.roller.onStateChanged.sub(this._onScrobbleStatusChanged);
     this.props.roller.onEnabledChanged.sub(this._onEnabledChanged);
   }
 
   componentWillUnmount() {
-    this.props.scrobble.onStateChanged.unsub(this._onScrobbleStatusChanged);
+    this.props.roller.onStateChanged.unsub(this._onScrobbleStatusChanged);
     this.props.roller.onEnabledChanged.unsub(this._onEnabledChanged);
   }
 
@@ -5147,36 +5962,40 @@ class StatusButton extends preact_1.Component {
   }
 
   _handleClick() {
-    window.open(this.props.scrobble.scrobbleUrl(), '_blank');
+    const url = this.props.roller.scrobble.scrobbleUrl();
+
+    if (url != '') {
+      window.open(this.props.roller.scrobble.scrobbleUrl(), '_blank');
+    }
   }
 
   render() {
-    let state = this.state.enabled ? "disabled" : TraktScrobble_1.TraktScrobbleState[this.state.scrobbleState].toLowerCase();
+    let state = this.state.enabled ? "disabled" : this.state.scrobbleState;
     let stateClass = "state-" + state;
-    let title = this.props.scrobble.error || TraktScrobble_1.TraktScrobbleState[this.state.scrobbleState];
-    return preact_1.h("div", {
-      className: `${className} right`
-    }, preact_1.h("button", {
-      className: `${buttonClassName} ${stateClass}`,
+    let title = this.props.roller.error || this.state.scrobbleState;
+    return core_1.jsx("div", {
+      css: className
+    }, core_1.jsx("button", {
+      css: buttonClassName,
+      className: stateClass,
       title: title,
       onClick: this._handleClick
-    }, preact_1.h(TraktIcon_1.default, {
+    }, core_1.jsx(TraktIcon_1.default, {
       className: iconStyles
-    })), preact_1.h("div", {
-      className: `${popupClassName} popup`
-    }, preact_1.h(Popup_1.default, {
-      roller: this.props.roller,
-      scrobble: this.props.scrobble,
-      history: this.props.history
-    }), preact_1.h("div", {
-      class: "hover-blocker"
+    })), core_1.jsx("div", {
+      css: popupClassName,
+      className: "popup"
+    }, core_1.jsx(Popup_1.default, {
+      roller: this.props.roller
+    }), core_1.jsx("div", {
+      className: "hover-blocker"
     })));
   }
 
 }
 
 exports.default = StatusButton;
-},{"../TraktScrobble":"SXC6","./TraktIcon":"B913","./Popup":"a5I5","preact":"aSor","emotion":"TAuN"}],"NFyx":[function(require,module,exports) {
+},{"./TraktIcon":"ui/TraktIcon.tsx","./Popup":"ui/Popup.tsx","react":"../node_modules/preact/compat/dist/compat.module.js","@emotion/core":"haMh"}],"TraktHistory.ts":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -5338,7 +6157,1527 @@ class TraktHistory {
 }
 
 exports.default = TraktHistory;
-},{"./TraktApi":"bK1h"}],"n8p7":[function(require,module,exports) {
+},{"./TraktApi":"TraktApi.ts"}],"TraktLookup.ts":[function(require,module,exports) {
+"use strict";
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const TraktApi_1 = __importStar(require("./TraktApi"));
+
+class TraktLookupError extends Error {
+  constructor(message, object) {
+    super(message);
+    this.associatedObject = object;
+  }
+
+}
+
+exports.TraktLookupError = TraktLookupError;
+/** Token allowing to cancel the async lookup operation */
+
+class CancellationToken {
+  constructor() {
+    this._isCancelled = false;
+  }
+
+  cancel() {
+    this._isCancelled = true;
+  }
+
+  get isCancelled() {
+    return this._isCancelled;
+  }
+
+  static throwIfCancelled(token) {
+    if (token && token.isCancelled) {
+      throw new CancellationError();
+    }
+  }
+
+}
+
+exports.CancellationToken = CancellationToken;
+/** Error thrown by async lookup method if it has been cancelled */
+
+class CancellationError extends Error {
+  constructor() {
+    super("The operation has been cancelled.");
+  }
+
+}
+
+exports.CancellationError = CancellationError;
+/** Look up a show on trakt */
+
+class TraktLookup {
+  constructor(client) {
+    this._client = client;
+  }
+  /** Start the lookup */
+
+
+  start(scrobbleData, cancellation) {
+    var _a, _b;
+
+    return __awaiter(this, void 0, void 0, function* () {
+      let data = Object.assign({}, scrobbleData);
+
+      if (data.movie === undefined && (data.show === undefined || data.episode === undefined)) {
+        throw new TraktLookupError('TraktRoller: either movie or show/episode needs to be set on scrobble data');
+      }
+
+      console.log('TraktRoller: looking up media on trakt...', Object.assign({}, data));
+      let type = data.movie !== undefined ? 'movie' : 'show';
+      let result = null; // Special episodes with fractional episode numbers, e.g. 14.5
+      // (Often used for recap episodes)
+
+      let isSpecialEp = data.episode && data.episode.number && data.episode.number % 1 !== 0;
+
+      if (!isSpecialEp) {
+        // Start with trakt's automatic matching
+        console.log('TraktRoller: trying automatic matching...');
+        result = yield this._scrobbleLookup(data);
+        CancellationToken.throwIfCancelled(cancellation);
+        if (result != null) return result; // Retry automatic matching with absolute episode number
+
+        if (type === 'show' && data.episode && data.episode.number_abs === undefined && data.episode.number !== undefined) {
+          let dataAbs = Object.assign({}, data);
+          dataAbs.episode = Object.assign({}, dataAbs.episode, {
+            number_abs: data.episode.number
+          });
+          delete dataAbs.episode.number;
+          result = yield this._scrobbleLookup(dataAbs);
+          CancellationToken.throwIfCancelled(cancellation);
+          if (result != null) return result;
+        }
+      } // Search for item manually
+
+
+      let title = data.movie !== undefined ? data.movie.title : data.show.title;
+
+      if (!title) {
+        throw new TraktLookupError('TraktRoller: No title set');
+      }
+
+      console.log('TraktRoller: trying to search manually...');
+      let results = yield this._search(type, title);
+      CancellationToken.throwIfCancelled(cancellation);
+
+      if (results.length === 0) {
+        console.warn(`TraktRoller: manual search for "${title}" returned no results`);
+        return null;
+      } // Use year to narrow results when available
+
+
+      const year = type === 'movie' ? (_a = data.movie) === null || _a === void 0 ? void 0 : _a.year : (_b = data.show) === null || _b === void 0 ? void 0 : _b.year;
+
+      if (year) {
+        let yearMatches = results.filter(r => {
+          var _a, _b;
+
+          return ((_a = r.show) === null || _a === void 0 ? void 0 : _a.year) == year || ((_b = r.movie) === null || _b === void 0 ? void 0 : _b.year) == year;
+        });
+
+        if (yearMatches.length > 0) {
+          results = yearMatches;
+        }
+      } // Try search results in order
+
+
+      for (const found of results) {
+        if (type === 'movie') {
+          console.log(`TraktRoller: trying result ${found.movie.title}`, found);
+          data.movie = found.movie;
+        } else {
+          console.log(`TraktRoller: trying result ${found.show.title}`, found);
+          data.show = found.show;
+        } // Look up episode for shows
+
+
+        if (type === 'show') {
+          let episodeResult = yield this._lookupEpisode(data.episode, found.show);
+          CancellationToken.throwIfCancelled(cancellation);
+          if (episodeResult == null) continue;
+          data.episode = episodeResult;
+        } // Retry start with new data
+
+
+        console.log('TraktRoller: re-trying matching');
+        result = yield this._scrobbleLookup(data);
+        CancellationToken.throwIfCancelled(cancellation);
+        if (result != null) return result;
+      }
+
+      return null;
+    });
+  }
+
+  _scrobbleLookup(data) {
+    return __awaiter(this, void 0, void 0, function* () {
+      let scrobbleResponse = yield this._client.scrobble('pause', data);
+
+      if (TraktApi_1.default.isError(scrobbleResponse, 404)) {
+        return null;
+      } else if (TraktApi_1.default.isError(scrobbleResponse)) {
+        throw new TraktApi_1.TraktApiError(scrobbleResponse);
+      }
+
+      let result = Object.assign({}, data);
+      if (scrobbleResponse.movie !== undefined) result.movie = scrobbleResponse.movie;
+      if (scrobbleResponse.show !== undefined) result.show = scrobbleResponse.show;
+      if (scrobbleResponse.episode !== undefined) result.episode = scrobbleResponse.episode;
+      console.log('TraktRoller: scrobble lookup succeeded', scrobbleResponse);
+      return result;
+    });
+  }
+
+  _search(type, title) {
+    return __awaiter(this, void 0, void 0, function* () {
+      // Quote and escape title to avoid special search characters interfereing with the query
+      // See https://github.com/trakt/api-help/issues/76
+      title = `"${title.replace(/[\\"']/g, '\\$&')}"`;
+      const searchResponse = yield this._client.search(type, title);
+
+      if (TraktApi_1.default.isError(searchResponse)) {
+        throw new TraktApi_1.TraktApiError(searchResponse);
+      }
+
+      const goodMatches = searchResponse.filter(r => r.score > 10);
+
+      if (searchResponse.length > goodMatches.length) {
+        if (goodMatches.length === 0) {
+          console.log(`TraktRoller: search returned only garbage results.`);
+        } else {
+          console.log(`TraktRoller: some search results with low scores ignored`);
+        }
+      }
+
+      return goodMatches;
+    });
+  }
+
+  _lookupEpisode(episode, show) {
+    return __awaiter(this, void 0, void 0, function* () {
+      if (episode.number === undefined || episode.season === undefined) {
+        throw new TraktLookupError('TraktRoller: data has show but episode is not set or incomplete', episode);
+      }
+
+      if (show.ids === undefined || show.ids.trakt === undefined) {
+        throw new TraktLookupError('TraktRoller: show data is missing trakt id', show);
+      }
+
+      let episodeResult = null;
+      const seasonsResponse = yield this._client.seasons(show.ids.trakt, ['episodes', 'full']);
+
+      if (TraktApi_1.default.isError(seasonsResponse, 404)) {
+        console.error('TraktRoller: manual lookup could not find seasons');
+        return null;
+      } else if (TraktApi_1.default.isError(seasonsResponse)) {
+        throw new TraktApi_1.TraktApiError(seasonsResponse);
+      } // First search in matching season
+
+
+      const season = seasonsResponse.find(s => s.number === episode.season);
+
+      if (!season) {
+        console.warn(`TraktRoller: could not find season ${episode.season} in seasons response`, seasonsResponse);
+      } else {
+        episodeResult = this._matchEpisodeOrTitle(season, episode.number, episode.title);
+      } // Look through all other seasons
+
+
+      if (episodeResult == null) {
+        for (let s of seasonsResponse) {
+          if (s === season) continue;
+          episodeResult = this._matchEpisodeOrTitle(s, episode.number, episode.title);
+          if (episodeResult != null) break;
+        }
+      }
+
+      return episodeResult;
+    });
+  }
+
+  _matchEpisodeOrTitle(season, episode, title) {
+    if (!season.episodes) {
+      throw new TraktLookupError(`TraktRoller: Missing episodes array in season object`, season);
+    }
+
+    let numberMatch = season.episodes.filter(e => e.number === episode || e.number_abs === episode);
+
+    if (numberMatch.length > 1) {
+      console.error(`TraktRoller: got multiple episode #${episode} in season`, season);
+      return null;
+    } else if (numberMatch.length == 1) {
+      console.log(`TraktRoller: found episode using episode number`, numberMatch[0]);
+      return numberMatch[0];
+    }
+
+    if (title) {
+      const filteredTitle = this._filterEpisodeTitle(title);
+
+      let titleMatch = season.episodes.filter(e => e.title && this._filterEpisodeTitle(e.title) === filteredTitle);
+
+      if (titleMatch.length > 1) {
+        console.error(`TraktRoller: got multiple episodes titled "${title}" in show`, season);
+        return null;
+      } else if (titleMatch.length == 1) {
+        console.log(`TraktRoller: found episode using episode title`, titleMatch[0]);
+        return titleMatch[0];
+      }
+    }
+
+    return null;
+  }
+
+  _filterEpisodeTitle(title) {
+    if (!title) debugger;
+    return title.replace(/[^\w\s]/gi, '').toLowerCase();
+  }
+
+}
+
+exports.default = TraktLookup;
+},{"./TraktApi":"TraktApi.ts"}],"../node_modules/player.js/dist/player-0.1.0.js":[function(require,module,exports) {
+var define;
+/*! Player.js - v0.1.0 - 2017-10-24
+* http://github.com/embedly/player.js
+* Copyright (c) 2017 Embedly; Licensed BSD */
+(function(window, document){
+var playerjs = {};
+
+playerjs.DEBUG = false;
+playerjs.VERSION = '0.0.11';
+playerjs.CONTEXT = 'player.js';
+playerjs.POST_MESSAGE = !!window.postMessage;
+
+/*
+* Utils.
+*/
+playerjs.origin = function(url){
+  // Grab the origin of a URL
+  if (url.substr(0, 2) === '//'){
+    url = window.location.protocol + url;
+  }
+
+  return url.split('/').slice(0,3).join('/');
+};
+
+playerjs.addEvent = function(elem, type, eventHandle) {
+  if (!elem) { return; }
+  if ( elem.addEventListener ) {
+    elem.addEventListener( type, eventHandle, false );
+  } else if ( elem.attachEvent ) {
+    elem.attachEvent( "on" + type, eventHandle );
+  } else {
+    elem["on"+type]=eventHandle;
+  }
+};
+
+// usage: log('inside coolFunc',this,arguments);
+// http://paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
+playerjs.log = function(){
+  playerjs.log.history = playerjs.log.history || [];   // store logs to an array for reference
+  playerjs.log.history.push(arguments);
+  if(window.console && playerjs.DEBUG){
+    window.console.log( Array.prototype.slice.call(arguments) );
+  }
+};
+
+// isFunctions
+playerjs.isString = function (obj) {
+  return Object.prototype.toString.call(obj) === '[object String]';
+};
+
+playerjs.isObject = function(obj){
+  return Object.prototype.toString.call(obj) === "[object Object]";
+};
+
+playerjs.isArray = function(obj){
+  return Object.prototype.toString.call(obj) === "[object Array]";
+};
+
+playerjs.isNone = function(obj){
+  return (obj === null || obj === undefined);
+};
+
+playerjs.has = function(obj, key){
+  return Object.prototype.hasOwnProperty.call(obj, key);
+};
+
+// ie8 doesn't support indexOf in arrays, based on underscore.
+playerjs.indexOf = function(array, item) {
+  if (array == null){ return -1; }
+  var i = 0, length = array.length;
+  if (Array.prototype.IndexOf && array.indexOf === Array.prototype.IndexOf) {
+    return array.indexOf(item);
+  }
+  for (; i < length; i++) {
+    if (array[i] === item) { return i; }
+  }
+  return -1;
+};
+
+// Assert
+playerjs.assert = function(test, msg) {
+  if (!test) {
+    throw msg || "Player.js Assert Failed";
+  }
+};
+/*
+* Keeper is just a method for keeping track of all the callbacks.
+*/
+
+playerjs.Keeper = function(){
+  this.init();
+};
+
+playerjs.Keeper.prototype.init = function(){
+  this.data = {};
+};
+
+playerjs.Keeper.prototype.getUUID = function(){
+  // Create a random id. #http://stackoverflow.com/a/2117523/564191
+  return 'listener-xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+      return v.toString(16);
+  });
+};
+
+playerjs.Keeper.prototype.has = function(event, id){
+  if (!this.data.hasOwnProperty(event)){
+    return false;
+  }
+
+  if (playerjs.isNone(id)){
+    return true;
+  }
+
+  // Figure out if we have the event.
+  var events = this.data[event];
+
+  for (var i = 0; i < events.length; i++){
+    if (events[i].id === id){
+      return true;
+    }
+  }
+
+  return false;
+};
+
+playerjs.Keeper.prototype.add = function(id, event, cb, ctx, one){
+  var d = {
+    id: id,
+    event: event,
+    cb: cb,
+    ctx: ctx,
+    one: one
+  };
+
+  if (this.has(event)){
+    this.data[event].push(d);
+  } else {
+    this.data[event] = [d];
+  }
+};
+
+playerjs.Keeper.prototype.execute = function(event, id, data, ctx){
+  if (!this.has(event, id)){
+    return false;
+  }
+
+  var keep = [],
+    execute = [];
+
+  for (var i=0; i< this.data[event].length; i++){
+    var d = this.data[event][i];
+
+    // There are omni events, in that they do not have an id. i.e "ready".
+    // Or there is an ID and we only want to execute the right id'd method.
+    if (playerjs.isNone(id) || (!playerjs.isNone(id) && d.id === id )){
+
+      execute.push({
+        cb: d.cb,
+        ctx: d.ctx? d.ctx: ctx,
+        data: data
+      });
+
+      // If we only wanted to execute this once.
+      if (d.one === false){
+        keep.push(d);
+      }
+    } else {
+      keep.push(d);
+    }
+  }
+
+  if (keep.length === 0){
+    delete this.data[event];
+  } else {
+    this.data[event] = keep;
+  }
+
+  // We need to execute everything after we deal with the one stuff. otherwise
+  // we have issues to order of operations.
+  for (var n=0; n < execute.length; n++){
+    var e = execute[n];
+    e.cb.call(e.ctx, e.data);
+  }
+};
+
+playerjs.Keeper.prototype.on = function(id, event, cb, ctx){
+  this.add(id, event, cb, ctx, false);
+};
+
+playerjs.Keeper.prototype.one = function(id, event, cb, ctx){
+  this.add(id, event, cb, ctx, true);
+};
+
+playerjs.Keeper.prototype.off = function(event, cb){
+  // We should probably restructure so this is a bit less of a pain.
+  var listeners = [];
+
+  if (!this.data.hasOwnProperty(event)){
+    return listeners;
+  }
+
+  var keep = [];
+
+  // Loop through everything.
+  for (var i=0; i< this.data[event].length; i++){
+    var data = this.data[event][i];
+    // If we only keep if there was a CB and the CB is there.
+    if (!playerjs.isNone(cb) && data.cb !== cb) {
+      keep.push(data);
+    } else if (!playerjs.isNone(data.id)) {
+      listeners.push(data.id);
+    }
+  }
+
+  if (keep.length === 0){
+    delete this.data[event];
+  } else {
+    this.data[event] = keep;
+  }
+
+  return listeners;
+};
+
+/*
+* Player.js is a javascript library for interacting with iframes via
+* postMessage that use an Open Player Spec
+*
+*/
+
+playerjs.Player = function(elem, options){
+  if (!(this instanceof playerjs.Player)) {
+    return new playerjs.Player(elem, options);
+  }
+  this.init(elem, options);
+};
+
+playerjs.EVENTS = {
+  READY: 'ready',
+  PLAY: 'play',
+  PAUSE: 'pause',
+  ENDED: 'ended',
+  TIMEUPDATE: 'timeupdate',
+  PROGRESS: 'progress',
+  ERROR: 'error'
+};
+
+playerjs.EVENTS.all = function(){
+  var all = [];
+  for (var key in playerjs.EVENTS) {
+    if (playerjs.has(playerjs.EVENTS, key) && playerjs.isString(playerjs.EVENTS[key])) {
+      all.push(playerjs.EVENTS[key]);
+    }
+  }
+  return all;
+};
+
+playerjs.METHODS = {
+  PLAY: 'play',
+  PAUSE: 'pause',
+  GETPAUSED: 'getPaused',
+  MUTE: 'mute',
+  UNMUTE: 'unmute',
+  GETMUTED: 'getMuted',
+  SETVOLUME: 'setVolume',
+  GETVOLUME: 'getVolume',
+  GETDURATION: 'getDuration',
+  SETCURRENTTIME: 'setCurrentTime',
+  GETCURRENTTIME:'getCurrentTime',
+  SETLOOP: 'setLoop',
+  GETLOOP: 'getLoop',
+  REMOVEEVENTLISTENER: 'removeEventListener',
+  ADDEVENTLISTENER: 'addEventListener'
+};
+
+playerjs.METHODS.all = function(){
+  var all = [];
+  for (var key in playerjs.METHODS) {
+    if (playerjs.has(playerjs.METHODS, key) && playerjs.isString(playerjs.METHODS[key])) {
+      all.push(playerjs.METHODS[key]);
+    }
+  }
+  return all;
+};
+
+playerjs.READIED = [];
+
+playerjs.Player.prototype.init = function(elem, options){
+
+  var self = this;
+
+  if (playerjs.isString(elem)){
+    elem = document.getElementById(elem);
+  }
+
+  this.elem = elem;
+
+  // make sure we have an iframe
+  playerjs.assert(elem.nodeName === 'IFRAME',
+    'playerjs.Player constructor requires an Iframe, got "'+elem.nodeName+'"');
+  playerjs.assert(elem.src,
+    'playerjs.Player constructor requires a Iframe with a \'src\' attribute.');
+
+  // Figure out the origin of where we are sending messages.
+  this.origin = playerjs.origin(elem.src);
+
+  // Event handling.
+  this.keeper = new playerjs.Keeper();
+
+  // Queuing before ready.
+  this.isReady = false;
+  this.queue = [];
+
+  // Assume that everything is supported, unless we know otherwise.
+  this.events = playerjs.EVENTS.all();
+  this.methods = playerjs.METHODS.all();
+
+  if (playerjs.POST_MESSAGE){
+    // Set up the reciever.
+    playerjs.addEvent(window, 'message', function(e){
+      self.receive(e);
+    });
+  } else {
+    playerjs.log('Post Message is not Available.');
+  }
+
+  // See if we caught the src event first, otherwise assume we haven't loaded
+  if (playerjs.indexOf(playerjs.READIED, elem.src) > -1){
+    self.loaded = true;
+  } else {
+    // Try the onload event, just lets us give another test.
+    this.elem.onload = function(){
+      self.loaded = true;
+    };
+  }
+};
+
+playerjs.Player.prototype.send = function(data, callback, ctx){
+  // Add the context and version to the data.
+  data.context = playerjs.CONTEXT;
+  data.version = playerjs.VERSION;
+
+  // We are expecting a response.
+  if (callback) {
+    // Create a UUID
+    var id = this.keeper.getUUID();
+
+    // Set the listener.
+    data.listener = id;
+
+    // Only hang on to this listener once.
+    this.keeper.one(id, data.method, callback, ctx);
+  }
+
+  if (!this.isReady && data.value !== 'ready'){
+    playerjs.log('Player.queue', data);
+    this.queue.push(data);
+    return false;
+  }
+
+  playerjs.log('Player.send', data, this.origin);
+
+  if (this.loaded === true){
+    this.elem.contentWindow.postMessage(JSON.stringify(data), this.origin);
+  }
+
+  return true;
+};
+
+playerjs.Player.prototype.receive = function(e){
+  playerjs.log('Player.receive', e);
+
+  if (e.origin !== this.origin){
+    return false;
+  }
+
+  var data;
+  try {
+    data = JSON.parse(e.data);
+  } catch (err){
+    // Not a valid response.
+    return false;
+  }
+
+  // abort if this message wasn't a player.js message
+  if (data.context !== playerjs.CONTEXT) {
+    return false;
+  }
+
+  // We need to determine if we are ready.
+  if (data.event === 'ready' && data.value && data.value.src === this.elem.src){
+    this.ready(data);
+  }
+
+  if (this.keeper.has(data.event, data.listener)){
+    this.keeper.execute(data.event, data.listener, data.value, this);
+  }
+};
+
+
+playerjs.Player.prototype.ready = function(data){
+
+  if (this.isReady === true){
+    return false;
+  }
+
+  // If we got a list of supported methods, we should set them.
+  if (data.value.events){
+    this.events = data.value.events;
+  }
+  if (data.value.methods){
+    this.methods = data.value.methods;
+  }
+
+  // set ready.
+  this.isReady = true;
+  this.loaded = true;
+
+  // Clear the queue
+  for (var i=0; i<this.queue.length; i++){
+    var obj = this.queue[i];
+
+    playerjs.log('Player.dequeue', obj);
+
+    if (data.event === 'ready'){
+      this.keeper.execute(obj.event, obj.listener, true, this);
+    }
+    this.send(obj);
+  }
+  this.queue = [];
+};
+
+playerjs.Player.prototype.on = function(event, callback, ctx){
+  var id = this.keeper.getUUID();
+
+  if (event === 'ready'){
+    // We only want to call ready once.
+    this.keeper.one(id, event, callback, ctx);
+  } else {
+    this.keeper.on(id, event, callback, ctx);
+  }
+
+  this.send({
+    method: 'addEventListener',
+    value: event,
+    listener: id
+  });
+
+  return true;
+};
+
+playerjs.Player.prototype.off = function(event, callback){
+
+  var listeners = this.keeper.off(event, callback);
+  playerjs.log('Player.off', listeners);
+
+  if (listeners.length > 0) {
+    for (var i in listeners){
+      this.send({
+        method: 'removeEventListener',
+        value: event,
+        listener: listeners[i]
+      });
+      return true;
+    }
+  }
+
+  return false;
+};
+
+// Based on what ready passed back, we can determine if the events/method are
+// supported by the player.
+playerjs.Player.prototype.supports = function(evtOrMethod, names){
+
+  playerjs.assert(playerjs.indexOf(['method', 'event'], evtOrMethod) > -1,
+    'evtOrMethod needs to be either "event" or "method" got ' + evtOrMethod);
+
+  // Make everything an array.
+  names = playerjs.isArray(names) ? names : [names];
+
+  var all = evtOrMethod === 'event' ? this.events : this.methods;
+
+  for (var i=0; i < names.length; i++){
+    if (playerjs.indexOf(all, names[i]) === -1){
+      return false;
+    }
+  }
+
+  return true;
+};
+
+//create function to add to the Player prototype
+function createPrototypeFunction(name) {
+
+  return function() {
+
+    var data = {
+      method: name
+    };
+
+    var args = Array.prototype.slice.call(arguments);
+
+    //for getters add the passed parameters to the arguments for the send call
+    if (/^get/.test(name)) {
+      playerjs.assert(args.length > 0, 'Get methods require a callback.');
+      args.unshift(data);
+    } else {
+      //for setter add the first arg to the value field
+      if (/^set/.test(name)) {
+        playerjs.assert(args.length !== 0, 'Set methods require a value.');
+        data.value = args[0];
+      }
+      args = [data];
+    }
+
+    this.send.apply(this, args);
+  };
+}
+
+// Loop through the methods to add them to the prototype.
+for (var i = 0, l = playerjs.METHODS.all().length; i < l; i++) {
+  var methodName = playerjs.METHODS.all()[i];
+
+  // We don't want to overwrite existing methods.
+  if (!playerjs.Player.prototype.hasOwnProperty(methodName)){
+    playerjs.Player.prototype[methodName] = createPrototypeFunction(methodName);
+  }
+}
+
+// We need to catch all ready events in case the iframe is ready before the
+// player is invoked.
+playerjs.addEvent(window, 'message', function(e){
+  var data;
+  try {
+    data = JSON.parse(e.data);
+  } catch (err){
+    return false;
+  }
+
+  // abort if this message wasn't a player.js message
+  if (data.context !== playerjs.CONTEXT) {
+    return false;
+  }
+
+  // We need to determine if we are ready.
+  if (data.event === 'ready' && data.value && data.value.src){
+    playerjs.READIED.push(data.value.src);
+  }
+});
+
+/*
+* Does all the wiring up for the backend.
+*
+* var receiver = new playerjs.Receiver();
+* receiver.on('play', function(){ video.play() });
+* receiver.on('getDuration', function(callback){ callback(video.duration) });
+* receiver.emit('timeupdate', {});
+*/
+
+playerjs.Receiver = function(events, methods){
+  this.init(events, methods);
+};
+
+playerjs.Receiver.prototype.init = function(events, methods){
+  var self = this;
+
+  // Deal with the ready crap.
+  this.isReady = false;
+
+  // Bind the window message.
+  this.origin = playerjs.origin(document.referrer);
+
+  //Create a holder for all the methods.
+  this.methods = {};
+
+  // holds all the information about what's supported
+  this.supported = {
+    events: events ? events : playerjs.EVENTS.all(),
+    methods: methods ? methods : playerjs.METHODS.all()
+  };
+
+  // Deals with the adding and removing of event listeners.
+  this.eventListeners = {};
+
+  // We can't send any messages.
+  this.reject = !(window.self !== window.top && playerjs.POST_MESSAGE);
+
+  // We aren't in an iframe, don't listen.
+  if (!this.reject){
+    playerjs.addEvent(window, 'message', function(e){
+      self.receive(e);
+    });
+  }
+};
+
+playerjs.Receiver.prototype.receive = function(e){
+  // Only want to listen to events that came from our origin.
+  if (e.origin !== this.origin){
+    return false;
+  }
+
+  // Browsers that support postMessage also support JSON.
+  var data = {};
+  if (playerjs.isObject(e.data)){
+    data = e.data;
+  } else {
+    try {
+      data = window.JSON.parse(e.data);
+    } catch (err){
+      playerjs.log('JSON Parse Error', err);
+    }
+  }
+
+  playerjs.log('Receiver.receive', e, data);
+
+  // Nothing for us to do.
+  if (!data.method){
+    return false;
+  }
+
+  // make sure the context is correct.
+  if (data.context !== playerjs.CONTEXT){
+    return false;
+  }
+
+  // Make sure we have a valid method.
+  if (playerjs.indexOf(playerjs.METHODS.all(), data.method) === -1){
+    this.emit('error', {
+      code: 2,
+      msg: 'Invalid Method "'+data.method+'"'
+    });
+    return false;
+  }
+
+  // See if we added a listener
+  var listener = !playerjs.isNone(data.listener) ? data.listener : null;
+
+  // Add Event Listener.
+  if (data.method === 'addEventListener') {
+    if (this.eventListeners.hasOwnProperty(data.value)) {
+      //If the listener is the same, i.e. null only add it once.
+      if (playerjs.indexOf(this.eventListeners[data.value], listener) === -1){
+        this.eventListeners[data.value].push(listener);
+      }
+    } else {
+      this.eventListeners[data.value] = [listener];
+    }
+
+    if (data.value === 'ready' && this.isReady){
+      this.ready();
+    }
+  }
+  // Remove the event listener.
+  else if (data.method === 'removeEventListener') {
+    if (this.eventListeners.hasOwnProperty(data.value)) {
+      var index = playerjs.indexOf(this.eventListeners[data.value], listener);
+
+      // if we find the element, remove it.
+      if (index > -1){
+        this.eventListeners[data.value].splice(index, 1);
+      }
+
+      if (this.eventListeners[data.value].length === 0){
+        delete this.eventListeners[data.value];
+      }
+    }
+  }
+  // Go get it.
+  else {
+    this.get(data.method, data.value, listener);
+  }
+};
+
+playerjs.Receiver.prototype.get = function(method, value, listener){
+  var self = this;
+
+  // Now lets do it.
+  if (!this.methods.hasOwnProperty(method)){
+    this.emit('error', {
+      code: 3,
+      msg: 'Method Not Supported"'+method+'"'
+    });
+    return false;
+  }
+
+  var func = this.methods[method];
+
+  if (method.substr(0,3) === 'get') {
+    var callback = function(val){
+      self.send(method, val, listener);
+    };
+    func.call(this, callback);
+  } else {
+    func.call(this, value);
+  }
+};
+
+playerjs.Receiver.prototype.on = function(event, callback){
+  this.methods[event] = callback;
+};
+
+playerjs.Receiver.prototype.send = function(event, value, listener){
+
+  playerjs.log('Receiver.send', event, value, listener);
+
+  if (this.reject){
+    // We are not in a frame, or we don't support POST_MESSAGE
+    playerjs.log('Receiver.send.reject', event, value, listener);
+    return false;
+  }
+
+  var data = {
+    context: playerjs.CONTEXT,
+    version: playerjs.VERSION,
+    event: event
+  };
+
+  if (!playerjs.isNone(value)){
+    data.value = value;
+  }
+
+  if (!playerjs.isNone(listener)){
+    data.listener = listener;
+  }
+
+  var msg = JSON.stringify(data);
+  window.parent.postMessage(msg, this.origin === "" ? '*' : this.origin);
+};
+
+playerjs.Receiver.prototype.emit = function(event, value){
+
+  if (!this.eventListeners.hasOwnProperty(event)){
+    return false;
+  }
+
+  playerjs.log('Instance.emit', event, value, this.eventListeners[event]);
+
+  for (var i=0; i < this.eventListeners[event].length; i++){
+    var listener = this.eventListeners[event][i];
+    this.send(event, value, listener);
+  }
+
+  return true;
+};
+
+playerjs.Receiver.prototype.ready = function(){
+  playerjs.log('Receiver.ready');
+  this.isReady = true;
+
+  var data = {
+    src: window.location.toString(),
+    events: this.supported.events,
+    methods: this.supported.methods
+  };
+
+  if (!this.emit('ready', data)){
+    this.send('ready', data);
+  }
+
+};
+
+playerjs.HTML5Adapter = function(video){
+  if (!(this instanceof playerjs.HTML5Adapter)) {
+    return new playerjs.HTML5Adapter(video);
+  }
+  this.init(video);
+};
+
+playerjs.HTML5Adapter.prototype.init = function(video){
+
+  playerjs.assert(video, 'playerjs.HTML5Adapter requires a video element');
+
+  // Set up the actual receiver
+  var receiver = this.receiver = new playerjs.Receiver();
+
+  /* EVENTS */
+  video.addEventListener('playing', function(){
+    receiver.emit('play');
+  });
+
+  video.addEventListener('pause', function(){
+    receiver.emit('pause');
+  });
+
+  video.addEventListener('ended', function(){
+    receiver.emit('ended');
+  });
+
+  video.addEventListener('timeupdate', function(){
+    receiver.emit('timeupdate', {
+      seconds: video.currentTime,
+      duration: video.duration
+    });
+  });
+
+  video.addEventListener('progress', function(){
+    receiver.emit('buffered', {
+      percent: video.buffered.length
+    });
+  });
+
+  /* Methods */
+  receiver.on('play', function(){
+    video.play();
+  });
+
+  receiver.on('pause', function(){
+    video.pause();
+  });
+
+  receiver.on('getPaused', function(callback){
+    callback(video.paused);
+  });
+
+  receiver.on('getCurrentTime', function(callback){
+    callback(video.currentTime);
+  });
+
+  receiver.on('setCurrentTime', function(value){
+    video.currentTime = value;
+  });
+
+  receiver.on('getDuration', function(callback){
+    callback(video.duration);
+  });
+
+  receiver.on('getVolume', function(callback){
+    callback(video.volume * 100);
+  });
+
+  receiver.on('setVolume', function(value){
+    video.volume = value/100;
+  });
+
+  receiver.on('mute', function(){
+    video.muted = true;
+  });
+
+  receiver.on('unmute', function(){
+    video.muted = false;
+  });
+
+  receiver.on('getMuted', function(callback){
+    callback(video.muted);
+  });
+
+  receiver.on('getLoop', function(callback){
+    callback(video.loop);
+  });
+
+  receiver.on('setLoop', function(value){
+    video.loop = value;
+  });
+};
+
+/* Call when the video has loaded */
+playerjs.HTML5Adapter.prototype.ready = function(){
+  this.receiver.ready();
+};
+
+//http://www.longtailvideo.com/support/jw-player/28851/javascript-api-reference
+playerjs.JWPlayerAdapter = function(player){
+  if (!(this instanceof playerjs.JWPlayerAdapter)) {
+    return new playerjs.JWPlayerAdapter(player);
+  }
+  this.init(player);
+};
+
+playerjs.JWPlayerAdapter.prototype.init = function(player){
+
+  playerjs.assert(player, 'playerjs.JWPlayerAdapter requires a player object');
+
+  // Set up the actual receiver
+  var receiver = this.receiver = new playerjs.Receiver();
+
+  // JWPlayer doesn't have a seLoop, so we can do it ourself.
+  this.looped = false;
+
+  /* EVENTS */
+  player.on('pause', function(){
+    receiver.emit('pause');
+  });
+
+  player.on('play', function(){
+    receiver.emit('play');
+  });
+
+  player.on('time', function(e){
+    var seconds = e.position,
+      duration = e.duration;
+
+    if (!seconds || !duration){
+      return false;
+    }
+
+    var value = {
+      seconds: seconds,
+      duration: duration
+    };
+    receiver.emit('timeupdate', value);
+  });
+
+  var self = this;
+  player.on('complete', function(){
+    // Fake the looping
+    if (self.looped === true){
+      // By default jwplayer seeks after play.
+      player.seek(0);
+    } else {
+      // Else throw the ended event.
+      receiver.emit('ended');
+    }
+  });
+
+  player.on('error', function(){
+    receiver.emit('error');
+  });
+
+
+  /* METHODS */
+  receiver.on('play', function(){
+    player.play(true);
+  });
+
+  receiver.on('pause', function(){
+    player.pause(true);
+  });
+
+  receiver.on('getPaused', function(callback){
+    callback(player.getState().toLowerCase() !== 'PLAYING'.toLowerCase());
+  });
+
+  receiver.on('getCurrentTime', function(callback){
+    callback(player.getPosition());
+  });
+
+  receiver.on('setCurrentTime', function(value){
+    player.seek(value);
+  });
+
+  receiver.on('getDuration', function(callback){
+    callback(player.getDuration());
+  });
+
+  receiver.on('getVolume', function(callback){
+    callback(player.getVolume());
+  });
+
+  receiver.on('setVolume', function(value){
+    player.setVolume(value);
+  });
+
+  receiver.on('mute', function(){
+    player.setMute(true);
+  });
+
+  receiver.on('unmute', function(){
+    player.setMute(false);
+  });
+
+  receiver.on('getMuted', function(callback){
+    callback(player.getMute() === true);
+  });
+
+  receiver.on('getLoop', function(callback){
+    callback(this.looped);
+  }, this);
+
+  receiver.on('setLoop', function(value){
+    this.looped = value;
+  }, this);
+};
+
+/* Call when the video.js is ready */
+playerjs.JWPlayerAdapter.prototype.ready = function(){
+  this.receiver.ready();
+};
+
+playerjs.MockAdapter = function(){
+  if (!(this instanceof playerjs.MockAdapter)) {
+    return new playerjs.MockAdapter();
+  }
+  this.init();
+};
+
+playerjs.MockAdapter.prototype.init = function(){
+
+  // Our mock video
+  var video = {
+    duration: 20,
+    currentTime: 0,
+    interval: null,
+    timeupdate: function(){},
+    volume: 100,
+    mute: false,
+    playing: false,
+    loop : false,
+    play: function(){
+      video.interval = setInterval(function(){
+        video.currentTime += 0.25;
+        video.timeupdate({
+          seconds: video.currentTime,
+          duration: video.duration
+        });
+      }, 250);
+      video.playing = true;
+    },
+    pause: function(){
+      clearInterval(video.interval);
+      video.playing = false;
+    }
+  };
+
+  // Set up the actual receiver
+  var receiver = this.receiver = new playerjs.Receiver();
+
+  receiver.on('play', function(){
+    var self = this;
+    video.play();
+    this.emit('play');
+    video.timeupdate = function(data){
+      self.emit('timeupdate', data);
+    };
+  });
+
+  receiver.on('pause', function(){
+    video.pause();
+    this.emit('pause');
+  });
+
+  receiver.on('getPaused', function(callback){
+    callback(!video.playing);
+  });
+
+  receiver.on('getCurrentTime', function(callback){
+    callback(video.currentTime);
+  });
+
+  receiver.on('setCurrentTime', function(value){
+    video.currentTime = value;
+  });
+
+  receiver.on('getDuration', function(callback){
+    callback(video.duration);
+  });
+
+  receiver.on('getVolume', function(callback){
+    callback(video.volume);
+  });
+
+  receiver.on('setVolume', function(value){
+    video.volume = value;
+  });
+
+  receiver.on('mute', function(){
+    video.mute = true;
+  });
+
+  receiver.on('unmute', function(){
+    video.mute = false;
+  });
+
+  receiver.on('getMuted', function(callback){
+    callback(video.mute);
+  });
+
+  receiver.on('getLoop', function(callback){
+    callback(video.loop);
+  });
+
+  receiver.on('setLoop', function(value){
+    video.loop = value;
+  });
+};
+
+/* Call when the video has loaded */
+playerjs.MockAdapter.prototype.ready = function(){
+  this.receiver.ready();
+};
+playerjs.VideoJSAdapter = function(player){
+  if (!(this instanceof playerjs.VideoJSAdapter)) {
+    return new playerjs.VideoJSAdapter(player);
+  }
+  this.init(player);
+};
+
+playerjs.VideoJSAdapter.prototype.init = function(player){
+
+  playerjs.assert(player, 'playerjs.VideoJSReceiver requires a player object');
+
+  // Set up the actual receiver
+  var receiver = this.receiver = new playerjs.Receiver();
+
+  /* EVENTS */
+  player.on("pause", function(){
+    receiver.emit('pause');
+  });
+
+  player.on("play", function(){
+    receiver.emit('play');
+  });
+
+  player.on("timeupdate", function(e){
+    var seconds = player.currentTime(),
+      duration = player.duration();
+
+    if (!seconds || !duration){
+      return false;
+    }
+
+    var value = {
+      seconds: seconds,
+      duration: duration
+    };
+    receiver.emit('timeupdate', value);
+  });
+
+  player.on("ended", function(){
+    receiver.emit('ended');
+  });
+
+  player.on("error", function(){
+    receiver.emit('error');
+  });
+
+
+  /* METHODS */
+  receiver.on('play', function(){
+    player.play();
+  });
+
+  receiver.on('pause', function(){
+    player.pause();
+  });
+
+  receiver.on('getPaused', function(callback){
+    callback(player.paused());
+  });
+
+  receiver.on('getCurrentTime', function(callback){
+    callback(player.currentTime());
+  });
+
+  receiver.on('setCurrentTime', function(value){
+    player.currentTime(value);
+  });
+
+  receiver.on('getDuration', function(callback){
+    callback(player.duration());
+  });
+
+  receiver.on('getVolume', function(callback){
+    callback(player.volume() * 100);
+  });
+
+  receiver.on('setVolume', function(value){
+    player.volume(value/100);
+  });
+
+  receiver.on('mute', function(){
+    player.volume(0);
+  });
+
+  receiver.on('unmute', function(){
+    player.volume(1);
+  });
+
+  receiver.on('getMuted', function(callback){
+    callback(player.volume() === 0);
+  });
+
+  receiver.on('getLoop', function(callback){
+    callback(player.loop());
+  });
+
+  receiver.on('setLoop', function(value){
+    player.loop(value);
+  });
+};
+
+/* Call when the video.js is ready */
+playerjs.VideoJSAdapter.prototype.ready = function(){
+  this.receiver.ready();
+};
+
+  if (typeof define === 'function' && define.amd) {
+    define(function () {
+      return playerjs
+    })
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = playerjs
+  } else {
+    window.playerjs = playerjs;
+  }
+})(window, document);
+
+},{}],"n8p7":[function(require,module,exports) {
 "use strict";
 
 var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -5401,19 +7740,46 @@ const StatusButton_1 = __importDefault(require("./ui/StatusButton"));
 
 const TraktHistory_1 = __importDefault(require("./TraktHistory"));
 
-const preact_1 = require("preact");
+const TraktLookup_1 = __importDefault(require("./TraktLookup"));
+
+const react_1 = require("react");
+
+const react_dom_1 = require("react-dom");
+
+const core_1 = require("@emotion/core");
+
+const cache_1 = __importDefault(require("@emotion/cache"));
 
 const ste_simple_events_1 = require("ste-simple-events");
 
-const EpisodeRegex = /Episode ([\d\.]+)/;
-const SeasonRegex = /Season (\d+)/;
-const MovieRegexes = [/Movie$/i, /Movie (Dub)$/i, /Movie (Sub)$/i, /Movie (Dubbed)$/i, /Movie (Subtitled)$/i, /^Movie - /i, /The Movie/i];
+const playerjs = __importStar(require("player.js"));
+
+exports.RollerContext = react_1.createContext(undefined);
+var TraktRollerState;
+
+(function (TraktRollerState) {
+  TraktRollerState["Undefined"] = "undefined";
+  TraktRollerState["Lookup"] = "lookup";
+  TraktRollerState["NotFound"] = "notfound";
+  TraktRollerState["Scrobbling"] = "scrobbling";
+  TraktRollerState["Error"] = "error";
+})(TraktRollerState = exports.TraktRollerState || (exports.TraktRollerState = {}));
+
+;
+const TraktUrlRegex = /^https:\/\/trakt\.tv\/(movies|shows)\/([\w-]+)(?:\/seasons\/(\d+)\/episodes\/(\d+))?$/;
 const ScrobblingEnabledKey = 'TraktRoller.enabled';
 
 class TraktRoller {
   constructor(options) {
+    this.onStateChanged = new ste_simple_events_1.SimpleEventDispatcher();
     this.onEnabledChanged = new ste_simple_events_1.SimpleEventDispatcher();
+    this._enabled = false;
+    this._duration = 0;
+    this._currentTime = 0;
+    if (!options.website) throw new Error("'website' option cannot be undefined");
     console.log("TraktRoller");
+    this._state = TraktRollerState.Undefined;
+    this._website = options.website;
     this._storage = options.storage || new TraktApi_1.LocalStorageAdapter();
 
     this._loadPrefs();
@@ -5424,9 +7790,48 @@ class TraktRoller {
 
     this._api.loadTokens();
 
+    this._history = new TraktHistory_1.default(this._api);
+    this._looker = new TraktLookup_1.default(this._api);
+    this._scrobble = new TraktScrobble_1.default(this._api);
+    this._scrobble.enabled = this.enabled;
+
+    this._scrobble.onStateChanged.sub(this._onScrobbleStatusChanged.bind(this));
+
+    this._scrobble.onScrobbled.sub(this._onScrobbled.bind(this));
+
     this._createFooterButton();
 
     this._waitForPlayer();
+  }
+
+  get scrobble() {
+    return this._scrobble;
+  }
+
+  get history() {
+    return this._history;
+  }
+
+  get state() {
+    if (this._state != TraktRollerState.Scrobbling) {
+      return this._state;
+    } else {
+      return this._scrobble.state;
+    }
+  }
+
+  _setState(value) {
+    if (this._state == value) return;
+    this._state = value;
+    this.onStateChanged.dispatch(this.state);
+  }
+
+  get error() {
+    if (this._state != TraktRollerState.Scrobbling) {
+      return this._error;
+    } else {
+      return this._scrobble.error;
+    }
   }
 
   get enabled() {
@@ -5439,8 +7844,55 @@ class TraktRoller {
 
     this._storage.setValue(ScrobblingEnabledKey, value ? "true" : "false");
 
-    if (this._scrobble) this._scrobble.enabled = value;
+    this._scrobble.enabled = value;
     this.onEnabledChanged.dispatch(value);
+  }
+
+  lookupTraktUrl(url) {
+    return __awaiter(this, void 0, void 0, function* () {
+      let match = TraktUrlRegex.exec(url);
+
+      if (!match) {
+        this._error = "Unrecognized Trakt URL.";
+
+        this._setState(TraktRollerState.Error);
+
+        return;
+      }
+
+      let data = this._baseScrobbleData();
+
+      if (match[1] == 'movies') {
+        data.movie = {
+          ids: {
+            slug: match[2]
+          }
+        };
+      } else {
+        data.show = {
+          ids: {
+            slug: match[2]
+          }
+        };
+
+        if (match[3] && match[4]) {
+          data.episode = {
+            season: parseInt(match[3]),
+            number: parseInt(match[4])
+          };
+        } else {
+          if (this._scrobble.data && this._scrobble.data.episode) {
+            data.episode = this._scrobble.data.episode;
+          } else {
+            let pageData = this._getScrobbleData();
+
+            data.episode = pageData === null || pageData === void 0 ? void 0 : pageData.episode;
+          }
+        }
+      }
+
+      yield this._lookup(data);
+    });
   }
 
   _loadPrefs() {
@@ -5450,33 +7902,24 @@ class TraktRoller {
   }
 
   _waitForPlayer() {
-    if (unsafeWindow.VILOS_PLAYERJS) {
-      this._loadPlayer(unsafeWindow.VILOS_PLAYERJS);
-    } else {
-      // Use a setter to wait for the player to be set
-      let value;
-      Object.defineProperty(unsafeWindow, "VILOS_PLAYERJS", {
-        get: () => value,
-        set: v => {
-          value = v;
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        this._player = yield this._website.loadPlayer();
 
-          this._loadPlayer(v);
-        }
-      });
-    }
+        this._player.on(playerjs.EVENTS.READY, () => this._playerReady());
+      } catch (e) {
+        console.log(`TraktRoller: No player found on page`);
+      }
+    });
   }
 
-  _loadPlayer(player) {
-    player.on(playerjs.EVENTS.READY, () => this._playerReady(player));
-  }
-
-  _playerReady(player) {
+  _playerReady() {
     if (!this._api.isAuthenticated()) return;
+    if (!this._player) return;
 
     let data = this._getScrobbleData();
 
     if (!data) return;
-    this._player = player;
 
     this._player.on(playerjs.EVENTS.TIMEUPDATE, info => this._onTimeChanged(info));
 
@@ -5488,26 +7931,47 @@ class TraktRoller {
 
     this._player.on(playerjs.EVENTS.ERROR, () => this._onPlaybackStateChange(TraktScrobble_1.PlaybackState.Ended));
 
-    this._history = new TraktHistory_1.default(this._api);
-    this._scrobble = new TraktScrobble_1.default(this._api, data);
-    this._scrobble.enabled = this.enabled;
-
-    this._scrobble.onStateChanged.sub(this._onScrobbleStatusChanged.bind(this));
-
-    this._scrobble.onScrobbled.sub(this._onScrobbled.bind(this));
-
     this._createStatusButton();
+
+    this._lookup(data);
+  }
+
+  _lookup(data) {
+    return __awaiter(this, void 0, void 0, function* () {
+      try {
+        this._setState(TraktRollerState.Lookup);
+
+        let result = yield this._looker.start(data);
+
+        if (result == null) {
+          this._setState(TraktRollerState.NotFound);
+        } else {
+          this._scrobble.scrobble(result);
+
+          this._setState(TraktRollerState.Scrobbling);
+        }
+      } catch (error) {
+        if (error.associatedObject) {
+          console.error(error.message, error.associatedObject);
+        } else {
+          console.error(error.message);
+        }
+
+        this._error = error.message;
+
+        this._setState(TraktRollerState.Error);
+      }
+    });
   }
 
   _onTimeChanged(info) {
     this._currentTime = info.seconds;
     this._duration = info.duration;
-    if (this._scrobble) this._scrobble.setPlaybackTime(info.seconds, info.duration);
+
+    this._scrobble.setPlaybackTime(info.seconds, info.duration);
   }
 
   _onPlaybackStateChange(state) {
-    if (!this._scrobble) return;
-
     this._scrobble.setPlaybackState(state, this._getProgress());
   }
 
@@ -5523,16 +7987,203 @@ class TraktRoller {
     return this._currentTime / this._duration * 100;
   }
 
-  _getScrobbleData() {
-    let buildDate = new Date("2019-12-26T18:18:19.363Z");
-    const data = {
+  _baseScrobbleData() {
+    let buildDate = new Date("2020-04-27T19:14:12.035Z");
+    return {
       progress: this._getProgress(),
-      app_version: "1.0.6",
+      app_version: "1.1.0",
       app_date: `${buildDate.getFullYear()}-${buildDate.getMonth() + 1}-${buildDate.getDate()}`
     };
+  }
+
+  _getScrobbleData() {
+    const data = this._baseScrobbleData();
+
+    const result = this._website.loadScrobbleData();
+
+    if (!result) {
+      console.error("TraktRoller: Could not extract scrobble data");
+      return null;
+    }
+
+    return Object.assign(data, result);
+  }
+
+  _onAuthenticationChange(isAuthenticated) {
+    if (!isAuthenticated) {
+      this._api.checkAuthenticationResult(window.location.href);
+    }
+  }
+
+  _onScrobbleStatusChanged(state) {
+    if (this._state == TraktRollerState.Scrobbling) {
+      this.onStateChanged.dispatch(this.state);
+    }
+  }
+
+  _onScrobbled(result) {
+    let ids = undefined;
+
+    if (result.movie && result.movie.ids) {
+      ids = result.movie.ids;
+    } else if (result.episode && result.episode.ids) {
+      ids = result.episode.ids;
+    }
+
+    if (!ids || !ids.trakt) {
+      console.error(`TraktRoller: Srobble didn't return any trakt ids`, result);
+      return;
+    }
+
+    this._history.add(ids.trakt, {
+      id: result.id,
+      watched_at: new Date().toISOString(),
+      action: "scrobble",
+      type: result.movie ? 'movie' : 'episode',
+      movie: result.movie,
+      show: result.show,
+      episode: result.episode
+    });
+  }
+
+  _createFooterButton() {
+    let footer = this._website.getConnectButtonParent();
+
+    if (!footer) {
+      console.error("TraktRoller: Could not find footer to add trakt connect button");
+      return;
+    }
+
+    const cache = cache_1.default({
+      container: footer
+    });
+    react_dom_1.render(core_1.jsx(core_1.CacheProvider, {
+      value: cache
+    }, core_1.jsx(ConnectButton_1.default, {
+      api: this._api
+    })), footer);
+  }
+
+  _createStatusButton() {
+    console.log(`TraktRoller: _createStatusButton`);
+
+    let container = this._website.getStatusButtonParent();
+
+    if (!container) {
+      console.error("TraktRoller: Could not find share row to add trakt status button");
+      return;
+    }
+
+    const cache = cache_1.default({
+      container: container
+    });
+    react_dom_1.render(core_1.jsx(core_1.CacheProvider, {
+      value: cache
+    }, core_1.jsx(exports.RollerContext.Provider, {
+      value: this
+    }, core_1.jsx(StatusButton_1.default, {
+      roller: this
+    }))), container);
+  }
+
+}
+
+exports.default = TraktRoller;
+},{"./TraktApi":"TraktApi.ts","./TraktScrobble":"TraktScrobble.ts","./ui/ConnectButton":"ui/ConnectButton.tsx","./ui/StatusButton":"ui/StatusButton.tsx","./TraktHistory":"TraktHistory.ts","./TraktLookup":"TraktLookup.ts","react":"../node_modules/preact/compat/dist/compat.module.js","react-dom":"../node_modules/preact/compat/dist/compat.module.js","@emotion/core":"haMh","@emotion/cache":"dqFm","ste-simple-events":"../node_modules/ste-simple-events/dist/index.js","player.js":"../node_modules/player.js/dist/player-0.1.0.js"}],"websites/Crunchyroll.ts":[function(require,module,exports) {
+"use strict";
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const playerjs = __importStar(require("player.js"));
+
+const EpisodeRegex = /Episode ([\d\.]+)/;
+const SeasonRegex = /Season (\d+)/;
+const MovieRegexes = [/Movie$/i, /Movie (Dub)$/i, /Movie (Sub)$/i, /Movie (Dubbed)$/i, /Movie (Subtitled)$/i, /^Movie - /i, /The Movie/i];
+
+class Crunchyroll {
+  loadPlayer() {
+    return __awaiter(this, void 0, void 0, function* () {
+      const player = document.getElementById('vilos-player');
+      if (!player) throw new Error('Player not found');
+      return new playerjs.Player(player);
+    });
+  }
+
+  getConnectButtonParent() {
+    const footer = document.querySelector('#social_media');
+    if (!footer) return null;
+    const container = document.createElement('div');
+    container.className = "footer-column";
+    footer.appendChild(container);
+    const shadow = container.attachShadow({
+      mode: 'closed'
+    });
+    const shadowContainer = document.createElement('div');
+    shadow.appendChild(shadowContainer);
+    return shadowContainer;
+  }
+
+  getStatusButtonParent() {
+    const submenu = document.querySelector('.showmedia-submenu');
+    if (!submenu) return null;
+    const container = document.createElement('div');
+    container.className = "right";
+    submenu.appendChild(container);
+    const shadow = container.attachShadow({
+      mode: 'closed'
+    });
+    const shadowContainer = document.createElement('div');
+    shadow.appendChild(shadowContainer);
+    return shadowContainer;
+  }
+
+  loadScrobbleData() {
+    const data = {};
     const titleElement = document.querySelector('#showmedia_about_episode_num');
 
-    if (!titleElement || titleElement.textContent.length == 0) {
+    if (!titleElement || !titleElement.textContent || titleElement.textContent.length == 0) {
       console.error("TraktRoller: Could not find video title");
       return null;
     }
@@ -5541,7 +8192,7 @@ class TraktRoller {
     let episodeTitle = undefined;
     const episodeTitleElement = document.querySelector('#showmedia_about_name');
 
-    if (episodeTitleElement) {
+    if (episodeTitleElement && episodeTitleElement.textContent) {
       episodeTitle = episodeTitleElement.textContent.trim();
 
       if (episodeTitle) {
@@ -5559,7 +8210,7 @@ class TraktRoller {
     let episodeNumber = 0;
     const episodeElement = document.querySelector('#showmedia_about_media h4:nth-child(2)');
 
-    if (episodeElement && episodeElement.textContent.length > 0) {
+    if (episodeElement && episodeElement.textContent && episodeElement.textContent.length > 0) {
       const seasonMatch = SeasonRegex.exec(episodeElement.textContent);
 
       if (seasonMatch) {
@@ -5591,64 +8242,161 @@ class TraktRoller {
     return data;
   }
 
-  _onAuthenticationChange(isAuthenticated) {
-    if (!isAuthenticated) {
-      this._api.checkAuthenticationResult(window.location.href);
-    }
+}
+
+exports.default = Crunchyroll;
+},{"player.js":"../node_modules/player.js/dist/player-0.1.0.js"}],"websites/Funimation.ts":[function(require,module,exports) {
+"use strict";
+
+var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
   }
 
-  _onScrobbleStatusChanged(state) {//
-  }
-
-  _onScrobbled(result) {
-    var item = {
-      id: result.id,
-      watched_at: new Date().toISOString(),
-      action: "scrobble",
-      type: result.movie ? 'movie' : 'episode',
-      movie: result.movie,
-      show: result.show,
-      episode: result.episode
-    };
-    let traktId = result.movie ? result.movie.ids.trakt : result.episode.ids.trakt;
-
-    this._history.add(traktId, item);
-  }
-
-  _createFooterButton() {
-    let footer = document.querySelector('#social_media');
-
-    if (!footer) {
-      console.error("TraktRoller: Could not find footer to add trakt connect button");
-      return;
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
     }
 
-    preact_1.render(preact_1.h("div", {
-      class: "footer-column"
-    }, preact_1.h(ConnectButton_1.default, {
-      api: this._api
-    })), footer);
-  }
-
-  _createStatusButton() {
-    let container = document.querySelector('.showmedia-submenu');
-
-    if (!container) {
-      console.error("TraktRoller: Could not find share row to add trakt status button");
-      return;
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
     }
 
-    preact_1.render(preact_1.h(StatusButton_1.default, {
-      roller: this,
-      scrobble: this._scrobble,
-      history: this._history
-    }), container);
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const playerjs = __importStar(require("player.js"));
+
+class Funimation {
+  constructor() {
+    this._decoder = document.createElement('textarea');
+  }
+
+  static createPlayerAdapter(videojs) {
+    videojs('#brightcove-player', {}, function () {
+      const adapter = new playerjs.VideoJSAdapter(this);
+      adapter.ready();
+    });
+  }
+
+  _unescape(input) {
+    if (!input) return input;
+    this._decoder.innerHTML = input;
+    return this._decoder.value;
+  }
+
+  loadPlayer() {
+    return __awaiter(this, void 0, void 0, function* () {
+      const player = document.getElementById('player');
+      if (!player) throw new Error('Player not found');
+      return new playerjs.Player(player);
+    });
+  }
+
+  getConnectButtonParent() {
+    const footer = document.querySelector('footer > .container > .row > .col-md-10 > .row:nth-child(2) > .col-sm-4');
+    if (!footer) return null;
+    const container = document.createElement('div');
+    container.style.float = "right";
+    container.style.clear = "both";
+    footer.appendChild(container);
+    const shadow = container.attachShadow({
+      mode: 'closed'
+    });
+    const shadowContainer = document.createElement('div');
+    shadow.appendChild(shadowContainer);
+    return shadowContainer;
+  }
+
+  getStatusButtonParent() {
+    const submenu = document.querySelector('#video-details > .row > .col-md-10 > .row > .col-sm-6:nth-child(2)');
+    if (!submenu) return null;
+    const container = document.createElement('div');
+    container.style.float = "right";
+    container.style.margin = "12px 0";
+    submenu.appendChild(container);
+    const shadow = container.attachShadow({
+      mode: 'closed'
+    });
+    const shadowContainer = document.createElement('div');
+    shadow.appendChild(shadowContainer);
+    return shadowContainer;
+  }
+
+  loadScrobbleData() {
+    const data = {};
+    var titleData = window['TITLE_DATA'];
+    var kaneData = window['KANE_customdimensions'];
+
+    if (!titleData || !kaneData) {
+      return null;
+    }
+
+    let year = undefined;
+
+    if (kaneData.dateAdded) {
+      let parts = kaneData.dateAdded.split('/');
+
+      if (parts.length == 3) {
+        year = parseInt(parts[2]);
+      }
+    }
+
+    if (kaneData.videoType == 'Movie') {
+      if (!titleData.title) return null;
+      data.movie = {
+        title: kaneData.showName,
+        year: year
+      };
+    } else if (kaneData.videoType == 'Episode') {
+      if (!kaneData.showName || !titleData.seasonNum || !titleData.episodeNum) return null;
+      data.show = {
+        title: this._unescape(kaneData.showName),
+        year: year
+      };
+      data.episode = {
+        season: titleData.seasonNum,
+        number: titleData.episodeNum,
+        title: this._unescape(titleData.title)
+      };
+    } else {
+      return null;
+    }
+
+    return data;
   }
 
 }
 
-exports.default = TraktRoller;
-},{"./TraktApi":"bK1h","./TraktScrobble":"SXC6","./ui/ConnectButton":"VnyP","./ui/StatusButton":"BUYa","./TraktHistory":"NFyx","preact":"aSor","ste-simple-events":"WWWf"}],"QCba":[function(require,module,exports) {
+exports.default = Funimation;
+},{"player.js":"../node_modules/player.js/dist/player-0.1.0.js"}],"index.ts":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -5665,10 +8413,33 @@ const TraktRoller_1 = __importDefault(require("./TraktRoller"));
 
 const TraktApi_1 = require("./TraktApi");
 
-new TraktRoller_1.default({
+const Crunchyroll_1 = __importDefault(require("./websites/Crunchyroll"));
+
+const Funimation_1 = __importDefault(require("./websites/Funimation"));
+
+const options = {
   client_id: "5ac1bf2ba188fc93f941eb0788ef5cb6e0e4bf96b882e914e6d0c17dacc8e7f2",
   client_secret: "3712241a1c467769e6c03336abb5fb9911f8665354d2aaffaa9f817e147a34ca",
-  storage: new TraktApi_1.GreaseMonkeyStorageAdapter()
-});
-},{"./TraktRoller":"n8p7","./TraktApi":"bK1h"}]},{},["QCba"], null)
+  storage: new TraktApi_1.GreaseMonkeyStorageAdapter(),
+  redirect_url: "",
+  website: undefined
+};
+const origin = window.location.origin;
+
+if (origin == "https://www.crunchyroll.com") {
+  options.redirect_url = "https://www.crunchyroll.com";
+  options.website = new Crunchyroll_1.default();
+} else if (origin == "https://www.funimation.com") {
+  if (window.videojs) {
+    Funimation_1.default.createPlayerAdapter(window.videojs);
+  } else {
+    options.redirect_url = "https://www.funimation.com";
+    options.website = new Funimation_1.default();
+  }
+}
+
+if (options.website) {
+  new TraktRoller_1.default(options);
+}
+},{"./TraktRoller":"n8p7","./TraktApi":"TraktApi.ts","./websites/Crunchyroll":"websites/Crunchyroll.ts","./websites/Funimation":"websites/Funimation.ts"}]},{},["index.ts"], null)
 //# sourceMappingURL=/TraktRoller.user.js.map

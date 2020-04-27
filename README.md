@@ -1,10 +1,10 @@
 # TraktRoller
 
-TraktRoller is a User Script that adds [Trakt](trakt.tv) scrobbling to Crunchyroll.
+TraktRoller is a User Script that adds [Trakt](trakt.tv) scrobbling to Crunchyroll and Funimation.
 
 ## Features
 
-* Scrobble movies and episodes watched on Crunchyroll
+* Scrobble movies and episodes watched on Crunchyroll or Funimation
 * Scrobble immediately
 * Turn scrobbling on or off
 * View Trakt watch history and remove entries
@@ -21,11 +21,11 @@ Either go to [TraktRoller on OpenUserJS](https://openuserjs.org/scripts/sttz/Tra
 
 Click on the «Connect with Trakt» button in the footer and allow the app to access your Trakt account.
 
-![Connect Button](./screenshots/connect.png?raw=true)
+<img src="./screenshots/connect.png" width="683" alt="Connect Button Screenshot" />
 
 Play any video and a Trakt button will appear next to the queue button. Hover on the button to open the popup.
 
-![Popup](./screenshots/popup.png?raw=true)
+<img src="./screenshots/popup.png" width="789" alt="Trakt Popup Screenshot" />
 
 At the top of the popup you'll see the Trakt episode or movie that has been matched.
 
@@ -36,7 +36,20 @@ The buttons at the bottom:
 - Purple: Immediately add the video to the watch history
 - Green: Disable scrobbling permanently until it's reenabled again
 
+If the episode can't be found or it's incorrect, the match can be changed using the "✍︎" button by entering the correct Trakt URL. Supported are:
+- https://trakt.tv/movies/name
+- https://trakt.tv/shows/name
+- https://trakt.tv/shows/name/seasons/x/episodes/x
+
+If only the URL is of a show and not a specific episode, TraktRoller will try to find the episode in the given show.
+
 # Changelog
+
+### 1.1.0 (2020-04-27)
+
+- Add support for Funimation
+- Manually correct mismatched or failed matches by providing the item's Trakt URL
+- Moved UI into shadow DOM to better isolate them from the website
 
 ### 1.0.6 (2019-12-26)
 
