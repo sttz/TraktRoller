@@ -32,7 +32,9 @@ export default class Funimation implements ITraktRollerWebsite {
   }
 
   async loadPlayer(): Promise<playerjs.Player> {
-    return new playerjs.Player('player');
+    const player = document.getElementById('player');
+    if (!player) throw new Error('Player not found');
+    return new playerjs.Player(player);
   }
   
   getConnectButtonParent(): HTMLElement | null {

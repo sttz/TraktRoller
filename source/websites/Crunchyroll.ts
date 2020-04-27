@@ -18,7 +18,9 @@ const MovieRegexes = [
 
 export default class Crunchyroll implements ITraktRollerWebsite {
   async loadPlayer(): Promise<playerjs.Player> {
-    return new playerjs.Player('vilos-player');
+    const player = document.getElementById('vilos-player');
+    if (!player) throw new Error('Player not found');
+    return new playerjs.Player(player);
   }
   
   getConnectButtonParent(): HTMLElement | null {
