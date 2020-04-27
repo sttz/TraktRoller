@@ -34,6 +34,14 @@ export default class Funimation implements ITraktRollerWebsite {
     });
   }
 
+  _decoder: HTMLTextAreaElement = document.createElement('textarea');
+
+  _unescape(input?: string): string | undefined {
+    if (!input) return input;
+    this._decoder.innerHTML = input;
+    return this._decoder.value;
+  }
+
   async loadPlayer(): Promise<playerjs.Player> {
     return new playerjs.Player('player');
   }
@@ -87,13 +95,13 @@ export default class Funimation implements ITraktRollerWebsite {
     } else if (kaneData.videoType == 'Episode') {
       if (!kaneData.showName || !titleData.seasonNum || !titleData.episodeNum) return null;
       data.show = {
-        title: kaneData.showName,
+        title: this._unescape(kaneData.showName),
         year: year,
       };
       data.episode = {
         season: titleData.seasonNum,
         number: titleData.episodeNum,
-        title: titleData.title,
+        title: this._unescape(titleData.title),
       };
     
     } else {
