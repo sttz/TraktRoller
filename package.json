@@ -15,7 +15,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist/*",
-    "dev": "parcel watch --no-hmr source/index.ts",
+    "dev": "parcel watch --no-hmr --out-file TraktRoller.user.js source/index.ts",
     "build": "npm run clean && parcel build --out-file TraktRoller.user.js --no-minify source/index.ts"
   },
   "header": "userscript_header.txt",
