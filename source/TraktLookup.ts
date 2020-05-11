@@ -149,9 +149,9 @@ export default class TraktLookup {
   }
 
   private async _search(type: 'movie' | 'show', title: string): Promise<Array<ITraktSearchResult>> {
-    // Quote and escape title to avoid special search characters interfereing with the query
+    // Escape Solr special characters so they don't interfere with the search
     // See https://github.com/trakt/api-help/issues/76
-    title = `"${title.replace(/[\\"']/g, '\\$&')}"`;
+    title = title.replace(/([+\-&|!(){}\[\]^"~*?:\/])/g, "\\$1");
 
     const searchResponse = await this._client.search(type, title);
     if (TraktApi.isError(searchResponse)) {
