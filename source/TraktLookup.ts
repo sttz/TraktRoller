@@ -103,7 +103,9 @@ export default class TraktLookup {
     }
 
     // Try search results in order
-    for (const found of results) {
+    for (let i = 0; i < results.length && i < 7; i++) {
+      const found = results[i];
+  
       if (type === 'movie') {
         console.log(`TraktRoller: trying result ${found.movie!.title}`, found);
         data.movie = found.movie;
@@ -158,15 +160,7 @@ export default class TraktLookup {
       throw new TraktApiError(searchResponse);
     }
 
-    const goodMatches = searchResponse.filter(r => r.score > 10);
-    if (searchResponse.length > goodMatches.length) {
-      if (goodMatches.length === 0) {
-        console.log(`TraktRoller: search returned only garbage results.`);
-      } else {
-        console.log(`TraktRoller: some search results with low scores ignored`);
-      }
-    }
-    return goodMatches;
+    return searchResponse.sort((a, b) => b.score - a.score);
   }
 
   private async _lookupEpisode(episode: ITraktEpisode, show: ITraktShow): Promise<ITraktEpisode | null> {
