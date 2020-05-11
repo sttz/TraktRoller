@@ -187,9 +187,6 @@ export default class TraktRoller {
     if (!this._api.isAuthenticated()) return;
     if (!this._player) return;
 
-    let data = this._getScrobbleData();
-    if (!data) return;
-
     this._player.on(playerjs.EVENTS.TIMEUPDATE,  (info: { seconds: number, duration: number }) => this._onTimeChanged(info));
     this._player.on(playerjs.EVENTS.PLAY,  () => this._onPlaybackStateChange(PlaybackState.Playing));
     this._player.on(playerjs.EVENTS.PAUSE, () => this._onPlaybackStateChange(PlaybackState.Paused));
@@ -197,6 +194,13 @@ export default class TraktRoller {
     this._player.on(playerjs.EVENTS.ERROR, () => this._onPlaybackStateChange(PlaybackState.Ended));
 
     this._createStatusButton();
+
+    let data = this._getScrobbleData();
+    if (!data) {
+      this._error = "Could not extract scrobble data from page";
+      this._setState(TraktRollerState.Error);
+      return;
+    }
 
     this._lookup(data);
   }
@@ -258,7 +262,7 @@ export default class TraktRoller {
 
     const result = this._website.loadScrobbleData();
     if (!result) {
-      console.error("TraktRoller: Could not extract scrobble data");
+      console.error("TraktRoller: Could not extract scrobble data from page");
       return null;
     }
 
