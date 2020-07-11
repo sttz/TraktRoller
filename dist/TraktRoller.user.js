@@ -8,7 +8,7 @@
 // @homepageURL   http://github.com/sttz/TraktRoller
 // @supportURL    http://github.com/sttz/TraktRoller/issues
 // @updateURL     https://openuserjs.org/meta/sttz/TraktRoller.meta.js
-// @version       1.1.0
+// @version       1.1.1
 // @include       https://www.crunchyroll.com/*
 // @include       https://www.funimation.com/*
 // @connect       api.trakt.tv
@@ -6326,7 +6326,9 @@ class TraktLookup {
       } // Try search results in order
 
 
-      for (const found of results) {
+      for (let i = 0; i < results.length && i < 7; i++) {
+        const found = results[i];
+
         if (type === 'movie') {
           console.log(`TraktRoller: trying result ${found.movie.title}`, found);
           data.movie = found.movie;
@@ -6375,26 +6377,16 @@ class TraktLookup {
 
   _search(type, title) {
     return __awaiter(this, void 0, void 0, function* () {
-      // Quote and escape title to avoid special search characters interfereing with the query
+      // Escape Solr special characters so they don't interfere with the search
       // See https://github.com/trakt/api-help/issues/76
-      title = `"${title.replace(/[\\"']/g, '\\$&')}"`;
+      title = title.replace(/([+\-&|!(){}\[\]^"~*?:\/])/g, "\\$1");
       const searchResponse = yield this._client.search(type, title);
 
       if (TraktApi_1.default.isError(searchResponse)) {
         throw new TraktApi_1.TraktApiError(searchResponse);
       }
 
-      const goodMatches = searchResponse.filter(r => r.score > 10);
-
-      if (searchResponse.length > goodMatches.length) {
-        if (goodMatches.length === 0) {
-          console.log(`TraktRoller: search returned only garbage results.`);
-        } else {
-          console.log(`TraktRoller: some search results with low scores ignored`);
-        }
-      }
-
-      return goodMatches;
+      return searchResponse.sort((a, b) => b.score - a.score);
     });
   }
 
@@ -7908,7 +7900,7 @@ class TraktRoller {
 
         this._player.on(playerjs.EVENTS.READY, () => this._playerReady());
       } catch (e) {
-        console.log(`TraktRoller: No player found on page`);
+        console.log(`TraktRoller: No player found on page: ${e.message}`);
       }
     });
   }
@@ -7916,10 +7908,6 @@ class TraktRoller {
   _playerReady() {
     if (!this._api.isAuthenticated()) return;
     if (!this._player) return;
-
-    let data = this._getScrobbleData();
-
-    if (!data) return;
 
     this._player.on(playerjs.EVENTS.TIMEUPDATE, info => this._onTimeChanged(info));
 
@@ -7932,6 +7920,16 @@ class TraktRoller {
     this._player.on(playerjs.EVENTS.ERROR, () => this._onPlaybackStateChange(TraktScrobble_1.PlaybackState.Ended));
 
     this._createStatusButton();
+
+    let data = this._getScrobbleData();
+
+    if (!data) {
+      this._error = "Could not extract scrobble data from page";
+
+      this._setState(TraktRollerState.Error);
+
+      return;
+    }
 
     this._lookup(data);
   }
@@ -7988,7 +7986,7 @@ class TraktRoller {
   }
 
   _baseScrobbleData() {
-    let buildDate = new Date("2020-04-27T19:14:12.035Z");
+    let buildDate = new Date("2020-07-11T16:10:06.091Z");
     return {
       progress: this._getProgress(),
       app_version: "1.1.0",
@@ -8002,7 +8000,7 @@ class TraktRoller {
     const result = this._website.loadScrobbleData();
 
     if (!result) {
-      console.error("TraktRoller: Could not extract scrobble data");
+      console.error("TraktRoller: Could not extract scrobble data from page");
       return null;
     }
 
@@ -8145,8 +8143,32 @@ const MovieRegexes = [/Movie$/i, /Movie (Dub)$/i, /Movie (Sub)$/i, /Movie (Dubbe
 class Crunchyroll {
   loadPlayer() {
     return __awaiter(this, void 0, void 0, function* () {
-      const player = document.getElementById('vilos-player');
-      if (!player) throw new Error('Player not found');
+      let player = document.getElementById('vilos-player');
+
+      if (!player) {
+        const container = document.getElementById('showmedia_video_player');
+
+        if (!container) {
+          throw new Error('Current page doesn\'t appear to be a video page ("#showmedia_video_player" container is missing)');
+        } // The player iframe hasn't been created yet, wait for it to appear
+
+
+        console.log("TraktRoller: Waiting for player iframe to be added to container...");
+        yield new Promise(resolve => {
+          const observer = new MutationObserver((mutationList, observer) => {
+            player = document.getElementById('vilos-player');
+
+            if (player) {
+              observer.disconnect();
+              resolve();
+            }
+          });
+          observer.observe(container, {
+            childList: true
+          });
+        });
+      }
+
       return new playerjs.Player(player);
     });
   }

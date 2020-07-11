@@ -45,6 +45,11 @@ If only the URL is of a show and not a specific episode, TraktRoller will try to
 
 # Changelog
 
+### 1.1.1 (2020-07-11)
+
+- Improve fallback title search
+- Fix status button not appearing on Crunchyroll due to extraction or timing issues
+
 ### 1.1.0 (2020-04-27)
 
 - Add support for Funimation
