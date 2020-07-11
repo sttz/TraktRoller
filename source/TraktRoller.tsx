@@ -179,7 +179,7 @@ export default class TraktRoller {
       this._player = await this._website.loadPlayer();
       this._player.on(playerjs.EVENTS.READY, () => this._playerReady());
     } catch (e) {
-      console.log(`TraktRoller: No player found on page`);
+      console.log(`TraktRoller: No player found on page: ${e.message}`);
     }
   }
 

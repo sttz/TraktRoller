@@ -18,9 +18,26 @@ const MovieRegexes = [
 
 export default class Crunchyroll implements ITraktRollerWebsite {
   async loadPlayer(): Promise<playerjs.Player> {
-    const player = document.getElementById('vilos-player');
-    if (!player) throw new Error('Player not found');
-    return new playerjs.Player(player);
+    let player = document.getElementById('vilos-player');
+    if (!player) {
+      const container = document.getElementById('showmedia_video_player');
+      if (!container) {
+        throw new Error('Current page doesn\'t appear to be a video page ("#showmedia_video_player" container is missing)');
+      }
+      // The player iframe hasn't been created yet, wait for it to appear
+      console.log("TraktRoller: Waiting for player iframe to be added to container...");
+      await new Promise((resolve) => {
+        const observer = new MutationObserver((mutationList, observer) => {
+          player = document.getElementById('vilos-player');
+          if (player) {
+            observer.disconnect();
+            resolve();
+          }
+        });
+        observer.observe(container, { childList: true });
+      });
+    }
+    return new playerjs.Player(player!);
   }
   
   getConnectButtonParent(): HTMLElement | null {
