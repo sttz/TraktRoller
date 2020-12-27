@@ -100,18 +100,18 @@ export default class Crunchyroll implements ITraktRollerWebsite {
       return null;
     }
 
-    const script = Array.from(playerBox.querySelectorAll('script')).filter(s => s.src == "" && s.type == "");
-    if (script.length != 1) {
-      console.error(`TraktRoller: Could not find player initialization inline script (${script.length})`);
-      return null;
+    let match: RegExpExecArray | null = null;
+    const scripts = Array.from(playerBox.querySelectorAll('script')).filter(s => s.src == "" && s.type == "");
+    for (let script of scripts) {
+      match = PlayerMetadataRegex.exec(script.innerText);
+      if (match) break;
     }
 
-    const match = PlayerMetadataRegex.exec(script[0].innerText);
     if (!match) {
-      console.error(`TraktRoller: Could not find player metadata in inline script`);
+      console.error(`TraktRoller: Could not find player initialization inline script`);
       return null;
     }
-
+  
     let metadata;
     try {
       metadata = JSON.parse(match[1]) as PlayerMetadata;
