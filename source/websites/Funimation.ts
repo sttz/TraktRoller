@@ -1,9 +1,11 @@
-import { ITraktRollerWebsite } from "../TraktRoller";
+import { ITraktRollerWebsite, IWebsiteData } from "../TraktRoller";
 import { ITraktScrobbleData } from "../TraktApi";
 
 import * as playerjs from "player.js";
 
 interface TitleData {
+  id?: string;
+  seriesId?: string;
   title?: string;
   seasonNum?: number;
   episodeNum?: number;
@@ -69,8 +71,12 @@ export default class Funimation implements ITraktRollerWebsite {
     return shadowContainer;
   }
   
-  loadScrobbleData(): Partial<ITraktScrobbleData> | null {
-    const data: Partial<ITraktScrobbleData> = {};
+  loadData(): IWebsiteData | null {
+    const data: IWebsiteData = {
+      id: null,
+      series_id: null,
+      scrobble: {}
+    };
     
     var titleData = (window as any)['TITLE_DATA'] as TitleData;
     var kaneData = (window as any)['KANE_customdimensions'] as KaneDimensions;
@@ -87,19 +93,32 @@ export default class Funimation implements ITraktRollerWebsite {
     }
 
     if (kaneData.videoType == 'Movie') {
-      if (!titleData.title) return null;
-      data.movie = {
+      if (!titleData.title || !titleData.id) {
+        console.error(`TraktRoller: Missing title or id in data`, titleData);
+        return null;
+      }
+      data.id = titleData.id;
+      data.scrobble.movie = {
         title: kaneData.showName,
         year: year,
       };
     
     } else if (kaneData.videoType == 'Episode') {
-      if (!kaneData.showName || !titleData.seasonNum || !titleData.episodeNum) return null;
-      data.show = {
+      if (!kaneData.showName 
+          || !titleData.seasonNum 
+          || !titleData.episodeNum
+          || !titleData.id
+          || !titleData.seriesId) {
+        console.error(`TraktRoller: Missing website data`, kaneData, titleData);
+        return null;
+      }
+      data.id = titleData.id;
+      data.series_id = titleData.seriesId;
+      data.scrobble.show = {
         title: this._unescape(kaneData.showName),
         year: year,
       };
-      data.episode = {
+      data.scrobble.episode = {
         season: titleData.seasonNum,
         number: titleData.episodeNum,
         title: this._unescape(titleData.title),

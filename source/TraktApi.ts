@@ -54,10 +54,13 @@ export interface ITraktSearchResult {
   episode?: ITraktEpisode;
 }
 
-export interface ITraktScrobbleData {
+export interface ITraktScrobbleItem {
   movie?: ITraktMovie;
   show?: ITraktShow;
   episode?: ITraktEpisode;
+}
+
+export interface ITraktScrobbleData extends ITraktScrobbleItem {
   progress: number;
   app_version: string;
   app_date: string;

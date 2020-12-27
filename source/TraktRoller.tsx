@@ -1,4 +1,4 @@
-import TraktApi, { ITraktScrobbleData, ITraktApiOptions, ITraktScobbleResult, IStorage, LocalStorageAdapter, ITraktIDs } from "./TraktApi";
+import TraktApi, { ITraktScrobbleData, ITraktApiOptions, ITraktScobbleResult, IStorage, LocalStorageAdapter, ITraktIDs, ITraktScrobbleItem } from "./TraktApi";
 import TraktScrobble, { TraktScrobbleState, PlaybackState } from "./TraktScrobble";
 import ConnectButton from "./ui/ConnectButton";
 import StatusButton from "./ui/StatusButton";
@@ -18,9 +18,16 @@ export interface ITraktRollerOptions extends ITraktApiOptions {
   website?: ITraktRollerWebsite;
 }
 
+export interface IWebsiteData {
+  id: string | null;
+  series_id: string | null;
+  season_id: string | null;
+  scrobble: ITraktScrobbleItem;
+}
+
 export interface ITraktRollerWebsite {
   loadPlayer(): Promise<playerjs.Player>;
-  loadScrobbleData(): Partial<ITraktScrobbleData> | null;
+  loadData(): IWebsiteData | null;
   getConnectButtonParent(): HTMLElement | null;
   getStatusButtonParent(): HTMLElement | null;
 }
@@ -55,6 +62,7 @@ export default class TraktRoller {
   private _history: TraktHistory;
   private _enabled: boolean = false;
 
+  private _data: IWebsiteData | null = null;
   private _duration: number = 0;
   private _currentTime: number = 0;
 
@@ -139,7 +147,7 @@ export default class TraktRoller {
       return;
     }
     
-    let data = this._baseScrobbleData();
+    let data: ITraktScrobbleItem = {};
     if (match[1] == 'movies') {
       data.movie = {
         ids: {
@@ -158,16 +166,17 @@ export default class TraktRoller {
           number: parseInt(match[4])
         };
       } else {
-        if (this._scrobble.data && this._scrobble.data.episode) {
-          data.episode = this._scrobble.data.episode;
+        if (this._data && this._data.scrobble.episode) {
+          data.episode = this._data.scrobble.episode;
         } else {
-          let pageData = this._getScrobbleData();
-          data.episode = pageData?.episode;
+          this._error = "Missing episode information, provide the Trakt URL of an episode.";
+          this._setState(TraktRollerState.Error);
+          return;
         }
       }
     }
 
-    await this._lookup(data);
+    await this._lookup(this._createScrobbleData(data));
   }
 
   private async _loadPrefs() {
@@ -195,14 +204,14 @@ export default class TraktRoller {
 
     this._createStatusButton();
 
-    let data = this._getScrobbleData();
-    if (!data) {
+    this._data = this._website.loadData();
+    if (!this._data) {
       this._error = "Could not extract scrobble data from page";
       this._setState(TraktRollerState.Error);
       return;
     }
 
-    this._lookup(data);
+    this._lookup(this._createScrobbleData(this._data.scrobble));
   }
 
   private async _lookup(data: ITraktScrobbleData) {
@@ -248,25 +257,13 @@ export default class TraktRoller {
     return this._currentTime / this._duration * 100;
   }
 
-  private _baseScrobbleData(): ITraktScrobbleData {
+  private _createScrobbleData(item: ITraktScrobbleItem): ITraktScrobbleData {
     let buildDate = new Date(process.env.BUILD_DATE);
-    return {
+    return Object.assign(item, {
       progress: this._getProgress(),
       app_version: process.env.VERSION,
       app_date: `${buildDate.getFullYear()}-${buildDate.getMonth() + 1}-${buildDate.getDate()}`
-    };
-  }
-
-  private _getScrobbleData(): ITraktScrobbleData | null {
-    const data = this._baseScrobbleData();
-
-    const result = this._website.loadScrobbleData();
-    if (!result) {
-      console.error("TraktRoller: Could not extract scrobble data from page");
-      return null;
-    }
-
-    return Object.assign(data, result);
+    });
   }
 
   private _onAuthenticationChange(isAuthenticated: boolean) {
@@ -325,7 +322,6 @@ export default class TraktRoller {
   }
 
   private _createStatusButton() {
-    console.log(`TraktRoller: _createStatusButton`);
     let container = this._website.getStatusButtonParent();
     if (!container) {
       console.error("TraktRoller: Could not find share row to add trakt status button");
