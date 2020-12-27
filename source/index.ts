@@ -18,8 +18,8 @@ if (origin == "https://www.crunchyroll.com") {
   options.website = new Crunchyroll();
 
 } else if (origin == "https://www.funimation.com") {
-  if (window.videojs) {
-    Funimation.createPlayerAdapter(window.videojs);
+  if (unsafeWindow.videojs) {
+    Funimation.createPlayerAdapter(unsafeWindow.videojs);
   } else {
     options.redirect_url = "https://www.funimation.com";
     options.website = new Funimation();

@@ -40,7 +40,7 @@ export default class Funimation implements ITraktRollerWebsite {
   }
   
   getConnectButtonParent(): HTMLElement | null {
-    const footer = document.querySelector('footer > .container > .row > .col-md-10 > .row:nth-child(2) > .col-sm-4');
+    const footer = document.querySelector('.social-media');
     if (!footer) return null;
     
     const container = document.createElement('div');
@@ -75,12 +75,14 @@ export default class Funimation implements ITraktRollerWebsite {
     const data: IWebsiteData = {
       id: null,
       series_id: null,
+      season_id: null,
       scrobble: {}
     };
     
-    var titleData = (window as any)['TITLE_DATA'] as TitleData;
-    var kaneData = (window as any)['KANE_customdimensions'] as KaneDimensions;
+    let titleData = (unsafeWindow as any)['TITLE_DATA'] as TitleData;
+    let kaneData = (unsafeWindow as any)['KANE_customdimensions'] as KaneDimensions;
     if (!titleData || !kaneData) {
+      console.error(`TraktRoller: Either TITLE_DATA or KANE_customdimensions not defined:`, titleData, kaneData);
       return null;
     }
 
@@ -125,6 +127,7 @@ export default class Funimation implements ITraktRollerWebsite {
       };
     
     } else {
+      console.error(`TraktRoller: Unknown KANE video type: ${kaneData.videoType}`);
       return null;
     }
     
