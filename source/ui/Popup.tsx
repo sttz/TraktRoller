@@ -6,7 +6,7 @@ import ScrobbleControl from "./ScrobbleControl";
 import TraktRoller, { TraktRollerCombinedState } from "../TraktRoller";
 
 import { Component } from "react";
-import { jsx, css } from "@emotion/core";
+import { jsx, css } from "@emotion/react";
 
 interface PopupProps {
   roller: TraktRoller;

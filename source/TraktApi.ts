@@ -1,4 +1,4 @@
-import { SimpleEventDispatcher } from "strongly-typed-events";
+import { SimpleEventDispatcher } from "ste-simple-events";
 
 const TraktTokensKey: string = 'trakt_tokens';
 

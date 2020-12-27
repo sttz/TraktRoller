@@ -11,7 +11,7 @@
     "parcel-plugin-buildenv": "./parcel-plugin-buildenv",
     "parcel-plugin-header": "./parcel-plugin-header",
     "prop-types": "^15.7.2",
-    "typescript": "^3.8.3"
+    "typescript": "^4.1.3"
   },
   "scripts": {
     "clean": "rm -rf dist/*",
@@ -20,13 +20,12 @@
   },
   "header": "userscript_header.txt",
   "dependencies": {
-    "@emotion/cache": "^10.0.29",
-    "@emotion/core": "^10.0.28",
-    "@types/react": "^16.9.34",
-    "emotion": "^10.0.27",
+    "@emotion/cache": "^11.1.3",
+    "@emotion/react": "^11.1.4",
+    "@types/react": "^17.0.0",
     "player.js": "^0.1.0",
     "preact": "^10.4.1",
-    "strongly-typed-events": "^1.6.3"
+    "ste-simple-events": "^2.0.6"
   },
   "alias": {
     "react": "preact/compat",

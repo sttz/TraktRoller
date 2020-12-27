@@ -7,7 +7,7 @@ import TraktLookup from "./TraktLookup";
 
 import { createContext } from 'react';
 import { render } from "react-dom";
-import { jsx, CacheProvider } from "@emotion/core";
+import { jsx, CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { SimpleEventDispatcher } from "ste-simple-events";
 import * as playerjs from "player.js";
@@ -310,7 +310,8 @@ export default class TraktRoller {
     }
 
     const cache = createCache({
-      container: footer
+      key: "trakt-roller",
+      container: footer,
     });
 
     render(
@@ -329,7 +330,8 @@ export default class TraktRoller {
     }
 
     const cache = createCache({
-      container: container
+      key: "trakt-roller",
+      container: container,
     });
 
     render((

@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { jsx, css, SerializedStyles } from "@emotion/core";
+import { jsx, css, SerializedStyles } from "@emotion/react";
 
 interface TraktIconProps {
   className?: SerializedStyles;

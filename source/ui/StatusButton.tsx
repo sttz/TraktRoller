@@ -3,7 +3,7 @@ import TraktIcon from "./TraktIcon";
 import Popup from "./Popup";
 
 import { Component } from "react";
-import { jsx, css } from "@emotion/core";
+import { jsx, css } from "@emotion/react";
 
 interface StatusButtonProps {
   roller: TraktRoller;

@@ -4,7 +4,7 @@ import TraktHistory from "../TraktHistory";
 import Button from "./Button";
 
 import { Component, MouseEvent } from "react";
-import { jsx, css } from "@emotion/core";
+import { jsx, css } from "@emotion/react";
 
 interface ScrobbleHistoryProps {
   scrobbleData: ITraktScrobbleData;

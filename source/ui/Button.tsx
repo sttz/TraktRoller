@@ -1,5 +1,5 @@
 import { Component, MouseEventHandler } from "react";
-import { jsx, css, SerializedStyles } from "@emotion/core";
+import { jsx, css, SerializedStyles } from "@emotion/react";
 
 interface ButtonProps {
   text: string;

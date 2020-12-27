@@ -2,7 +2,7 @@ import TraktRoller, { TraktRollerCombinedState, TraktRollerState } from "../Trak
 import { ITraktScrobbleData } from "../TraktApi";
 
 import { Component } from "react";
-import { jsx, css } from "@emotion/core";
+import { jsx, css } from "@emotion/react";
 
 interface ScrobbleInfoProps {
   roller: TraktRoller;

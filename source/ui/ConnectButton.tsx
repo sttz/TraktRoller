@@ -2,7 +2,7 @@ import TraktApi from "../TraktApi";
 import TraktIcon from "./TraktIcon";
 
 import { Component } from "react";
-import { jsx, css } from "@emotion/core";
+import { jsx, css } from "@emotion/react";
 
 interface ConnectButtonProps {
   api: TraktApi;

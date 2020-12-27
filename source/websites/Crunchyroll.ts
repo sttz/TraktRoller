@@ -49,7 +49,7 @@ export default class Crunchyroll implements ITraktRollerWebsite {
       }
       // The player iframe hasn't been created yet, wait for it to appear
       console.log("TraktRoller: Waiting for player iframe to be added to container...");
-      await new Promise((resolve) => {
+      await new Promise<void>((resolve) => {
         const observer = new MutationObserver((mutationList, observer) => {
           player = document.getElementById('vilos-player');
           if (player) {
@@ -169,6 +169,7 @@ export default class Crunchyroll implements ITraktRollerWebsite {
     const data: IWebsiteData = {
       id: null,
       series_id: null,
+      season_id: null,
       scrobble: {}
     };
     if (playerMetadata.metadata.type == "movie" 
@@ -197,8 +198,9 @@ export default class Crunchyroll implements ITraktRollerWebsite {
 
   loadDataFromDom(): IWebsiteData | null {
     const data: IWebsiteData = {
-      id: "",
-      series_id: "",
+      id: null,
+      series_id: null,
+      season_id: null,
       scrobble: {}
     };
     const titleElement = document.querySelector('#showmedia_about_episode_num');
@@ -264,5 +266,4 @@ export default class Crunchyroll implements ITraktRollerWebsite {
 
     return jsonData;
   }
-}
 }
