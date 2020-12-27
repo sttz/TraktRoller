@@ -45,6 +45,11 @@ If only the URL is of a show and not a specific episode, TraktRoller will try to
 
 # Changelog
 
+### 1.2.0 (2020-12-27)
+
+- Fix Funimation integration
+- Change Crunchyroll to extract data from player code instead of DOM
+
 ### 1.1.1 (2020-07-11)
 
 - Improve fallback title search
